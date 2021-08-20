@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " x ",
+    "xxx",
+    " x "
+  ],
+  "key": {
+    "x": {
+      "tag": "forge:dyes"
+    }
+  },
+  "result": {
+    "item": "colorful_journey:ink_ball",
+    "count": 4
+  }
+}

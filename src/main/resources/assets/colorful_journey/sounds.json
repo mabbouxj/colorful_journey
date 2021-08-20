@@ -1,0 +1,26 @@
+{
+  "color_gun_shoot": {
+    "sounds": [
+      {
+        "name": "colorful_journey:color_gun_shoot",
+        "stream": true
+      }
+    ]
+  },
+  "color_gun_handling": {
+    "sounds": [
+      {
+        "name": "colorful_journey:color_gun_handling",
+        "stream": true
+      }
+    ]
+  },
+  "ink_splash": {
+    "sounds": [
+      {
+        "name": "colorful_journey:ink_splash",
+        "stream": true
+      }
+    ]
+  }
+}
