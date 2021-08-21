@@ -5,7 +5,9 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.ISubtypeRegistration;
 import net.mabbouxj.colorful_journey.Reference;
 import net.mabbouxj.colorful_journey.init.ModItems;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.RegistryObject;
 
 @JeiPlugin
 public class JeiCompat implements IModPlugin {
@@ -17,10 +19,8 @@ public class JeiCompat implements IModPlugin {
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
-        registration.useNbtForSubtypes(
-                ModItems.COLORED_FEATHER.get(),
-                ModItems.COLORED_EGG.get(),
-                ModItems.COLORED_HONEYCOMB.get()
-        );
+        for (RegistryObject<Item> registryItem : ModItems.COLORFUL_ITEMS) {
+            registration.useNbtForSubtypes(registryItem.get());
+        }
     }
 }

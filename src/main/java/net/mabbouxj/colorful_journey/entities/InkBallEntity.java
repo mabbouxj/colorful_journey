@@ -8,6 +8,7 @@ import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.monster.SkeletonEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.SheepEntity;
@@ -79,6 +80,11 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
                 } else if (entity instanceof BeeEntity) {
                     BeeEntity oldEntity = (BeeEntity) entity;
                     ColoredBeeEntity newEntity = ColoredBeeEntity.newFromExistingEntity(oldEntity, this.level, this.getColor());
+                    oldEntity.remove();
+                    this.level.addFreshEntity(newEntity);
+                } else if (entity instanceof SkeletonEntity) {
+                    SkeletonEntity oldEntity = (SkeletonEntity) entity;
+                    ColoredSkeletonEntity newEntity = ColoredSkeletonEntity.newFromExistingEntity(oldEntity, this.level, this.getColor());
                     oldEntity.remove();
                     this.level.addFreshEntity(newEntity);
                 }
