@@ -1,6 +1,7 @@
 package net.mabbouxj.colorful_journey.init;
 
 import net.mabbouxj.colorful_journey.Reference;
+import net.mabbouxj.colorful_journey.entities.ColoredBeeEntity;
 import net.mabbouxj.colorful_journey.entities.ColoredChickenEntity;
 import net.mabbouxj.colorful_journey.entities.InkBallEntity;
 import net.minecraft.entity.Entity;
@@ -16,6 +17,7 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<InkBallEntity>> INK_BALL = registerMiscEntity("ink_ball", InkBallEntity::new);
     public static final RegistryObject<EntityType<ColoredChickenEntity>> COLORED_CHICKEN = registerCreatureEntity("colored_chicken", ColoredChickenEntity::new);
+    public static final RegistryObject<EntityType<ColoredBeeEntity>> COLORED_BEE = registerCreatureEntity("colored_bee", ColoredBeeEntity::new);
 
     private static <T extends Entity> RegistryObject<EntityType<T>> registerCreatureEntity(String id, BiFunction<EntityType<T>, World, T> function) {
         EntityType<T> type = EntityType.Builder.of(function::apply, EntityClassification.CREATURE)

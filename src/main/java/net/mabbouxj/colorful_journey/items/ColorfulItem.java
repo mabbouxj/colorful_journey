@@ -8,7 +8,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import org.apache.commons.lang3.StringUtils;
 
 public class ColorfulItem extends Item {
 
@@ -46,7 +48,9 @@ public class ColorfulItem extends Item {
 
     @Override
     public ITextComponent getName(ItemStack itemStack) {
-        return new TranslationTextComponent("item.colorful_journey." + this.registryName + "." + getColor(itemStack).getName());
+        String colorName = StringUtils.capitalize(getColor(itemStack).getName());
+        String itemName = new TranslationTextComponent("item.colorful_journey." + this.registryName).getString();
+        return new StringTextComponent(colorName + " " + itemName);
     }
 
 }

@@ -8,6 +8,7 @@ import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
@@ -24,7 +25,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.awt.*;
 import java.util.Random;
-import java.util.logging.Logger;
 
 public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditionalSpawnData {
 
@@ -41,32 +41,20 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
         this.color = ColorUtils.getRandomDyeColor();
     }
 
-    public InkBallEntity(World world, double x, double y, double z) {
-        super(ModEntities.INK_BALL.get(), x, y, z, world);
-        this.color = ColorUtils.getRandomDyeColor();
-    }
-
     public DyeColor getColor() {
         return this.color;
     }
 
-    // If you forget to override this method, the default vanilla method will be called.
-    // This sends a vanilla spawn packet, which is then silently discarded when it reaches the client.
-    //  Your entity will be present on the server and can cause effects, but the client will not have a copy of the entity
-    //    and hence it will not render.
     @Override
     public IPacket<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
-    // ProjectileItemEntity::setItem uses this to save storage space.  It only stores the itemStack if the itemStack is not
-    //   the default item.
     @Override
     protected Item getDefaultItem() {
         return ModItems.INK_BALL.get().asItem();
     }
 
-    // We hit something (entity or block).
     @Override
     protected void onHit(RayTraceResult rayTraceResult) {
 
@@ -76,7 +64,6 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
                 EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
                 Entity entity = entityRayTraceResult.getEntity();
 
-                Logger.getLogger("").warning("InkBall color: " + this.getColor().getName());
                 this.level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), ModSounds.INK_SPLASH.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
 
                 if (entity instanceof IColoredMobEntity) {
@@ -89,9 +76,12 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
                     ColoredChickenEntity newEntity = ColoredChickenEntity.newFromExistingEntity(oldEntity, this.level, this.getColor());
                     oldEntity.remove();
                     this.level.addFreshEntity(newEntity);
+                } else if (entity instanceof BeeEntity) {
+                    BeeEntity oldEntity = (BeeEntity) entity;
+                    ColoredBeeEntity newEntity = ColoredBeeEntity.newFromExistingEntity(oldEntity, this.level, this.getColor());
+                    oldEntity.remove();
+                    this.level.addFreshEntity(newEntity);
                 }
-            } else if (rayTraceResult.getType() == RayTraceResult.Type.BLOCK) {
-                Logger.getLogger("").warning("InkBall color: " + this.getColor().getName());
             }
 
             this.level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);

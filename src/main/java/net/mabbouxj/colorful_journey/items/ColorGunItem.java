@@ -44,7 +44,7 @@ public class ColorGunItem extends Item {
             InkBallEntity inkBallEntity = new InkBallEntity(world, player);
             inkBallEntity.setItem(new ItemStack(ModItems.INK_BALL.get()));
 
-            float velocity = 1.5F;
+            float velocity = 2.0F;
             inkBallEntity.shootFromRotation(player, player.xRot, player.yRot, 0.0F, velocity, 1.0F);
             world.addFreshEntity(inkBallEntity);
 

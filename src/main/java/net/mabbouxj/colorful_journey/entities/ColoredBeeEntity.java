@@ -3,33 +3,28 @@ package net.mabbouxj.colorful_journey.entities;
 import net.mabbouxj.colorful_journey.init.ModEntities;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.items.ColorfulItem;
-import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.ChickenEntity;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 
 
-public class ColoredChickenEntity extends ChickenEntity implements IColoredMobEntity {
+public class ColoredBeeEntity extends BeeEntity implements IColoredMobEntity {
 
-    private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredChickenEntity.class, DataSerializers.INT);
+    private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredBeeEntity.class, DataSerializers.INT);
 
-    public ColoredChickenEntity(EntityType<? extends ChickenEntity> type, World world) {
-        super(type, world);
-        this.setColor(ColorUtils.getRandomDyeColor());
+    public ColoredBeeEntity(EntityType<? extends BeeEntity> entityType, World world) {
+        super(entityType, world);
     }
 
-    public static ColoredChickenEntity newFromExistingEntity(ChickenEntity oldEntity, World world, DyeColor color) {
-        ColoredChickenEntity newEntity = new ColoredChickenEntity(ModEntities.COLORED_CHICKEN.get(), world);
+    public static ColoredBeeEntity newFromExistingEntity(BeeEntity oldEntity, World world, DyeColor color) {
+        ColoredBeeEntity newEntity = new ColoredBeeEntity(ModEntities.COLORED_BEE.get(), world);
         newEntity.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
@@ -41,6 +36,11 @@ public class ColoredChickenEntity extends ChickenEntity implements IColoredMobEn
 
         newEntity.setAge(oldEntity.getAge());
         newEntity.setHealth(oldEntity.getHealth());
+        newEntity.setAggressive(oldEntity.isAggressive());
+        newEntity.setBaby(oldEntity.isBaby());
+        newEntity.setStingerCount(oldEntity.getStingerCount());
+        newEntity.setAggressive(oldEntity.isAggressive());
+        newEntity.setPersistentAngerTarget(oldEntity.getPersistentAngerTarget());
 
         return newEntity;
     }
@@ -63,40 +63,22 @@ public class ColoredChickenEntity extends ChickenEntity implements IColoredMobEn
         this.setColor(DyeColor.byId(nbt.getInt("Color")));
     }
 
+    @Override
     public DyeColor getColor() {
         return DyeColor.byId(this.entityData.get(DATA_COLOR_ID));
     }
 
+    @Override
     public void setColor(DyeColor color) {
         this.entityData.set(DATA_COLOR_ID, color.getId());
     }
 
     @Override
-    public ResourceLocation getDefaultLootTable() {
-        return new ResourceLocation("minecraft", "entities/chicken");
-    }
-
     public ColorfulItem getReplacementItemFor(Item item) {
-        if (item == Items.FEATHER) {
-            return (ColorfulItem) ModItems.COLORED_FEATHER.get();
-        } else if (item == Items.EGG) {
-            return (ColorfulItem) ModItems.COLORED_EGG.get();
+        if (item == Items.HONEYCOMB) {
+            return (ColorfulItem) ModItems.COLORED_HONEYCOMB.get();
         }
         return null;
-    }
-
-    public void aiStep() {
-        // Catch the moment when the vanilla chicken lays its egg and replace it by a colored one
-        if (!this.level.isClientSide && this.isAlive() && !this.isBaby() && !this.isChickenJockey() && --this.eggTime <= 0) {
-            this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
-
-            ItemStack coloredEggStack = new ItemStack(ModItems.COLORED_EGG.get(), 1);
-            ColorfulItem.setColor(coloredEggStack, this.getColor());
-
-            this.spawnAtLocation(coloredEggStack);
-            this.eggTime = this.random.nextInt(6000) + 6000;
-        }
-        super.aiStep();
     }
 
 }

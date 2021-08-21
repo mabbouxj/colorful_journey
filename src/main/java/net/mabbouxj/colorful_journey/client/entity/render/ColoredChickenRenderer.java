@@ -1,29 +1,28 @@
 package net.mabbouxj.colorful_journey.client.entity.render;
 
-import net.mabbouxj.colorful_journey.Reference;
 import net.mabbouxj.colorful_journey.client.entity.layer.ColoredChickenLayer;
-import net.mabbouxj.colorful_journey.client.entity.model.ColoredChickenModel;
 import net.mabbouxj.colorful_journey.entities.ColoredChickenEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.model.ChickenModel;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ColoredChickenRenderer extends MobRenderer<ColoredChickenEntity, ColoredChickenModel<ColoredChickenEntity>> {
+public class ColoredChickenRenderer extends MobRenderer<ColoredChickenEntity, ChickenModel<ColoredChickenEntity>> {
 
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(Reference.MOD_ID, "textures/entity/chicken/colored_chicken.png");
+    private static final ResourceLocation CHICKEN_LOCATION = new ResourceLocation("textures/entity/chicken.png");
 
     public ColoredChickenRenderer(EntityRendererManager renderManager) {
-        super(renderManager, new ColoredChickenModel<>(), 0.3F);
+        super(renderManager, new ChickenModel<>(), 0.3F);
         this.addLayer(new ColoredChickenLayer(this));
     }
 
     @Override
     public ResourceLocation getTextureLocation(ColoredChickenEntity entity) {
-        return TEXTURE;
+        return CHICKEN_LOCATION;
     }
 
     @Override

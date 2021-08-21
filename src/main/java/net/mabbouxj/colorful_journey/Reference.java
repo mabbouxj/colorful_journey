@@ -20,7 +20,10 @@ public class Reference {
     public static final DyeColor[] COLORS = new DyeColor[]{
             DyeColor.RED,
             DyeColor.GREEN,
-            DyeColor.BLUE
+            DyeColor.BLUE,
+            DyeColor.CYAN,
+            DyeColor.ORANGE,
+            DyeColor.PINK
     };
     public static final Map<DyeColor, float[]> COLORARRAY_BY_COLOR = Maps.newEnumMap(Arrays.stream(COLORS).collect(Collectors.toMap((DyeColor dyeColor) -> {
         return dyeColor;

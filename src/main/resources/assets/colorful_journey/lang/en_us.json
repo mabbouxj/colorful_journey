@@ -2,12 +2,9 @@
   "itemGroup.colorful_journey": "Colorful Journey",
   "item.colorful_journey.color_gun": "Color Gun",
   "item.colorful_journey.ink_ball": "Ink Ball",
-  "item.colorful_journey.colored_feather.red": "Red Feather",
-  "item.colorful_journey.colored_feather.green": "Green Feather",
-  "item.colorful_journey.colored_feather.blue": "Blue Feather",
-  "item.colorful_journey.colored_egg.red": "Red Egg",
-  "item.colorful_journey.colored_egg.green": "Green Egg",
-  "item.colorful_journey.colored_egg.blue": "Blue Egg",
+  "item.colorful_journey.colored_feather": "Feather",
+  "item.colorful_journey.colored_egg": "Egg",
+  "item.colorful_journey.colored_honeycomb": "Honeycomb",
   "entity.colorful_journey.colored_chicken": "Colored Chicken",
   "message.colorful_journey.color_gun_out_of_ink": "Your gun is out of ink!"
 }

@@ -1,13 +1,16 @@
 package net.mabbouxj.colorful_journey.init;
 
 import net.mabbouxj.colorful_journey.Reference;
+import net.mabbouxj.colorful_journey.client.entity.render.ColoredBeeRenderer;
 import net.mabbouxj.colorful_journey.client.entity.render.ColoredChickenRenderer;
 import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
+import net.mabbouxj.colorful_journey.entities.ColoredBeeEntity;
 import net.mabbouxj.colorful_journey.events.ColoredMobEvent;
 import net.mabbouxj.colorful_journey.utils.CustomItemColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -73,6 +76,7 @@ public class Registration {
         @SubscribeEvent
         public static void entityAttributeCreationEvent(EntityAttributeCreationEvent event) {
             event.put(ModEntities.COLORED_CHICKEN.get(), ChickenEntity.createAttributes().build());
+            event.put(ModEntities.COLORED_BEE.get(), BeeEntity.createAttributes().build());
         }
 
     }
@@ -84,20 +88,17 @@ public class Registration {
 
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
-            ModelLoader.addSpecialModel(InkBallRenderer.MODEL_LOCATION);
-
-            //RenderingRegistry.registerEntityRenderingHandler(ModEntities.INK_BALL.get(), InkBallRenderer::new);
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.INK_BALL.get(), erm -> new SpriteRenderer<>(erm, Minecraft.getInstance().getItemRenderer()));
-
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_CHICKEN.get(), ColoredChickenRenderer::new);
+            RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_BEE.get(), ColoredBeeRenderer::new);
         }
 
         @SubscribeEvent
         public static void onColorHandlerEvent(ColorHandlerEvent.Item event) {
             event.getItemColors().register(new CustomItemColor(),
                     ModItems.COLORED_FEATHER.get(),
-                    ModItems.COLORED_EGG.get()
+                    ModItems.COLORED_EGG.get(),
+                    ModItems.COLORED_HONEYCOMB.get()
             );
         }
 
