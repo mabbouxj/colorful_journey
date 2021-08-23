@@ -3,6 +3,7 @@ package net.mabbouxj.colorful_journey.init;
 import net.mabbouxj.colorful_journey.Reference;
 import net.mabbouxj.colorful_journey.client.entity.render.ColoredBeeRenderer;
 import net.mabbouxj.colorful_journey.client.entity.render.ColoredChickenRenderer;
+import net.mabbouxj.colorful_journey.client.entity.render.ColoredCowRenderer;
 import net.mabbouxj.colorful_journey.client.entity.render.ColoredSkeletonRenderer;
 import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
 import net.mabbouxj.colorful_journey.events.MobEvent;
@@ -13,6 +14,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.SkeletonEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.ChickenEntity;
+import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.particles.ParticleType;
@@ -79,6 +81,7 @@ public class Registration {
             event.put(ModEntities.COLORED_CHICKEN.get(), ChickenEntity.createAttributes().build());
             event.put(ModEntities.COLORED_BEE.get(), BeeEntity.createAttributes().build());
             event.put(ModEntities.COLORED_SKELETON.get(), SkeletonEntity.createAttributes().build());
+            event.put(ModEntities.COLORED_COW.get(), CowEntity.createAttributes().build());
         }
 
     }
@@ -94,6 +97,7 @@ public class Registration {
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_CHICKEN.get(), ColoredChickenRenderer::new);
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_BEE.get(), ColoredBeeRenderer::new);
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_SKELETON.get(), ColoredSkeletonRenderer::new);
+            RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_COW.get(), ColoredCowRenderer::new);
         }
 
         @SubscribeEvent

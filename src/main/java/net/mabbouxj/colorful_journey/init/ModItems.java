@@ -20,6 +20,7 @@ public class ModItems {
     public static final RegistryObject<Item> COLORED_EGG = registerColorfulItem("colored_egg");
     public static final RegistryObject<Item> COLORED_HONEYCOMB = registerColorfulItem("colored_honeycomb");
     public static final RegistryObject<Item> COLORED_BONE = registerColorfulItem("colored_bone");
+    public static final RegistryObject<Item> COLORED_LEATHER = registerColorfulItem("colored_leather");
 
     private static RegistryObject<Item> registerColorfulItem(String name) {
         Item.Properties props = new Item.Properties().tab(Reference.MOD_ITEM_GROUP).stacksTo(64);

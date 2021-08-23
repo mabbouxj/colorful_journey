@@ -11,6 +11,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.SkeletonEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.ChickenEntity;
+import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.DyeColor;
@@ -63,6 +64,7 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
 
             Vector3d hitLocation = rayTraceResult.getLocation();
             this.level.playSound(null, hitLocation.x, hitLocation.y, hitLocation.z, ModSounds.INK_SPLASH.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+            this.level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
 
             if (rayTraceResult.getType() == RayTraceResult.Type.ENTITY) {
                 EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
@@ -79,6 +81,8 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
                     newEntity = new ColoredBeeEntity(this.level, (BeeEntity) entity, this.getColor());
                 } else if (entity instanceof SkeletonEntity) {
                     newEntity = new ColoredSkeletonEntity(this.level, (SkeletonEntity) entity, this.getColor());
+                } else if (entity instanceof CowEntity) {
+                    newEntity = new ColoredCowEntity(this.level, (CowEntity) entity, this.getColor());
                 }
 
                 if (newEntity != null) {
@@ -86,8 +90,6 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
                     this.level.addFreshEntity(newEntity);
                 }
             }
-
-            this.level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
             this.remove();
         }
     }
