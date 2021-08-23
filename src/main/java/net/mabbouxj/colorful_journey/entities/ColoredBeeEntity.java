@@ -1,8 +1,10 @@
 package net.mabbouxj.colorful_journey.entities;
 
+import net.mabbouxj.colorful_journey.Reference;
 import net.mabbouxj.colorful_journey.init.ModEntities;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.items.ColorfulItem;
+import net.minecraft.client.renderer.entity.model.BeeModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.item.DyeColor;
@@ -12,37 +14,40 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+
+import static net.mabbouxj.colorful_journey.Reference.NBT_COLOR_ID;
 
 
 public class ColoredBeeEntity extends BeeEntity implements IColoredMobEntity {
 
     private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredBeeEntity.class, DataSerializers.INT);
+    private final BeeModel<ColoredBeeEntity> ENTITY_MODEL = new BeeModel<>();
+    private final ResourceLocation LAYER_LOCATION = new ResourceLocation(Reference.MOD_ID, "textures/entity/bee/colored_bee_layer.png");
 
     public ColoredBeeEntity(EntityType<? extends BeeEntity> entityType, World world) {
         super(entityType, world);
     }
 
-    public static ColoredBeeEntity newFromExistingEntity(BeeEntity oldEntity, World world, DyeColor color) {
-        ColoredBeeEntity newEntity = new ColoredBeeEntity(ModEntities.COLORED_BEE.get(), world);
-        newEntity.setColor(color);
+    public ColoredBeeEntity(World world, BeeEntity oldEntity, DyeColor color) {
+        this(ModEntities.COLORED_BEE.get(), world);
+        this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
-            newEntity.entityData.assignValues(oldEntity.getEntityData().getAll());
+            this.entityData.assignValues(oldEntity.getEntityData().getAll());
         }
 
-        newEntity.setPos(oldEntity.getX(), oldEntity.getY(), oldEntity.getZ());
-        newEntity.setRot(oldEntity.xRot, oldEntity.yRot);
+        this.setPos(oldEntity.getX(), oldEntity.getY(), oldEntity.getZ());
+        this.setRot(oldEntity.xRot, oldEntity.yRot);
 
-        newEntity.setAge(oldEntity.getAge());
-        newEntity.setHealth(oldEntity.getHealth());
-        newEntity.setAggressive(oldEntity.isAggressive());
-        newEntity.setBaby(oldEntity.isBaby());
-        newEntity.setStingerCount(oldEntity.getStingerCount());
-        newEntity.setAggressive(oldEntity.isAggressive());
-        newEntity.setPersistentAngerTarget(oldEntity.getPersistentAngerTarget());
-
-        return newEntity;
+        this.setAge(oldEntity.getAge());
+        this.setHealth(oldEntity.getHealth());
+        this.setAggressive(oldEntity.isAggressive());
+        this.setBaby(oldEntity.isBaby());
+        this.setStingerCount(oldEntity.getStingerCount());
+        this.setAggressive(oldEntity.isAggressive());
+        this.setPersistentAngerTarget(oldEntity.getPersistentAngerTarget());
     }
 
     @Override
@@ -54,13 +59,13 @@ public class ColoredBeeEntity extends BeeEntity implements IColoredMobEntity {
     @Override
     public void addAdditionalSaveData(CompoundNBT nbt) {
         super.addAdditionalSaveData(nbt);
-        nbt.putInt("Color", this.getColor().getId());
+        nbt.putInt(NBT_COLOR_ID, this.getColor().getId());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundNBT nbt) {
         super.readAdditionalSaveData(nbt);
-        this.setColor(DyeColor.byId(nbt.getInt("Color")));
+        this.setColor(DyeColor.byId(nbt.getInt(NBT_COLOR_ID)));
     }
 
     @Override
@@ -79,6 +84,16 @@ public class ColoredBeeEntity extends BeeEntity implements IColoredMobEntity {
             return (ColorfulItem) ModItems.COLORED_HONEYCOMB.get();
         }
         return null;
+    }
+
+    @Override
+    public BeeModel<ColoredBeeEntity> getEntityModel() {
+        return ENTITY_MODEL;
+    }
+
+    @Override
+    public ResourceLocation getLayerLocation() {
+        return LAYER_LOCATION;
     }
 
 }

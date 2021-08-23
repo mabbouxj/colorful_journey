@@ -5,7 +5,7 @@ import net.mabbouxj.colorful_journey.client.entity.render.ColoredBeeRenderer;
 import net.mabbouxj.colorful_journey.client.entity.render.ColoredChickenRenderer;
 import net.mabbouxj.colorful_journey.client.entity.render.ColoredSkeletonRenderer;
 import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
-import net.mabbouxj.colorful_journey.events.ColoredMobEvent;
+import net.mabbouxj.colorful_journey.events.MobEvent;
 import net.mabbouxj.colorful_journey.utils.CustomItemColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
@@ -61,7 +61,7 @@ public class Registration {
         ModParticles.register();
         ModRecipeSerializers.register();
 
-        MinecraftForge.EVENT_BUS.register(new ColoredMobEvent());
+        MinecraftForge.EVENT_BUS.register(new MobEvent());
 
     }
 

@@ -1,6 +1,6 @@
 package net.mabbouxj.colorful_journey.client.entity.render;
 
-import net.mabbouxj.colorful_journey.client.entity.layer.ColoredSkeletonLayer;
+import net.mabbouxj.colorful_journey.client.entity.layer.ColoredMobLayer;
 import net.mabbouxj.colorful_journey.entities.ColoredSkeletonEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -13,7 +13,7 @@ public class ColoredSkeletonRenderer extends MobRenderer<ColoredSkeletonEntity, 
 
     public ColoredSkeletonRenderer(EntityRendererManager renderManager) {
         super(renderManager, new SkeletonModel<>(), 0.4F);
-        this.addLayer(new ColoredSkeletonLayer(this));
+        this.addLayer(new ColoredMobLayer<>(this));
     }
 
     @Override

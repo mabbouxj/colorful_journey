@@ -61,31 +61,28 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
 
         if (!this.level.isClientSide()) {
 
+            Vector3d hitLocation = rayTraceResult.getLocation();
+            this.level.playSound(null, hitLocation.x, hitLocation.y, hitLocation.z, ModSounds.INK_SPLASH.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+
             if (rayTraceResult.getType() == RayTraceResult.Type.ENTITY) {
                 EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
                 Entity entity = entityRayTraceResult.getEntity();
-
-                this.level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), ModSounds.INK_SPLASH.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                Entity newEntity = null;
 
                 if (entity instanceof IColoredMobEntity) {
                     ((IColoredMobEntity) entity).setColor(this.getColor());
                 } else if (entity instanceof SheepEntity) {
-                    SheepEntity oldEntity = (SheepEntity) entity;
-                    oldEntity.setColor(this.getColor());
+                    ((SheepEntity) entity).setColor(this.getColor());
                 } else if (entity instanceof ChickenEntity) {
-                    ChickenEntity oldEntity = (ChickenEntity) entity;
-                    ColoredChickenEntity newEntity = ColoredChickenEntity.newFromExistingEntity(oldEntity, this.level, this.getColor());
-                    oldEntity.remove();
-                    this.level.addFreshEntity(newEntity);
+                    newEntity = new ColoredChickenEntity(this.level, (ChickenEntity) entity, this.getColor());
                 } else if (entity instanceof BeeEntity) {
-                    BeeEntity oldEntity = (BeeEntity) entity;
-                    ColoredBeeEntity newEntity = ColoredBeeEntity.newFromExistingEntity(oldEntity, this.level, this.getColor());
-                    oldEntity.remove();
-                    this.level.addFreshEntity(newEntity);
+                    newEntity = new ColoredBeeEntity(this.level, (BeeEntity) entity, this.getColor());
                 } else if (entity instanceof SkeletonEntity) {
-                    SkeletonEntity oldEntity = (SkeletonEntity) entity;
-                    ColoredSkeletonEntity newEntity = ColoredSkeletonEntity.newFromExistingEntity(oldEntity, this.level, this.getColor());
-                    oldEntity.remove();
+                    newEntity = new ColoredSkeletonEntity(this.level, (SkeletonEntity) entity, this.getColor());
+                }
+
+                if (newEntity != null) {
+                    entity.remove();
                     this.level.addFreshEntity(newEntity);
                 }
             }

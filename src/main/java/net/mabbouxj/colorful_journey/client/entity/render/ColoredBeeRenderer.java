@@ -1,6 +1,6 @@
 package net.mabbouxj.colorful_journey.client.entity.render;
 
-import net.mabbouxj.colorful_journey.client.entity.layer.ColoredBeeLayer;
+import net.mabbouxj.colorful_journey.client.entity.layer.ColoredMobLayer;
 import net.mabbouxj.colorful_journey.entities.ColoredBeeEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -16,7 +16,7 @@ public class ColoredBeeRenderer extends MobRenderer<ColoredBeeEntity, BeeModel<C
 
     public ColoredBeeRenderer(EntityRendererManager renderManager) {
         super(renderManager, new BeeModel<>(), 0.4F);
-        this.addLayer(new ColoredBeeLayer(this));
+        this.addLayer(new ColoredMobLayer<>(this));
     }
 
     @Override

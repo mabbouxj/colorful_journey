@@ -1,9 +1,11 @@
 package net.mabbouxj.colorful_journey.entities;
 
+import net.mabbouxj.colorful_journey.Reference;
 import net.mabbouxj.colorful_journey.init.ModEntities;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.items.ColorfulItem;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
+import net.minecraft.client.renderer.entity.model.ChickenModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.item.DyeColor;
@@ -18,31 +20,34 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 
+import static net.mabbouxj.colorful_journey.Reference.NBT_COLOR_ID;
+
 
 public class ColoredChickenEntity extends ChickenEntity implements IColoredMobEntity {
 
     private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredChickenEntity.class, DataSerializers.INT);
+    private final ChickenModel<ColoredChickenEntity> ENTITY_MODEL = new ChickenModel<>();
+    private final ResourceLocation LAYER_LOCATION = new ResourceLocation(Reference.MOD_ID, "textures/entity/chicken/colored_chicken_layer.png");
 
     public ColoredChickenEntity(EntityType<? extends ChickenEntity> type, World world) {
         super(type, world);
         this.setColor(ColorUtils.getRandomDyeColor());
     }
 
-    public static ColoredChickenEntity newFromExistingEntity(ChickenEntity oldEntity, World world, DyeColor color) {
-        ColoredChickenEntity newEntity = new ColoredChickenEntity(ModEntities.COLORED_CHICKEN.get(), world);
-        newEntity.setColor(color);
+    public ColoredChickenEntity(World world, ChickenEntity oldEntity, DyeColor color) {
+        this(ModEntities.COLORED_CHICKEN.get(), world);
+        this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
-            newEntity.entityData.assignValues(oldEntity.getEntityData().getAll());
+            this.entityData.assignValues(oldEntity.getEntityData().getAll());
         }
 
-        newEntity.setPos(oldEntity.getX(), oldEntity.getY(), oldEntity.getZ());
-        newEntity.setRot(oldEntity.xRot, oldEntity.yRot);
+        this.setPos(oldEntity.getX(), oldEntity.getY(), oldEntity.getZ());
+        //this.setRot(oldEntity.xRot, oldEntity.yRot);
+        this.setYHeadRot(oldEntity.getYHeadRot());
 
-        newEntity.setAge(oldEntity.getAge());
-        newEntity.setHealth(oldEntity.getHealth());
-
-        return newEntity;
+        this.setAge(oldEntity.getAge());
+        this.setHealth(oldEntity.getHealth());
     }
 
     @Override
@@ -54,13 +59,13 @@ public class ColoredChickenEntity extends ChickenEntity implements IColoredMobEn
     @Override
     public void addAdditionalSaveData(CompoundNBT nbt) {
         super.addAdditionalSaveData(nbt);
-        nbt.putInt("Color", this.getColor().getId());
+        nbt.putInt(NBT_COLOR_ID, this.getColor().getId());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundNBT nbt) {
         super.readAdditionalSaveData(nbt);
-        this.setColor(DyeColor.byId(nbt.getInt("Color")));
+        this.setColor(DyeColor.byId(nbt.getInt(NBT_COLOR_ID)));
     }
 
     public DyeColor getColor() {
@@ -79,14 +84,13 @@ public class ColoredChickenEntity extends ChickenEntity implements IColoredMobEn
     public ColorfulItem getReplacementItemFor(Item item) {
         if (item == Items.FEATHER) {
             return (ColorfulItem) ModItems.COLORED_FEATHER.get();
-        } else if (item == Items.EGG) {
-            return (ColorfulItem) ModItems.COLORED_EGG.get();
         }
         return null;
     }
 
     public void aiStep() {
         // Catch the moment when the vanilla chicken lays its egg and replace it by a colored one
+        // This resets the eggTime so the super.aiStep() will not spawn it again
         if (!this.level.isClientSide && this.isAlive() && !this.isBaby() && !this.isChickenJockey() && --this.eggTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 
@@ -97,6 +101,16 @@ public class ColoredChickenEntity extends ChickenEntity implements IColoredMobEn
             this.eggTime = this.random.nextInt(6000) + 6000;
         }
         super.aiStep();
+    }
+
+    @Override
+    public ChickenModel<ColoredChickenEntity> getEntityModel() {
+        return ENTITY_MODEL;
+    }
+
+    @Override
+    public ResourceLocation getLayerLocation() {
+        return LAYER_LOCATION;
     }
 
 }

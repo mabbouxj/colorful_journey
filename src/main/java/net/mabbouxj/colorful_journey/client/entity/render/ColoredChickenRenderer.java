@@ -1,6 +1,6 @@
 package net.mabbouxj.colorful_journey.client.entity.render;
 
-import net.mabbouxj.colorful_journey.client.entity.layer.ColoredChickenLayer;
+import net.mabbouxj.colorful_journey.client.entity.layer.ColoredMobLayer;
 import net.mabbouxj.colorful_journey.entities.ColoredChickenEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -17,7 +17,7 @@ public class ColoredChickenRenderer extends MobRenderer<ColoredChickenEntity, Ch
 
     public ColoredChickenRenderer(EntityRendererManager renderManager) {
         super(renderManager, new ChickenModel<>(), 0.3F);
-        this.addLayer(new ColoredChickenLayer(this));
+        this.addLayer(new ColoredMobLayer<>(this));
     }
 
     @Override

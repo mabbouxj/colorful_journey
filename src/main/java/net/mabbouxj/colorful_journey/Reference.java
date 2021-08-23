@@ -16,6 +16,7 @@ public class Reference {
     public static final String MOD_NAME = "Colorful Journey";
     public static final String MOD_VERSION = "0.0.1";
     public static final ItemGroup MOD_ITEM_GROUP = new ColorfulJourneyItemGroup(MOD_ID);
+    public static final String NBT_COLOR_ID = "Color";
 
     public static final DyeColor[] COLORS = new DyeColor[]{
             DyeColor.RED,

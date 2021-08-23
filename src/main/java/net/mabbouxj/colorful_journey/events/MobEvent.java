@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mod.EventBusSubscriber
-public class ColoredMobEvent {
+public class MobEvent {
 
     @SubscribeEvent
-    public void coloredMobItemDrop(LivingDropsEvent e) {
+    public void onMobItemDrop(LivingDropsEvent e) {
 
         Entity entity = e.getEntity();
         World world = entity.getCommandSenderWorld();
