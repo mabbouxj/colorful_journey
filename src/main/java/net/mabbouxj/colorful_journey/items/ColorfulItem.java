@@ -1,6 +1,6 @@
 package net.mabbouxj.colorful_journey.items;
 
-import net.mabbouxj.colorful_journey.Reference;
+import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -38,7 +38,7 @@ public class ColorfulItem extends Item {
     @Override
     public void fillItemCategory(ItemGroup itemGroup, NonNullList<ItemStack> subItems) {
         if (this.getItemCategory() == itemGroup) {
-            for (DyeColor color : Reference.COLORS) {
+            for (DyeColor color : ColorfulJourney.COLORS) {
                 ItemStack subItemStack = new ItemStack(this, 1);
                 setColor(subItemStack, color);
                 subItems.add(subItemStack);

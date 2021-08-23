@@ -31,16 +31,14 @@ import java.util.Random;
 public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditionalSpawnData {
 
     private static final byte VANILLA_IMPACT_STATUS_ID = 3;
-    private DyeColor color;
+    private DyeColor color = ColorUtils.getRandomDyeColor();
 
     public InkBallEntity(EntityType<? extends InkBallEntity> entityType, World world) {
         super(entityType, world);
-        this.color = ColorUtils.getRandomDyeColor();
     }
 
     public InkBallEntity(World world, LivingEntity livingEntity) {
         super(ModEntities.INK_BALL.get(), livingEntity, world);
-        this.color = ColorUtils.getRandomDyeColor();
     }
 
     public DyeColor getColor() {

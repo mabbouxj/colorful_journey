@@ -1,6 +1,6 @@
 package net.mabbouxj.colorful_journey.entities;
 
-import net.mabbouxj.colorful_journey.Reference;
+import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.items.ColorfulItem;
@@ -18,13 +18,13 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-import static net.mabbouxj.colorful_journey.Reference.NBT_COLOR_ID;
+import static net.mabbouxj.colorful_journey.ColorfulJourney.NBT_COLOR_ID;
 
 public class ColoredCowEntity extends CowEntity implements IColoredMobEntity {
 
     private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredCowEntity.class, DataSerializers.INT);
     private final CowModel<ColoredCowEntity> ENTITY_MODEL = new CowModel<>();
-    private final ResourceLocation LAYER_LOCATION = new ResourceLocation(Reference.MOD_ID, "textures/entity/cow/colored_cow_layer.png");
+    private final ResourceLocation LAYER_LOCATION = new ResourceLocation(ColorfulJourney.MOD_ID, "textures/entity/cow/colored_cow_layer.png");
 
     public ColoredCowEntity(EntityType<? extends CowEntity> type, World world) {
         super(type, world);

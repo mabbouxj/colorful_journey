@@ -1,19 +1,24 @@
 package net.mabbouxj.colorful_journey.init;
 
-import net.mabbouxj.colorful_journey.Reference;
+import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.items.ColorGunItem;
 import net.mabbouxj.colorful_journey.items.ColorfulItem;
 import net.mabbouxj.colorful_journey.items.InkBallItem;
 import net.minecraft.item.Item;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ModItems {
 
-    public static final RegistryObject<Item> COLOR_GUN = Registration.ITEMS.register("color_gun", ColorGunItem::new);
-    public static final RegistryObject<Item> INK_BALL = Registration.ITEMS.register("ink_ball", () -> new InkBallItem(new Item.Properties().tab(Reference.MOD_ITEM_GROUP).stacksTo(64)));
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ColorfulJourney.MOD_ID);
+
+    public static final RegistryObject<Item> COLOR_GUN = ITEMS.register("color_gun", ColorGunItem::new);
+    public static final RegistryObject<Item> INK_BALL = ITEMS.register("ink_ball", () -> new InkBallItem(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64)));
 
     public static final List<RegistryObject<Item>> COLORFUL_ITEMS = new ArrayList<>();
     public static final RegistryObject<Item> COLORED_FEATHER = registerColorfulItem("colored_feather");
@@ -23,13 +28,14 @@ public class ModItems {
     public static final RegistryObject<Item> COLORED_LEATHER = registerColorfulItem("colored_leather");
 
     private static RegistryObject<Item> registerColorfulItem(String name) {
-        Item.Properties props = new Item.Properties().tab(Reference.MOD_ITEM_GROUP).stacksTo(64);
-        RegistryObject<Item> itemRegistryObject = Registration.ITEMS.register(name, () -> new ColorfulItem(props, name));
+        Item.Properties props = new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64);
+        RegistryObject<Item> itemRegistryObject = ITEMS.register(name, () -> new ColorfulItem(props, name));
         COLORFUL_ITEMS.add(itemRegistryObject);
         return itemRegistryObject;
     }
 
-    static void register() {
+    public static void register(IEventBus bus) {
+        ITEMS.register(bus);
     }
 
 }

@@ -1,6 +1,6 @@
 package net.mabbouxj.colorful_journey.entities;
 
-import net.mabbouxj.colorful_journey.Reference;
+import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.items.ColorfulItem;
@@ -17,14 +17,14 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-import static net.mabbouxj.colorful_journey.Reference.NBT_COLOR_ID;
+import static net.mabbouxj.colorful_journey.ColorfulJourney.NBT_COLOR_ID;
 
 
 public class ColoredBeeEntity extends BeeEntity implements IColoredMobEntity {
 
     private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredBeeEntity.class, DataSerializers.INT);
     private final BeeModel<ColoredBeeEntity> ENTITY_MODEL = new BeeModel<>();
-    private final ResourceLocation LAYER_LOCATION = new ResourceLocation(Reference.MOD_ID, "textures/entity/bee/colored_bee_layer.png");
+    private final ResourceLocation LAYER_LOCATION = new ResourceLocation(ColorfulJourney.MOD_ID, "textures/entity/bee/colored_bee_layer.png");
 
     public ColoredBeeEntity(EntityType<? extends BeeEntity> entityType, World world) {
         super(entityType, world);
@@ -39,7 +39,7 @@ public class ColoredBeeEntity extends BeeEntity implements IColoredMobEntity {
         }
 
         this.setPos(oldEntity.getX(), oldEntity.getY(), oldEntity.getZ());
-        this.setRot(oldEntity.xRot, oldEntity.yRot);
+        this.setYHeadRot(oldEntity.getYHeadRot());
 
         this.setAge(oldEntity.getAge());
         this.setHealth(oldEntity.getHealth());

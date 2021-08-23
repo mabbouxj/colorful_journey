@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 
 import java.awt.*;
 
-public class CustomItemColor implements IItemColor {
+public class ColorfulItemColor implements IItemColor {
 
     @Override
     public int getColor(ItemStack itemStack, int tintIndex) {

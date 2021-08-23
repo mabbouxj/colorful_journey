@@ -1,6 +1,6 @@
 package net.mabbouxj.colorful_journey.entities;
 
-import net.mabbouxj.colorful_journey.Reference;
+import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.items.ColorfulItem;
@@ -19,14 +19,14 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-import static net.mabbouxj.colorful_journey.Reference.NBT_COLOR_ID;
+import static net.mabbouxj.colorful_journey.ColorfulJourney.NBT_COLOR_ID;
 
 
 public class ColoredSkeletonEntity extends SkeletonEntity implements IColoredMobEntity {
 
     private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredSkeletonEntity.class, DataSerializers.INT);
     private final SkeletonModel<ColoredSkeletonEntity> ENTITY_MODEL = new SkeletonModel<>();
-    private final ResourceLocation LAYER_LOCATION = new ResourceLocation(Reference.MOD_ID, "textures/entity/skeleton/colored_skeleton_layer.png");
+    private final ResourceLocation LAYER_LOCATION = new ResourceLocation(ColorfulJourney.MOD_ID, "textures/entity/skeleton/colored_skeleton_layer.png");
 
     public ColoredSkeletonEntity(EntityType<? extends SkeletonEntity> entityType, World world) {
         super(entityType, world);

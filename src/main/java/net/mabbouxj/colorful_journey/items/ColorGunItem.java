@@ -1,6 +1,6 @@
 package net.mabbouxj.colorful_journey.items;
 
-import net.mabbouxj.colorful_journey.Reference;
+import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.entities.InkBallEntity;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.init.ModSounds;
@@ -21,7 +21,7 @@ public class ColorGunItem extends Item {
 
     public ColorGunItem() {
         super(new Item.Properties()
-                .tab(Reference.MOD_ITEM_GROUP)
+                .tab(ColorfulJourney.MOD_ITEM_GROUP)
                 .stacksTo(1)
                 .durability(MAX_DAMAGE)
         );

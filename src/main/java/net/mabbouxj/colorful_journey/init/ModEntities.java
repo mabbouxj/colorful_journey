@@ -1,17 +1,22 @@
 package net.mabbouxj.colorful_journey.init;
 
-import net.mabbouxj.colorful_journey.Reference;
+import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.entities.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.BiFunction;
 
 public class ModEntities {
+
+    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, ColorfulJourney.MOD_ID);
 
     public static final RegistryObject<EntityType<InkBallEntity>> INK_BALL = registerMiscEntity("ink_ball", InkBallEntity::new);
     public static final RegistryObject<EntityType<ColoredChickenEntity>> COLORED_CHICKEN = registerColoredMob("colored_chicken", ColoredChickenEntity::new);
@@ -22,17 +27,18 @@ public class ModEntities {
     private static <T extends Entity> RegistryObject<EntityType<T>> registerColoredMob(String id, BiFunction<EntityType<T>, World, T> function) {
         EntityType<T> type = EntityType.Builder.of(function::apply, EntityClassification.CREATURE)
                 .sized(1.0F, 1.0F)
-                .build(new ResourceLocation(Reference.MOD_ID, id).toString());
-        return Registration.ENTITIES.register(id, () -> type);
+                .build(new ResourceLocation(ColorfulJourney.MOD_ID, id).toString());
+        return ENTITIES.register(id, () -> type);
     }
 
     private static <T extends Entity> RegistryObject<EntityType<T>> registerMiscEntity(String id, BiFunction<EntityType<T>, World, T> function) {
         EntityType<T> type = EntityType.Builder.of(function::apply, EntityClassification.MISC)
                 .sized(0.25F, 0.25F)
                 .build(id);
-        return Registration.ENTITIES.register(id, () -> type);
+        return ENTITIES.register(id, () -> type);
     }
 
-    static void register() {
+    public static void register(IEventBus bus) {
+        ENTITIES.register(bus);
     }
 }
