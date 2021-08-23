@@ -1,9 +1,6 @@
 package net.mabbouxj.colorful_journey;
 
-import net.mabbouxj.colorful_journey.client.entity.render.ColoredBeeRenderer;
-import net.mabbouxj.colorful_journey.client.entity.render.ColoredChickenRenderer;
-import net.mabbouxj.colorful_journey.client.entity.render.ColoredCowRenderer;
-import net.mabbouxj.colorful_journey.client.entity.render.ColoredSkeletonRenderer;
+import net.mabbouxj.colorful_journey.client.entity.render.*;
 import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
 import net.mabbouxj.colorful_journey.events.MobEvent;
 import net.mabbouxj.colorful_journey.init.*;
@@ -14,6 +11,7 @@ import net.minecraft.entity.monster.SkeletonEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.CowEntity;
+import net.minecraft.entity.passive.PandaEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -87,6 +85,7 @@ public class ColorfulJourney {
             event.put(ModEntities.COLORED_BEE.get(), BeeEntity.createAttributes().build());
             event.put(ModEntities.COLORED_SKELETON.get(), SkeletonEntity.createAttributes().build());
             event.put(ModEntities.COLORED_COW.get(), CowEntity.createAttributes().build());
+            event.put(ModEntities.COLORED_PANDA.get(), PandaEntity.createAttributes().build());
         }
 
     }
@@ -103,6 +102,7 @@ public class ColorfulJourney {
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_BEE.get(), ColoredBeeRenderer::new);
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_SKELETON.get(), ColoredSkeletonRenderer::new);
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_COW.get(), ColoredCowRenderer::new);
+            RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_PANDA.get(), ColoredPandaRenderer::new);
         }
 
         @SubscribeEvent

@@ -22,6 +22,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<ColoredChickenEntity>> COLORED_CHICKEN = registerColoredMob("colored_chicken", ColoredChickenEntity::new);
     public static final RegistryObject<EntityType<ColoredBeeEntity>> COLORED_BEE = registerColoredMob("colored_bee", ColoredBeeEntity::new);
     public static final RegistryObject<EntityType<ColoredCowEntity>> COLORED_COW = registerColoredMob("colored_cow", ColoredCowEntity::new);
+    public static final RegistryObject<EntityType<ColoredPandaEntity>> COLORED_PANDA = registerColoredMob("colored_panda", ColoredPandaEntity::new);
     public static final RegistryObject<EntityType<ColoredSkeletonEntity>> COLORED_SKELETON = registerColoredMob("colored_skeleton", ColoredSkeletonEntity::new);
 
     private static <T extends Entity> RegistryObject<EntityType<T>> registerColoredMob(String id, BiFunction<EntityType<T>, World, T> function) {
