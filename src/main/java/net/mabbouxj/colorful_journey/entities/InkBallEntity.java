@@ -8,10 +8,7 @@ import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.monster.EndermanEntity;
-import net.minecraft.entity.monster.SkeletonEntity;
-import net.minecraft.entity.monster.SpiderEntity;
-import net.minecraft.entity.monster.ZombieEntity;
+import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.DyeColor;
@@ -19,7 +16,8 @@ import net.minecraft.item.Item;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -88,6 +86,8 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
                     newEntity = new ColoredSpiderEntity(this.level, (SpiderEntity) entity, this.getColor());
                 } else if (entity instanceof EndermanEntity) {
                     newEntity = new ColoredEndermanEntity(this.level, (EndermanEntity) entity, this.getColor());
+                } else if (entity instanceof WitherSkeletonEntity) {
+                    newEntity = new ColoredWitherSkeletonEntity(this.level, (WitherSkeletonEntity) entity, this.getColor());
                 }
 
                 if (newEntity != null) {

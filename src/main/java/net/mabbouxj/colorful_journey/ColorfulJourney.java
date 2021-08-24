@@ -7,10 +7,7 @@ import net.mabbouxj.colorful_journey.init.*;
 import net.mabbouxj.colorful_journey.utils.ColorfulItemColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
-import net.minecraft.entity.monster.EndermanEntity;
-import net.minecraft.entity.monster.SkeletonEntity;
-import net.minecraft.entity.monster.SpiderEntity;
-import net.minecraft.entity.monster.ZombieEntity;
+import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.CowEntity;
@@ -50,7 +47,9 @@ public class ColorfulJourney {
             DyeColor.BLUE,
             DyeColor.CYAN,
             DyeColor.ORANGE,
-            DyeColor.PINK
+            DyeColor.PINK,
+            DyeColor.LIGHT_BLUE,
+            DyeColor.LIME
     };
 
     public ColorfulJourney() {
@@ -58,7 +57,9 @@ public class ColorfulJourney {
 
         bus.register(this);
         ModItems.register(bus);
+        ModBlocks.register(bus);
         ModEntities.register(bus);
+        ModTiles.register(bus);
         ModSounds.register(bus);
         ModParticles.register(bus);
         ModRecipeSerializers.register(bus);
@@ -92,6 +93,7 @@ public class ColorfulJourney {
             event.put(ModEntities.COLORED_ZOMBIE.get(), ZombieEntity.createAttributes().build());
             event.put(ModEntities.COLORED_SPIDER.get(), SpiderEntity.createAttributes().build());
             event.put(ModEntities.COLORED_ENDERMAN.get(), EndermanEntity.createAttributes().build());
+            event.put(ModEntities.COLORED_WITHER_SKELETON.get(), WitherSkeletonEntity.createAttributes().build());
         }
 
     }
@@ -112,11 +114,12 @@ public class ColorfulJourney {
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_ZOMBIE.get(), ColoredZombieRenderer::new);
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_SPIDER.get(), ColoredSpiderRenderer::new);
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_ENDERMAN.get(), ColoredEndermanRenderer::new);
+            RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_WITHER_SKELETON.get(), ColoredWitherSkeletonRenderer::new);
         }
 
         @SubscribeEvent
         public static void onColorHandlerEvent(ColorHandlerEvent.Item event) {
-            for (RegistryObject<Item> registryItem : ModItems.COLORFUL_ITEMS) {
+            for (RegistryObject<? extends Item> registryItem : ModItems.COLORFUL_ITEMS) {
                 event.getItemColors().register(new ColorfulItemColor(), registryItem.get());
             }
         }

@@ -10,7 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModSounds {
 
-    public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, ColorfulJourney.MOD_ID);
+    private static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, ColorfulJourney.MOD_ID);
 
     public static final RegistryObject<SoundEvent> COLOR_GUN_SHOOT = registerSound("color_gun_shoot");
     public static final RegistryObject<SoundEvent> COLOR_GUN_HANDLING = registerSound("color_gun_handling");

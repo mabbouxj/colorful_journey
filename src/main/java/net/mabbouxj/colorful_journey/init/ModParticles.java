@@ -10,7 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModParticles {
 
-    public static final DeferredRegister<ParticleType<?>> PARTICLES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, ColorfulJourney.MOD_ID);
+    private static final DeferredRegister<ParticleType<?>> PARTICLES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, ColorfulJourney.MOD_ID);
 
     public static final RegistryObject<ParticleType<InkSplashParticle.Data>> INK_SPLASH = PARTICLES.register("ink_splash", InkSplashParticle.Type::new);
 

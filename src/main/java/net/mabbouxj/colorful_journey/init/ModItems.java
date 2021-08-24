@@ -15,12 +15,11 @@ import java.util.List;
 
 public class ModItems {
 
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ColorfulJourney.MOD_ID);
+    public static final List<RegistryObject<? extends Item>> COLORFUL_ITEMS = new ArrayList<>();
 
     public static final RegistryObject<Item> COLOR_GUN = ITEMS.register("color_gun", ColorGunItem::new);
     public static final RegistryObject<Item> INK_BALL = ITEMS.register("ink_ball", () -> new InkBallItem(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64)));
-
-    public static final List<RegistryObject<Item>> COLORFUL_ITEMS = new ArrayList<>();
+    private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ColorfulJourney.MOD_ID);
     public static final RegistryObject<Item> COLORED_FEATHER = registerColorfulItem("colored_feather");
     public static final RegistryObject<Item> COLORED_EGG = registerColorfulItem("colored_egg");
     public static final RegistryObject<Item> COLORED_HONEYCOMB = registerColorfulItem("colored_honeycomb");

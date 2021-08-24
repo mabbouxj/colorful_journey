@@ -11,7 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModRecipeSerializers {
 
-    public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ColorfulJourney.MOD_ID);
+    private static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ColorfulJourney.MOD_ID);
 
     public static final RegistryObject<IRecipeSerializer<ColorGunFillRecipe>> COLOR_GUN_FILL_RECIPE = RECIPE_SERIALIZERS.register("color_gun_fill", () -> new SpecialRecipeSerializer<>(ColorGunFillRecipe::new));
 

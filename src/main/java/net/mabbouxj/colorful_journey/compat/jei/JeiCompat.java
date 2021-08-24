@@ -19,7 +19,7 @@ public class JeiCompat implements IModPlugin {
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
-        for (RegistryObject<Item> registryItem : ModItems.COLORFUL_ITEMS) {
+        for (RegistryObject<? extends Item> registryItem : ModItems.COLORFUL_ITEMS) {
             registration.useNbtForSubtypes(registryItem.get());
         }
     }
