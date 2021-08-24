@@ -6,7 +6,10 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.CowModel;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ColoredCowRenderer extends MobRenderer<ColoredCowEntity, CowModel<ColoredCowEntity>> {
 
     private static final ResourceLocation COW_LOCATION = new ResourceLocation("textures/entity/cow/cow.png");

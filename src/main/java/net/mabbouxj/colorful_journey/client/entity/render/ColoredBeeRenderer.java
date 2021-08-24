@@ -6,7 +6,10 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.BeeModel;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ColoredBeeRenderer extends MobRenderer<ColoredBeeEntity, BeeModel<ColoredBeeEntity>> {
 
     private static final ResourceLocation ANGRY_BEE_TEXTURE = new ResourceLocation("textures/entity/bee/bee_angry.png");

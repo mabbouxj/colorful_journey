@@ -12,9 +12,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Map;
 
+@OnlyIn(Dist.CLIENT)
 public class ColoredPandaRenderer extends MobRenderer<ColoredPandaEntity, PandaModel<ColoredPandaEntity>> {
 
     private static final Map<PandaEntity.Gene, ResourceLocation> TEXTURES = Util.make(Maps.newEnumMap(PandaEntity.Gene.class), (variants) -> {

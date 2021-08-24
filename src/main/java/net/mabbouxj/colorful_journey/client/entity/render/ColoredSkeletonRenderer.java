@@ -6,7 +6,10 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.SkeletonModel;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ColoredSkeletonRenderer extends MobRenderer<ColoredSkeletonEntity, SkeletonModel<ColoredSkeletonEntity>> {
 
     private static final ResourceLocation SKELETON_LOCATION = new ResourceLocation("textures/entity/skeleton/skeleton.png");

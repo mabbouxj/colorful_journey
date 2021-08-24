@@ -27,6 +27,7 @@ public class ModItems {
     public static final RegistryObject<Item> COLORED_BONE = registerColorfulItem("colored_bone");
     public static final RegistryObject<Item> COLORED_LEATHER = registerColorfulItem("colored_leather");
     public static final RegistryObject<Item> COLORED_BAMBOO = registerColorfulItem("colored_bamboo");
+    public static final RegistryObject<Item> COLORED_ROTTEN_FLESH = registerColorfulItem("colored_rotten_flesh");
 
     private static RegistryObject<Item> registerColorfulItem(String name) {
         Item.Properties props = new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64);
