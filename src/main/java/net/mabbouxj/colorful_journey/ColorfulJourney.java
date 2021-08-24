@@ -8,6 +8,7 @@ import net.mabbouxj.colorful_journey.utils.ColorfulItemColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.entity.monster.SkeletonEntity;
+import net.minecraft.entity.monster.SpiderEntity;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.ChickenEntity;
@@ -88,6 +89,7 @@ public class ColorfulJourney {
             event.put(ModEntities.COLORED_COW.get(), CowEntity.createAttributes().build());
             event.put(ModEntities.COLORED_PANDA.get(), PandaEntity.createAttributes().build());
             event.put(ModEntities.COLORED_ZOMBIE.get(), ZombieEntity.createAttributes().build());
+            event.put(ModEntities.COLORED_SPIDER.get(), SpiderEntity.createAttributes().build());
         }
 
     }
@@ -106,6 +108,7 @@ public class ColorfulJourney {
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_COW.get(), ColoredCowRenderer::new);
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_PANDA.get(), ColoredPandaRenderer::new);
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_ZOMBIE.get(), ColoredZombieRenderer::new);
+            RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_SPIDER.get(), ColoredSpiderRenderer::new);
         }
 
         @SubscribeEvent

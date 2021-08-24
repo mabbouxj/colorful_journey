@@ -25,6 +25,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<ColoredPandaEntity>> COLORED_PANDA = registerColoredMob("colored_panda", ColoredPandaEntity::new);
     public static final RegistryObject<EntityType<ColoredSkeletonEntity>> COLORED_SKELETON = registerColoredMob("colored_skeleton", ColoredSkeletonEntity::new);
     public static final RegistryObject<EntityType<ColoredZombieEntity>> COLORED_ZOMBIE = registerColoredMob("colored_zombie", ColoredZombieEntity::new);
+    public static final RegistryObject<EntityType<ColoredSpiderEntity>> COLORED_SPIDER = registerColoredMob("colored_spider", ColoredSpiderEntity::new);
 
     private static <T extends Entity> RegistryObject<EntityType<T>> registerColoredMob(String id, BiFunction<EntityType<T>, World, T> function) {
         EntityType<T> type = EntityType.Builder.of(function::apply, EntityClassification.CREATURE)

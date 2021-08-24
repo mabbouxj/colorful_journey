@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.SkeletonEntity;
+import net.minecraft.entity.monster.SpiderEntity;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
@@ -82,6 +83,8 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
                     newEntity = new ColoredPandaEntity(this.level, (PandaEntity) entity, this.getColor());
                 } else if (entity instanceof ZombieEntity) {
                     newEntity = new ColoredZombieEntity(this.level, (ZombieEntity) entity, this.getColor());
+                } else if (entity instanceof SpiderEntity) {
+                    newEntity = new ColoredSpiderEntity(this.level, (SpiderEntity) entity, this.getColor());
                 }
 
                 if (newEntity != null) {
