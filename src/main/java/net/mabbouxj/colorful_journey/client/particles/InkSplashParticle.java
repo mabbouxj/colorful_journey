@@ -7,6 +7,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.mabbouxj.colorful_journey.init.ModParticles;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.item.DyeColor;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleType;
@@ -103,9 +104,13 @@ public class InkSplashParticle extends SpriteTexturedParticle {
             this.diameter = diameter;
         }
 
-        private Data(int colorRGB, double diameter) {
+        public Data(int colorRGB, double diameter) {
             this.color = new Color(colorRGB);
             this.diameter = constrainDiameterToValidRange(diameter);
+        }
+
+        public Data(DyeColor color) {
+            this(color.getColorValue(), new Random().nextDouble());
         }
 
         private static double constrainDiameterToValidRange(double diameter) {

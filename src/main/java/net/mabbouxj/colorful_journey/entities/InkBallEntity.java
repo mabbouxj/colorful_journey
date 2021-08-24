@@ -22,7 +22,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-import java.awt.*;
 import java.util.Random;
 
 public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditionalSpawnData {
@@ -94,35 +93,48 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
     @Override
     public void tick() {
         super.tick();
+        makeFlightParticle();
     }
 
     @Override
     public void handleEntityEvent(byte statusID) {
         if (statusID == VANILLA_IMPACT_STATUS_ID) {
+            makeHitParticle();
+        }
+    }
 
-            final double SPEED_IN_BLOCKS_PER_SECOND = 5.0;
-            final double TICKS_PER_SECOND = 20;
-            final double SPEED_IN_BLOCKS_PER_TICK = SPEED_IN_BLOCKS_PER_SECOND / TICKS_PER_SECOND;
+    private void makeFlightParticle() {
+        for (int i = 0; i < 3; i++) {
+            double velocityX = (double) (2 >> 16 & 255) / 255.0D;
+            double velocityY = (double) (2 >> 8 & 255) / 255.0D;
+            double velocityZ = (double) (2 >> 0 & 255) / 255.0D;
+            this.level.addParticle(
+                    new InkSplashParticle.Data(this.getColor()),
+                    this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D),
+                    velocityX, velocityY, velocityZ
+            );
+        }
+    }
 
-            Color color = new Color(this.getColor().getColorValue());
+    private void makeHitParticle() {
+        final double SPEED_IN_BLOCKS_PER_SECOND = 5.0;
+        final double TICKS_PER_SECOND = 20;
+        final double SPEED_IN_BLOCKS_PER_TICK = SPEED_IN_BLOCKS_PER_SECOND / TICKS_PER_SECOND;
+        for (int i = 0; i < 40; i++) {
+            Vector3d direction = new Vector3d(
+                    2 * new Random().nextDouble() - 1,
+                    2 * new Random().nextDouble() - 1,
+                    2 * new Random().nextDouble() - 1
+            );
+            double velocityX = SPEED_IN_BLOCKS_PER_TICK * direction.x;
+            double velocityY = SPEED_IN_BLOCKS_PER_TICK * direction.y;
+            double velocityZ = SPEED_IN_BLOCKS_PER_TICK * direction.z;
 
-            for (int i = 0; i < 40; i++) {
-                Vector3d direction = new Vector3d(
-                        2 * new Random().nextDouble() - 1,
-                        2 * new Random().nextDouble() - 1,
-                        2 * new Random().nextDouble() - 1
-                );
-
-                double velocityX = SPEED_IN_BLOCKS_PER_TICK * direction.x;
-                double velocityY = SPEED_IN_BLOCKS_PER_TICK * direction.y;
-                double velocityZ = SPEED_IN_BLOCKS_PER_TICK * direction.z;
-
-                double diameter = new Random().nextDouble();
-
-                InkSplashParticle.Data inkSplashParticleData = new InkSplashParticle.Data(color, diameter);
-                this.level.addParticle(inkSplashParticleData, this.getX(), this.getY(), this.getZ(), velocityX, velocityY, velocityZ);
-            }
-
+            this.level.addParticle(
+                    new InkSplashParticle.Data(this.getColor()),
+                    this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D),
+                    velocityX, velocityY, velocityZ
+            );
         }
     }
 
