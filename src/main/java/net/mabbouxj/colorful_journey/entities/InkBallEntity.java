@@ -8,6 +8,7 @@ import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.monster.EndermanEntity;
 import net.minecraft.entity.monster.SkeletonEntity;
 import net.minecraft.entity.monster.SpiderEntity;
 import net.minecraft.entity.monster.ZombieEntity;
@@ -85,6 +86,8 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
                     newEntity = new ColoredZombieEntity(this.level, (ZombieEntity) entity, this.getColor());
                 } else if (entity instanceof SpiderEntity) {
                     newEntity = new ColoredSpiderEntity(this.level, (SpiderEntity) entity, this.getColor());
+                } else if (entity instanceof EndermanEntity) {
+                    newEntity = new ColoredEndermanEntity(this.level, (EndermanEntity) entity, this.getColor());
                 }
 
                 if (newEntity != null) {
@@ -110,10 +113,18 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
     }
 
     private void makeFlightParticle() {
+        final double SPEED_IN_BLOCKS_PER_SECOND = 1.0;
+        final double TICKS_PER_SECOND = 20;
+        final double SPEED_IN_BLOCKS_PER_TICK = SPEED_IN_BLOCKS_PER_SECOND / TICKS_PER_SECOND;
         for (int i = 0; i < 3; i++) {
-            double velocityX = (double) (2 >> 16 & 255) / 255.0D;
-            double velocityY = (double) (2 >> 8 & 255) / 255.0D;
-            double velocityZ = (double) (2 >> 0 & 255) / 255.0D;
+            Vector3d direction = new Vector3d(
+                    2 * new Random().nextDouble() - 1,
+                    2 * new Random().nextDouble() - 1,
+                    2 * new Random().nextDouble() - 1
+            );
+            double velocityX = SPEED_IN_BLOCKS_PER_TICK * direction.x;
+            double velocityY = SPEED_IN_BLOCKS_PER_TICK * direction.y;
+            double velocityZ = SPEED_IN_BLOCKS_PER_TICK * direction.z;
             this.level.addParticle(
                     new InkSplashParticle.Data(this.getColor()),
                     this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D),
@@ -123,7 +134,7 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
     }
 
     private void makeHitParticle() {
-        final double SPEED_IN_BLOCKS_PER_SECOND = 5.0;
+        final double SPEED_IN_BLOCKS_PER_SECOND = 6.0;
         final double TICKS_PER_SECOND = 20;
         final double SPEED_IN_BLOCKS_PER_TICK = SPEED_IN_BLOCKS_PER_SECOND / TICKS_PER_SECOND;
         for (int i = 0; i < 40; i++) {
@@ -135,7 +146,6 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
             double velocityX = SPEED_IN_BLOCKS_PER_TICK * direction.x;
             double velocityY = SPEED_IN_BLOCKS_PER_TICK * direction.y;
             double velocityZ = SPEED_IN_BLOCKS_PER_TICK * direction.z;
-
             this.level.addParticle(
                     new InkSplashParticle.Data(this.getColor()),
                     this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D),
