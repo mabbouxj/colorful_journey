@@ -3,7 +3,6 @@ package net.mabbouxj.colorful_journey.entities;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
 import net.mabbouxj.colorful_journey.init.ModItems;
-import net.mabbouxj.colorful_journey.items.ColorfulItem;
 import net.minecraft.client.renderer.entity.model.EndermanModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.EndermanEntity;
@@ -77,9 +76,10 @@ public class ColoredEndermanEntity extends EndermanEntity implements IColoredMob
         return new ResourceLocation("minecraft", "entities/enderman");
     }
 
-    public ColorfulItem getReplacementItemFor(Item item) {
+    @Override
+    public Item getReplacementItemFor(Item item, DyeColor color) {
         if (item == Items.ENDER_PEARL) {
-            return (ColorfulItem) ModItems.COLORED_ENDER_PEARL.get();
+            return ModItems.COLORED_ENDER_PEARL.get();
         }
         return null;
     }

@@ -3,7 +3,6 @@ package net.mabbouxj.colorful_journey.entities;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
 import net.mabbouxj.colorful_journey.init.ModItems;
-import net.mabbouxj.colorful_journey.items.ColorfulItem;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.client.renderer.entity.model.ChickenModel;
 import net.minecraft.entity.EntityType;
@@ -80,9 +79,10 @@ public class ColoredChickenEntity extends ChickenEntity implements IColoredMobEn
         return new ResourceLocation("minecraft", "entities/chicken");
     }
 
-    public ColorfulItem getReplacementItemFor(Item item) {
+    @Override
+    public Item getReplacementItemFor(Item item, DyeColor color) {
         if (item == Items.FEATHER) {
-            return (ColorfulItem) ModItems.COLORED_FEATHER.get();
+            return ModItems.COLORED_FEATHER.get();
         }
         return null;
     }
@@ -94,7 +94,7 @@ public class ColoredChickenEntity extends ChickenEntity implements IColoredMobEn
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 
             ItemStack coloredEggStack = new ItemStack(ModItems.COLORED_EGG.get(), 1);
-            ColorfulItem.setColor(coloredEggStack, this.getColor());
+            ColorUtils.setColor(coloredEggStack, this.getColor());
 
             this.spawnAtLocation(coloredEggStack);
             this.eggTime = this.random.nextInt(6000) + 6000;

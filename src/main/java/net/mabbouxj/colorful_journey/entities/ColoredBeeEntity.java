@@ -3,7 +3,6 @@ package net.mabbouxj.colorful_journey.entities;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
 import net.mabbouxj.colorful_journey.init.ModItems;
-import net.mabbouxj.colorful_journey.items.ColorfulItem;
 import net.minecraft.client.renderer.entity.model.BeeModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.BeeEntity;
@@ -79,9 +78,9 @@ public class ColoredBeeEntity extends BeeEntity implements IColoredMobEntity {
     }
 
     @Override
-    public ColorfulItem getReplacementItemFor(Item item) {
+    public Item getReplacementItemFor(Item item, DyeColor color) {
         if (item == Items.HONEYCOMB) {
-            return (ColorfulItem) ModItems.COLORED_HONEYCOMB.get();
+            return ModItems.COLORED_HONEYCOMB.get();
         }
         return null;
     }

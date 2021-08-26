@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
 import net.mabbouxj.colorful_journey.init.ModItems;
-import net.mabbouxj.colorful_journey.items.ColorfulItem;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.client.renderer.entity.model.PandaModel;
 import net.minecraft.entity.EntityType;
@@ -90,9 +89,10 @@ public class ColoredPandaEntity extends PandaEntity implements IColoredMobEntity
         return new ResourceLocation("minecraft", "entities/panda");
     }
 
-    public ColorfulItem getReplacementItemFor(Item item) {
+    @Override
+    public Item getReplacementItemFor(Item item, DyeColor color) {
         if (item == Items.BAMBOO) {
-            return (ColorfulItem) ModItems.COLORED_BAMBOO.get();
+            return ModItems.COLORED_BAMBOO.get();
         }
         return null;
     }

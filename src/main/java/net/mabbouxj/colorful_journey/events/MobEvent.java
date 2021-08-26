@@ -1,9 +1,13 @@
 package net.mabbouxj.colorful_journey.events;
 
 import net.mabbouxj.colorful_journey.entities.IColoredMobEntity;
-import net.mabbouxj.colorful_journey.items.ColorfulItem;
+import net.mabbouxj.colorful_journey.items.ColoredVariantsBlockItem;
+import net.mabbouxj.colorful_journey.items.ColoredVariantsItem;
+import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.item.DyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -34,13 +38,18 @@ public class MobEvent {
             return;
         }
 
+        IColoredMobEntity coloredEntity = ((IColoredMobEntity) entity);
+        DyeColor entityColor = coloredEntity.getColor();
+
         // Iterate over items dropped by an IColoredMobEntity
         // Replace "vanilla" items by their "colorful" equivalent
         for (ItemEntity itemEntity : e.getDrops()) {
-            ColorfulItem replacementItem = ((IColoredMobEntity) entity).getReplacementItemFor(itemEntity.getItem().getItem());
-            if (replacementItem != null) {
+
+            Item replacementItem = coloredEntity.getReplacementItemFor(itemEntity.getItem().getItem(), entityColor);
+
+            if (replacementItem instanceof ColoredVariantsItem || replacementItem instanceof ColoredVariantsBlockItem) {
                 ItemStack newItemStack = new ItemStack(replacementItem, itemEntity.getItem().getCount());
-                ColorfulItem.setColor(newItemStack, ((IColoredMobEntity) entity).getColor());
+                ColorUtils.setColor(newItemStack, entityColor);
                 dropsToAdd.add(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), newItemStack));
                 dropsToRemove.add(itemEntity);
             }

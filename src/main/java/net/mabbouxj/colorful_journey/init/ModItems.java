@@ -2,8 +2,11 @@ package net.mabbouxj.colorful_journey.init;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.items.ColorGunItem;
-import net.mabbouxj.colorful_journey.items.ColorfulItem;
+import net.mabbouxj.colorful_journey.items.ColoredVariantsBlockItem;
+import net.mabbouxj.colorful_journey.items.ColoredVariantsItem;
 import net.mabbouxj.colorful_journey.items.InkBallItem;
+import net.minecraft.block.Block;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
@@ -15,27 +18,37 @@ import java.util.List;
 
 public class ModItems {
 
-    public static final List<RegistryObject<? extends Item>> COLORFUL_ITEMS = new ArrayList<>();
+    public static final List<RegistryObject<Item>> COLORED_VARIANTS_ITEMS = new ArrayList<>();
 
     public static final RegistryObject<Item> COLOR_GUN = ITEMS.register("color_gun", ColorGunItem::new);
     public static final RegistryObject<Item> INK_BALL = ITEMS.register("ink_ball", () -> new InkBallItem(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64)));
+    public static final List<RegistryObject<BlockItem>> COLORED_VARIANTS_BLOCK_ITEMS = new ArrayList<>();
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ColorfulJourney.MOD_ID);
-    public static final RegistryObject<Item> COLORED_FEATHER = registerColorfulItem("colored_feather");
-    public static final RegistryObject<Item> COLORED_EGG = registerColorfulItem("colored_egg");
-    public static final RegistryObject<Item> COLORED_HONEYCOMB = registerColorfulItem("colored_honeycomb");
-    public static final RegistryObject<Item> COLORED_BONE = registerColorfulItem("colored_bone");
-    public static final RegistryObject<Item> COLORED_LEATHER = registerColorfulItem("colored_leather");
-    public static final RegistryObject<Item> COLORED_BAMBOO = registerColorfulItem("colored_bamboo");
-    public static final RegistryObject<Item> COLORED_ROTTEN_FLESH = registerColorfulItem("colored_rotten_flesh");
-    public static final RegistryObject<Item> COLORED_STRING = registerColorfulItem("colored_string");
-    public static final RegistryObject<Item> COLORED_ENDER_PEARL = registerColorfulItem("colored_ender_pearl");
+    public static final RegistryObject<Item> COLORED_FEATHER = registerColoredVariantsItem("colored_feather");
+    public static final RegistryObject<Item> COLORED_EGG = registerColoredVariantsItem("colored_egg");
+    public static final RegistryObject<Item> COLORED_HONEYCOMB = registerColoredVariantsItem("colored_honeycomb");
+    public static final RegistryObject<Item> COLORED_BONE = registerColoredVariantsItem("colored_bone");
+    public static final RegistryObject<Item> COLORED_LEATHER = registerColoredVariantsItem("colored_leather");
+    public static final RegistryObject<Item> COLORED_BAMBOO = registerColoredVariantsItem("colored_bamboo");
+    public static final RegistryObject<Item> COLORED_ROTTEN_FLESH = registerColoredVariantsItem("colored_rotten_flesh");
+    public static final RegistryObject<Item> COLORED_STRING = registerColoredVariantsItem("colored_string");
+    public static final RegistryObject<Item> COLORED_ENDER_PEARL = registerColoredVariantsItem("colored_ender_pearl");
+    public static final RegistryObject<BlockItem> COLORED_SKULL = registerColoredVariantsBlockItem("colored_skull", ModBlocks.COLORED_SKULL);
 
-    private static RegistryObject<Item> registerColorfulItem(String name) {
+    private static RegistryObject<Item> registerColoredVariantsItem(String name) {
         Item.Properties props = new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64);
-        RegistryObject<Item> itemRegistryObject = ITEMS.register(name, () -> new ColorfulItem(props, name));
-        COLORFUL_ITEMS.add(itemRegistryObject);
+        RegistryObject<Item> itemRegistryObject = ITEMS.register(name, () -> new ColoredVariantsItem(props, name));
+        COLORED_VARIANTS_ITEMS.add(itemRegistryObject);
         return itemRegistryObject;
     }
+
+    private static RegistryObject<BlockItem> registerColoredVariantsBlockItem(String name, RegistryObject<Block> block) {
+        Item.Properties props = new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64);
+        RegistryObject<BlockItem> itemRegistryObject = ITEMS.register(name, () -> new ColoredVariantsBlockItem(block.get(), props, name));
+        COLORED_VARIANTS_BLOCK_ITEMS.add(itemRegistryObject);
+        return itemRegistryObject;
+    }
+
 
     public static void register(IEventBus bus) {
         ITEMS.register(bus);

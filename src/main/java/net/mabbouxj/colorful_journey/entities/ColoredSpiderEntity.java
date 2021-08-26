@@ -3,7 +3,6 @@ package net.mabbouxj.colorful_journey.entities;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
 import net.mabbouxj.colorful_journey.init.ModItems;
-import net.mabbouxj.colorful_journey.items.ColorfulItem;
 import net.minecraft.client.renderer.entity.model.SpiderModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.SpiderEntity;
@@ -77,9 +76,10 @@ public class ColoredSpiderEntity extends SpiderEntity implements IColoredMobEnti
         return new ResourceLocation("minecraft", "entities/spider");
     }
 
-    public ColorfulItem getReplacementItemFor(Item item) {
+    @Override
+    public Item getReplacementItemFor(Item item, DyeColor color) {
         if (item == Items.STRING) {
-            return (ColorfulItem) ModItems.COLORED_STRING.get();
+            return ModItems.COLORED_STRING.get();
         }
         return null;
     }

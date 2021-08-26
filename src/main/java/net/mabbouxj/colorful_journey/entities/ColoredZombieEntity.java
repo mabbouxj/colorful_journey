@@ -3,7 +3,6 @@ package net.mabbouxj.colorful_journey.entities;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
 import net.mabbouxj.colorful_journey.init.ModItems;
-import net.mabbouxj.colorful_journey.items.ColorfulItem;
 import net.minecraft.client.renderer.entity.model.ZombieModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.ZombieEntity;
@@ -89,9 +88,12 @@ public class ColoredZombieEntity extends ZombieEntity implements IColoredMobEnti
         return new ResourceLocation("minecraft", "entities/zombie");
     }
 
-    public ColorfulItem getReplacementItemFor(Item item) {
+    @Override
+    public Item getReplacementItemFor(Item item, DyeColor color) {
         if (item == Items.ROTTEN_FLESH) {
-            return (ColorfulItem) ModItems.COLORED_ROTTEN_FLESH.get();
+            return ModItems.COLORED_ROTTEN_FLESH.get();
+        } else if (item == Items.ZOMBIE_HEAD) {
+            return ModItems.COLORED_SKULL.get();
         }
         return null;
     }

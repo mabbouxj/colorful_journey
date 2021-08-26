@@ -4,17 +4,17 @@ import net.mabbouxj.colorful_journey.client.entity.render.*;
 import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
 import net.mabbouxj.colorful_journey.events.MobEvent;
 import net.mabbouxj.colorful_journey.init.*;
-import net.mabbouxj.colorful_journey.utils.ColorfulItemColor;
+import net.mabbouxj.colorful_journey.utils.MulticolorImplem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.entity.passive.PandaEntity;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
+import net.minecraft.item.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -29,6 +29,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
+import java.util.logging.Logger;
+
 import static net.mabbouxj.colorful_journey.ColorfulJourney.MOD_ID;
 
 
@@ -36,6 +38,7 @@ import static net.mabbouxj.colorful_journey.ColorfulJourney.MOD_ID;
 public class ColorfulJourney {
 
     public static final String MOD_ID = "colorful_journey";
+    public static final Logger LOGGER = Logger.getLogger(MOD_ID);
     public static final String MOD_NAME = "Colorful Journey";
     public static final String MOD_VERSION = "0.0.1";
     public static final ItemGroup MOD_ITEM_GROUP = new ColorfulJourneyItemGroup();
@@ -46,9 +49,8 @@ public class ColorfulJourney {
             DyeColor.GREEN,
             DyeColor.BLUE,
             DyeColor.CYAN,
-            DyeColor.ORANGE,
             DyeColor.PINK,
-            DyeColor.LIGHT_BLUE,
+            DyeColor.ORANGE,
             DyeColor.LIME
     };
 
@@ -56,10 +58,9 @@ public class ColorfulJourney {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         bus.register(this);
-        ModItems.register(bus);
         ModBlocks.register(bus);
+        ModItems.register(bus);
         ModEntities.register(bus);
-        ModTiles.register(bus);
         ModSounds.register(bus);
         ModParticles.register(bus);
         ModRecipeSerializers.register(bus);
@@ -115,13 +116,19 @@ public class ColorfulJourney {
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_SPIDER.get(), ColoredSpiderRenderer::new);
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_ENDERMAN.get(), ColoredEndermanRenderer::new);
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_WITHER_SKELETON.get(), ColoredWitherSkeletonRenderer::new);
+
+            RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_SKULL.get(), RenderType.solid());
         }
 
         @SubscribeEvent
         public static void onColorHandlerEvent(ColorHandlerEvent.Item event) {
-            for (RegistryObject<? extends Item> registryItem : ModItems.COLORFUL_ITEMS) {
-                event.getItemColors().register(new ColorfulItemColor(), registryItem.get());
+            for (RegistryObject<Item> registryItem : ModItems.COLORED_VARIANTS_ITEMS) {
+                event.getItemColors().register(new MulticolorImplem.Item(), registryItem.get());
             }
+            for (RegistryObject<BlockItem> registryItem : ModItems.COLORED_VARIANTS_BLOCK_ITEMS) {
+                event.getItemColors().register(new MulticolorImplem.Item(), registryItem.get());
+            }
+            event.getBlockColors().register(new MulticolorImplem.Block(), ModBlocks.COLORED_SKULL.get());
         }
 
         @SubscribeEvent
@@ -129,6 +136,17 @@ public class ColorfulJourney {
             Minecraft.getInstance().particleEngine.register(ModParticles.INK_SPLASH.get(), InkSplashParticle.Factory::new);
         }
 
+    }
+
+    private static class ColorfulJourneyItemGroup extends ItemGroup {
+        public ColorfulJourneyItemGroup() {
+            super(ColorfulJourney.MOD_ID);
+        }
+
+        @Override
+        public ItemStack makeIcon() {
+            return new ItemStack(ModItems.INK_BALL.get());
+        }
     }
 
 }

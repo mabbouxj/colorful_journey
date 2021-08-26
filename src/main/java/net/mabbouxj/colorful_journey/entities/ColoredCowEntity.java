@@ -3,7 +3,6 @@ package net.mabbouxj.colorful_journey.entities;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
 import net.mabbouxj.colorful_journey.init.ModItems;
-import net.mabbouxj.colorful_journey.items.ColorfulItem;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.client.renderer.entity.model.CowModel;
 import net.minecraft.entity.EntityType;
@@ -77,9 +76,10 @@ public class ColoredCowEntity extends CowEntity implements IColoredMobEntity {
         return new ResourceLocation("minecraft", "entities/cow");
     }
 
-    public ColorfulItem getReplacementItemFor(Item item) {
+    @Override
+    public Item getReplacementItemFor(Item item, DyeColor color) {
         if (item == Items.LEATHER) {
-            return (ColorfulItem) ModItems.COLORED_LEATHER.get();
+            return ModItems.COLORED_LEATHER.get();
         }
         return null;
     }
