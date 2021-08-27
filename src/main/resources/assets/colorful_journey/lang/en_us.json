@@ -11,7 +11,9 @@
   "item.colorful_journey.colored_rotten_flesh": "Rotten Flesh",
   "item.colorful_journey.colored_string": "String",
   "item.colorful_journey.colored_ender_pearl": "Ender Pearl",
+  "item.colorful_journey.colored_nether_star": "Nether Star",
   "entity.colorful_journey.colored_chicken": "Colored Chicken",
+  "entity.colorful_journey.colored_wither": "Wither",
   "block.colorful_journey.colored_skull": "Skull",
   "message.colorful_journey.color_gun_out_of_ink": "Your gun is out of ink!"
 }

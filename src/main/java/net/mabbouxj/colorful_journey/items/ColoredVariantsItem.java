@@ -39,4 +39,9 @@ public class ColoredVariantsItem extends Item {
         return new StringTextComponent(colorName + " " + itemName);
     }
 
+    @Override
+    public boolean isFoil(ItemStack itemStack) {
+        return this.registryName.contains("nether_star");
+    }
+
 }
