@@ -23,7 +23,6 @@ public class ModItems {
     public static final RegistryObject<Item> COLOR_GUN = ITEMS.register("color_gun", ColorGunItem::new);
     public static final RegistryObject<Item> INK_BALL = ITEMS.register("ink_ball", () -> new InkBallItem(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64)));
     public static final List<RegistryObject<BlockItem>> COLORED_VARIANTS_BLOCK_ITEMS = new ArrayList<>();
-    private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ColorfulJourney.MOD_ID);
     public static final RegistryObject<Item> COLORED_FEATHER = registerColoredVariantsItem("colored_feather");
     public static final RegistryObject<Item> COLORED_EGG = registerColoredVariantsItem("colored_egg");
     public static final RegistryObject<Item> COLORED_HONEYCOMB = registerColoredVariantsItem("colored_honeycomb");
@@ -33,6 +32,7 @@ public class ModItems {
     public static final RegistryObject<Item> COLORED_ROTTEN_FLESH = registerColoredVariantsItem("colored_rotten_flesh");
     public static final RegistryObject<Item> COLORED_STRING = registerColoredVariantsItem("colored_string");
     public static final RegistryObject<Item> COLORED_ENDER_PEARL = registerColoredVariantsItem("colored_ender_pearl");
+    private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ColorfulJourney.MOD_ID);
     public static final RegistryObject<BlockItem> COLORED_SKULL = registerColoredVariantsBlockItem("colored_skull", ModBlocks.COLORED_SKULL);
 
     private static RegistryObject<Item> registerColoredVariantsItem(String name) {

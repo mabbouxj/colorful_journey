@@ -2,13 +2,10 @@ package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
-import net.mabbouxj.colorful_journey.init.ModItems;
 import net.minecraft.client.renderer.entity.model.EndermanModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.EndermanEntity;
 import net.minecraft.item.DyeColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -74,14 +71,6 @@ public class ColoredEndermanEntity extends EndermanEntity implements IColoredMob
     @Override
     public ResourceLocation getDefaultLootTable() {
         return new ResourceLocation("minecraft", "entities/enderman");
-    }
-
-    @Override
-    public Item getReplacementItemFor(Item item, DyeColor color) {
-        if (item == Items.ENDER_PEARL) {
-            return ModItems.COLORED_ENDER_PEARL.get();
-        }
-        return null;
     }
 
     @Override

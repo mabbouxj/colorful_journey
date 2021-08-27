@@ -2,14 +2,11 @@ package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
-import net.mabbouxj.colorful_journey.init.ModItems;
 import net.minecraft.client.renderer.entity.model.SkeletonModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.WitherSkeletonEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.DyeColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -24,7 +21,7 @@ public class ColoredWitherSkeletonEntity extends WitherSkeletonEntity implements
 
     private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredWitherSkeletonEntity.class, DataSerializers.INT);
     private final SkeletonModel<ColoredWitherSkeletonEntity> ENTITY_MODEL = new SkeletonModel<>(0.0F, false);
-    private final ResourceLocation LAYER_LOCATION = new ResourceLocation(ColorfulJourney.MOD_ID, "textures/entity/wither_skeleton/colored_wither_skeleton_layer.png");
+    private final ResourceLocation LAYER_LOCATION = new ResourceLocation(ColorfulJourney.MOD_ID, "textures/entity/skeleton/colored_skeleton_layer.png");
 
     public ColoredWitherSkeletonEntity(EntityType<? extends WitherSkeletonEntity> entityType, World world) {
         super(entityType, world);
@@ -86,16 +83,6 @@ public class ColoredWitherSkeletonEntity extends WitherSkeletonEntity implements
     @Override
     public ResourceLocation getDefaultLootTable() {
         return new ResourceLocation("minecraft", "entities/wither_skeleton");
-    }
-
-    @Override
-    public Item getReplacementItemFor(Item item, DyeColor color) {
-        if (item == Items.BONE) {
-            return ModItems.COLORED_BONE.get();
-        } else if (item == Items.WITHER_SKELETON_SKULL) {
-            return ModItems.COLORED_SKULL.get();
-        }
-        return null;
     }
 
     @Override

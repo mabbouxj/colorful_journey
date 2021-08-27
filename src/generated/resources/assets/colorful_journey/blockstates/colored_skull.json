@@ -10,7 +10,8 @@
       "model": "colorful_journey:block/colored_skull"
     },
     "rotation=3": {
-      "model": "colorful_journey:block/colored_skull"
+      "model": "colorful_journey:block/colored_skull",
+      "y": 90
     },
     "rotation=4": {
       "model": "colorful_journey:block/colored_skull",
@@ -26,7 +27,7 @@
     },
     "rotation=7": {
       "model": "colorful_journey:block/colored_skull",
-      "y": 90
+      "y": 180
     },
     "rotation=8": {
       "model": "colorful_journey:block/colored_skull",
@@ -42,7 +43,7 @@
     },
     "rotation=11": {
       "model": "colorful_journey:block/colored_skull",
-      "y": 180
+      "y": 270
     },
     "rotation=12": {
       "model": "colorful_journey:block/colored_skull",
@@ -57,8 +58,7 @@
       "y": 270
     },
     "rotation=15": {
-      "model": "colorful_journey:block/colored_skull",
-      "y": 270
+      "model": "colorful_journey:block/colored_skull"
     }
   }
 }

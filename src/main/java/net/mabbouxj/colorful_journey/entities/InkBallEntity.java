@@ -1,5 +1,6 @@
 package net.mabbouxj.colorful_journey.entities;
 
+import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
 import net.mabbouxj.colorful_journey.init.ModEntities;
 import net.mabbouxj.colorful_journey.init.ModItems;
@@ -8,8 +9,7 @@ import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.monster.*;
-import net.minecraft.entity.passive.*;
+import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
@@ -70,24 +70,17 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
                     ((IColoredMobEntity) entity).setColor(this.getColor());
                 } else if (entity instanceof SheepEntity) {
                     ((SheepEntity) entity).setColor(this.getColor());
-                } else if (entity instanceof ChickenEntity) {
-                    newEntity = new ColoredChickenEntity(this.level, (ChickenEntity) entity, this.getColor());
-                } else if (entity instanceof BeeEntity) {
-                    newEntity = new ColoredBeeEntity(this.level, (BeeEntity) entity, this.getColor());
-                } else if (entity instanceof SkeletonEntity) {
-                    newEntity = new ColoredSkeletonEntity(this.level, (SkeletonEntity) entity, this.getColor());
-                } else if (entity instanceof CowEntity) {
-                    newEntity = new ColoredCowEntity(this.level, (CowEntity) entity, this.getColor());
-                } else if (entity instanceof PandaEntity) {
-                    newEntity = new ColoredPandaEntity(this.level, (PandaEntity) entity, this.getColor());
-                } else if (entity instanceof ZombieEntity) {
-                    newEntity = new ColoredZombieEntity(this.level, (ZombieEntity) entity, this.getColor());
-                } else if (entity instanceof SpiderEntity) {
-                    newEntity = new ColoredSpiderEntity(this.level, (SpiderEntity) entity, this.getColor());
-                } else if (entity instanceof EndermanEntity) {
-                    newEntity = new ColoredEndermanEntity(this.level, (EndermanEntity) entity, this.getColor());
-                } else if (entity instanceof WitherSkeletonEntity) {
-                    newEntity = new ColoredWitherSkeletonEntity(this.level, (WitherSkeletonEntity) entity, this.getColor());
+                } else {
+                    Class<? extends Entity> targetClass = ColorfulJourney.REPLACEMENT_MOBS.getOrDefault(entity.getClass(), null);
+                    if (targetClass != null) {
+                        try {
+                            newEntity = targetClass
+                                    .getConstructor(World.class, entity.getClass(), DyeColor.class)
+                                    .newInstance(this.level, entity, this.getColor());
+                        } catch (Exception e) {
+                            ColorfulJourney.LOGGER.info("Could not create replacement mob for " + targetClass.getName());
+                        }
+                    }
                 }
 
                 if (newEntity != null) {
@@ -102,42 +95,20 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
     @Override
     public void tick() {
         super.tick();
-        makeFlightParticle();
+        makeParticle(1, 3);
     }
 
     @Override
     public void handleEntityEvent(byte statusID) {
         if (statusID == VANILLA_IMPACT_STATUS_ID) {
-            makeHitParticle();
+            makeParticle(10, 40);
         }
     }
 
-    private void makeFlightParticle() {
-        final double SPEED_IN_BLOCKS_PER_SECOND = 1.0;
+    private void makeParticle(double speed, int amount) {
         final double TICKS_PER_SECOND = 20;
-        final double SPEED_IN_BLOCKS_PER_TICK = SPEED_IN_BLOCKS_PER_SECOND / TICKS_PER_SECOND;
-        for (int i = 0; i < 3; i++) {
-            Vector3d direction = new Vector3d(
-                    2 * new Random().nextDouble() - 1,
-                    2 * new Random().nextDouble() - 1,
-                    2 * new Random().nextDouble() - 1
-            );
-            double velocityX = SPEED_IN_BLOCKS_PER_TICK * direction.x;
-            double velocityY = SPEED_IN_BLOCKS_PER_TICK * direction.y;
-            double velocityZ = SPEED_IN_BLOCKS_PER_TICK * direction.z;
-            this.level.addParticle(
-                    new InkSplashParticle.Data(this.getColor()),
-                    this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D),
-                    velocityX, velocityY, velocityZ
-            );
-        }
-    }
-
-    private void makeHitParticle() {
-        final double SPEED_IN_BLOCKS_PER_SECOND = 6.0;
-        final double TICKS_PER_SECOND = 20;
-        final double SPEED_IN_BLOCKS_PER_TICK = SPEED_IN_BLOCKS_PER_SECOND / TICKS_PER_SECOND;
-        for (int i = 0; i < 40; i++) {
+        final double SPEED_IN_BLOCKS_PER_TICK = speed / TICKS_PER_SECOND;
+        for (int i = 0; i < amount; i++) {
             Vector3d direction = new Vector3d(
                     2 * new Random().nextDouble() - 1,
                     2 * new Random().nextDouble() - 1,

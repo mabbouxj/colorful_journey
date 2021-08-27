@@ -8,9 +8,7 @@ import net.minecraft.client.renderer.entity.model.ChickenModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.item.DyeColor;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -77,14 +75,6 @@ public class ColoredChickenEntity extends ChickenEntity implements IColoredMobEn
     @Override
     public ResourceLocation getDefaultLootTable() {
         return new ResourceLocation("minecraft", "entities/chicken");
-    }
-
-    @Override
-    public Item getReplacementItemFor(Item item, DyeColor color) {
-        if (item == Items.FEATHER) {
-            return ModItems.COLORED_FEATHER.get();
-        }
-        return null;
     }
 
     public void aiStep() {

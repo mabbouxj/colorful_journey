@@ -11,7 +11,7 @@ import net.minecraft.world.IBlockDisplayReader;
 import javax.annotation.Nullable;
 import java.awt.*;
 
-public class MulticolorImplem {
+public class Multicolor {
 
     public static class Item implements IItemColor {
         @Override

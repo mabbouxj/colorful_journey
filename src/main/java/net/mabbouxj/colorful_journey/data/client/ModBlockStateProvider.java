@@ -22,14 +22,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
         // Generate blockstates file with all possible values of rotation
         ModelFile coloredSkullModelFile = new ModelFile.ExistingModelFile(modLoc("block/colored_skull"), this.models().existingFileHelper);
 
+        int rotationY = 0;
         for (int i = 0; i < 16; i++) {
-            int rotationY = 0;
-            if (i >= 12) {
-                rotationY = 270;
-            } else if (i >= 8) {
-                rotationY = 180;
-            } else if (i >= 4) {
-                rotationY = 90;
+            if (i % 4 == 3) {
+                rotationY = (rotationY + 90) % 360;
             }
             ConfiguredModel modelForState = new ConfiguredModel(coloredSkullModelFile, 0, rotationY, false);
             getVariantBuilder(ModBlocks.COLORED_SKULL.get())

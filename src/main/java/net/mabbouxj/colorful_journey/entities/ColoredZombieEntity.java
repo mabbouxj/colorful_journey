@@ -2,14 +2,11 @@ package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
-import net.mabbouxj.colorful_journey.init.ModItems;
 import net.minecraft.client.renderer.entity.model.ZombieModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.DyeColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -86,16 +83,6 @@ public class ColoredZombieEntity extends ZombieEntity implements IColoredMobEnti
     @Override
     public ResourceLocation getDefaultLootTable() {
         return new ResourceLocation("minecraft", "entities/zombie");
-    }
-
-    @Override
-    public Item getReplacementItemFor(Item item, DyeColor color) {
-        if (item == Items.ROTTEN_FLESH) {
-            return ModItems.COLORED_ROTTEN_FLESH.get();
-        } else if (item == Items.ZOMBIE_HEAD) {
-            return ModItems.COLORED_SKULL.get();
-        }
-        return null;
     }
 
     @Override

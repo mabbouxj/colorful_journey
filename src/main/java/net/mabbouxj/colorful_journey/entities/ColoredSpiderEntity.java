@@ -2,13 +2,10 @@ package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
-import net.mabbouxj.colorful_journey.init.ModItems;
 import net.minecraft.client.renderer.entity.model.SpiderModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.SpiderEntity;
 import net.minecraft.item.DyeColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -74,14 +71,6 @@ public class ColoredSpiderEntity extends SpiderEntity implements IColoredMobEnti
     @Override
     public ResourceLocation getDefaultLootTable() {
         return new ResourceLocation("minecraft", "entities/spider");
-    }
-
-    @Override
-    public Item getReplacementItemFor(Item item, DyeColor color) {
-        if (item == Items.STRING) {
-            return ModItems.COLORED_STRING.get();
-        }
-        return null;
     }
 
     @Override

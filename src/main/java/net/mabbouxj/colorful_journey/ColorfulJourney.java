@@ -2,13 +2,15 @@ package net.mabbouxj.colorful_journey;
 
 import net.mabbouxj.colorful_journey.client.entity.render.*;
 import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
+import net.mabbouxj.colorful_journey.entities.*;
 import net.mabbouxj.colorful_journey.events.MobEvent;
 import net.mabbouxj.colorful_journey.init.*;
-import net.mabbouxj.colorful_journey.utils.MulticolorImplem;
+import net.mabbouxj.colorful_journey.utils.Multicolor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.ChickenEntity;
@@ -29,6 +31,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import static net.mabbouxj.colorful_journey.ColorfulJourney.MOD_ID;
@@ -44,6 +48,8 @@ public class ColorfulJourney {
     public static final ItemGroup MOD_ITEM_GROUP = new ColorfulJourneyItemGroup();
     public static final String NBT_COLOR_ID = "color";
 
+    public static final Map<Item, RegistryObject<? extends Item>> REPLACEMENT_ITEMS = new HashMap<>();
+    public static final Map<Class<? extends Entity>, Class<? extends Entity>> REPLACEMENT_MOBS = new HashMap<>();
     public static final DyeColor[] COLORS = new DyeColor[]{
             DyeColor.RED,
             DyeColor.GREEN,
@@ -72,6 +78,35 @@ public class ColorfulJourney {
         bus.addListener(Client::onParticleFactoryRegistration);
 
         MinecraftForge.EVENT_BUS.register(this);
+
+        populateReplacementItems();
+        populateReplacementMobs();
+    }
+
+    private void populateReplacementItems() {
+        REPLACEMENT_ITEMS.put(Items.HONEYCOMB, ModItems.COLORED_HONEYCOMB);
+        REPLACEMENT_ITEMS.put(Items.FEATHER, ModItems.COLORED_FEATHER);
+        REPLACEMENT_ITEMS.put(Items.LEATHER, ModItems.COLORED_LEATHER);
+        REPLACEMENT_ITEMS.put(Items.ENDER_PEARL, ModItems.COLORED_ENDER_PEARL);
+        REPLACEMENT_ITEMS.put(Items.BAMBOO, ModItems.COLORED_BAMBOO);
+        REPLACEMENT_ITEMS.put(Items.BONE, ModItems.COLORED_BONE);
+        REPLACEMENT_ITEMS.put(Items.SKELETON_SKULL, ModItems.COLORED_SKULL);
+        REPLACEMENT_ITEMS.put(Items.STRING, ModItems.COLORED_STRING);
+        REPLACEMENT_ITEMS.put(Items.WITHER_SKELETON_SKULL, ModItems.COLORED_SKULL);
+        REPLACEMENT_ITEMS.put(Items.ROTTEN_FLESH, ModItems.COLORED_ROTTEN_FLESH);
+        REPLACEMENT_ITEMS.put(Items.ZOMBIE_HEAD, ModItems.COLORED_SKULL);
+    }
+
+    private void populateReplacementMobs() {
+        REPLACEMENT_MOBS.put(BeeEntity.class, ColoredBeeEntity.class);
+        REPLACEMENT_MOBS.put(ChickenEntity.class, ColoredChickenEntity.class);
+        REPLACEMENT_MOBS.put(CowEntity.class, ColoredCowEntity.class);
+        REPLACEMENT_MOBS.put(EndermanEntity.class, ColoredEndermanEntity.class);
+        REPLACEMENT_MOBS.put(PandaEntity.class, ColoredPandaEntity.class);
+        REPLACEMENT_MOBS.put(SkeletonEntity.class, ColoredSkeletonEntity.class);
+        REPLACEMENT_MOBS.put(SpiderEntity.class, ColoredSpiderEntity.class);
+        REPLACEMENT_MOBS.put(WitherSkeletonEntity.class, ColoredWitherSkeletonEntity.class);
+        REPLACEMENT_MOBS.put(ZombieEntity.class, ColoredZombieEntity.class);
     }
 
     @Mod.EventBusSubscriber(value = Dist.DEDICATED_SERVER, modid = ColorfulJourney.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -123,12 +158,12 @@ public class ColorfulJourney {
         @SubscribeEvent
         public static void onColorHandlerEvent(ColorHandlerEvent.Item event) {
             for (RegistryObject<Item> registryItem : ModItems.COLORED_VARIANTS_ITEMS) {
-                event.getItemColors().register(new MulticolorImplem.Item(), registryItem.get());
+                event.getItemColors().register(new Multicolor.Item(), registryItem.get());
             }
-            for (RegistryObject<BlockItem> registryItem : ModItems.COLORED_VARIANTS_BLOCK_ITEMS) {
-                event.getItemColors().register(new MulticolorImplem.Item(), registryItem.get());
+            for (RegistryObject<BlockItem> registryBlockItem : ModItems.COLORED_VARIANTS_BLOCK_ITEMS) {
+                event.getItemColors().register(new Multicolor.Item(), registryBlockItem.get());
             }
-            event.getBlockColors().register(new MulticolorImplem.Block(), ModBlocks.COLORED_SKULL.get());
+            event.getBlockColors().register(new Multicolor.Block(), ModBlocks.COLORED_SKULL.get());
         }
 
         @SubscribeEvent
