@@ -37,6 +37,9 @@ public class ModItems {
 
     public static final RegistryObject<BlockItem> COLORED_SKULL = registerColoredVariantsWallOrFloorItem("colored_skull", ModBlocks.COLORED_SKULL, ModBlocks.COLORED_WALL_SKULL);
 
+    public static final RegistryObject<BlockItem> COLORED_LOG = registerColoredVariantsBlockItem("colored_log", ModBlocks.COLORED_LOG);
+    public static final RegistryObject<BlockItem> COLORED_LEAVES = registerColoredVariantsBlockItem("colored_leaves", ModBlocks.COLORED_LEAVES);
+    public static final RegistryObject<BlockItem> COLORED_SAPLING = registerColoredVariantsBlockItem("colored_sapling", ModBlocks.COLORED_SAPLING);
 
     private static RegistryObject<Item> registerColoredVariantsItem(String name) {
         Item.Properties props = new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64);

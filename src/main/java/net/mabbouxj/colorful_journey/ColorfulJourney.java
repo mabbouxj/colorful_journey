@@ -6,6 +6,7 @@ import net.mabbouxj.colorful_journey.entities.*;
 import net.mabbouxj.colorful_journey.events.MobEvent;
 import net.mabbouxj.colorful_journey.init.*;
 import net.mabbouxj.colorful_journey.utils.Multicolor;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -71,6 +72,7 @@ public class ColorfulJourney {
         ModSounds.register(bus);
         ModParticles.register(bus);
         ModRecipeSerializers.register(bus);
+        ModFeatures.register(bus);
 
         bus.addListener(Common::onCommonSetup);
         bus.addListener(Common::onEntityAttributeCreationEvent);
@@ -163,6 +165,9 @@ public class ColorfulJourney {
 
             RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_SKULL.get(), RenderType.solid());
             RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_WALL_SKULL.get(), RenderType.solid());
+            RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_LOG.get(), RenderType.solid());
+            RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_LEAVES.get(), RenderType.cutout());
+            RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_SAPLING.get(), RenderType.cutout());
         }
 
         @SubscribeEvent
@@ -173,8 +178,9 @@ public class ColorfulJourney {
             for (RegistryObject<BlockItem> registryBlockItem : ModItems.COLORED_VARIANTS_BLOCK_ITEMS) {
                 event.getItemColors().register(new Multicolor.Item(), registryBlockItem.get());
             }
-            event.getBlockColors().register(new Multicolor.Block(), ModBlocks.COLORED_SKULL.get());
-            event.getBlockColors().register(new Multicolor.Block(), ModBlocks.COLORED_WALL_SKULL.get());
+            for (RegistryObject<Block> registryBlock: ModBlocks.COLORED_VARIANTS_BLOCKS) {
+                event.getBlockColors().register(new Multicolor.Block(), registryBlock.get());
+            }
         }
 
         @SubscribeEvent
