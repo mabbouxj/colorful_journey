@@ -3,9 +3,9 @@ package net.mabbouxj.colorful_journey.entities;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
-import net.minecraft.client.renderer.entity.model.SpiderModel;
+import net.minecraft.client.renderer.entity.model.CreeperModel;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.monster.SpiderEntity;
+import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -16,18 +16,18 @@ import net.minecraft.world.World;
 
 import static net.mabbouxj.colorful_journey.ColorfulJourney.NBT_COLOR_ID;
 
-public class ColoredSpiderEntity extends SpiderEntity implements IColoredMobEntity {
+public class ColoredCreeperEntity extends CreeperEntity implements IColoredMobEntity {
 
-    private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredSpiderEntity.class, DataSerializers.INT);
-    private final SpiderModel<ColoredSpiderEntity> ENTITY_MODEL = new SpiderModel<>();
-    private final ResourceLocation LAYER_LOCATION = new ResourceLocation(ColorfulJourney.MOD_ID, "textures/entity/spider/colored_spider_layer.png");
+    private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredCreeperEntity.class, DataSerializers.INT);
+    private final CreeperModel<ColoredCreeperEntity> ENTITY_MODEL = new CreeperModel<>(0.0F);
+    private final ResourceLocation LAYER_LOCATION = new ResourceLocation(ColorfulJourney.MOD_ID, "textures/entity/creeper/colored_creeper_layer.png");
 
-    public ColoredSpiderEntity(EntityType<? extends SpiderEntity> entityType, World world) {
+    public ColoredCreeperEntity(EntityType<? extends CreeperEntity> entityType, World world) {
         super(entityType, world);
     }
 
-    public ColoredSpiderEntity(World world, SpiderEntity oldEntity, DyeColor color) {
-        this(ModEntities.COLORED_SPIDER.get(), world);
+    public ColoredCreeperEntity(World world, CreeperEntity oldEntity, DyeColor color) {
+        this(ModEntities.COLORED_CREEPER.get(), world);
         this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
@@ -35,7 +35,6 @@ public class ColoredSpiderEntity extends SpiderEntity implements IColoredMobEnti
         }
 
         MobUtils.initFromOldEntity(this, oldEntity);
-
     }
 
     @Override
@@ -66,11 +65,11 @@ public class ColoredSpiderEntity extends SpiderEntity implements IColoredMobEnti
 
     @Override
     public ResourceLocation getDefaultLootTable() {
-        return new ResourceLocation("minecraft", "entities/spider");
+        return new ResourceLocation("minecraft", "entities/creeper");
     }
 
     @Override
-    public SpiderModel<ColoredSpiderEntity> getEntityModel() {
+    public CreeperModel<ColoredCreeperEntity> getEntityModel() {
         return ENTITY_MODEL;
     }
 

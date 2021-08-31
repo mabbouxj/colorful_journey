@@ -4,6 +4,7 @@ import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
+import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.ChickenModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.ChickenEntity;
@@ -39,11 +40,7 @@ public class ColoredChickenEntity extends ChickenEntity implements IColoredMobEn
             this.entityData.assignValues(oldEntity.getEntityData().getAll());
         }
 
-        this.setPos(oldEntity.getX(), oldEntity.getY(), oldEntity.getZ());
-        this.setYHeadRot(oldEntity.getYHeadRot());
-
-        this.setAge(oldEntity.getAge());
-        this.setHealth(oldEntity.getHealth());
+        MobUtils.initFromOldEntity(this, oldEntity);
     }
 
     @Override

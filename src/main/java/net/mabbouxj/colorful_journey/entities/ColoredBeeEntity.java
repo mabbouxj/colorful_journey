@@ -2,6 +2,7 @@ package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
+import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.BeeModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.BeeEntity;
@@ -34,15 +35,8 @@ public class ColoredBeeEntity extends BeeEntity implements IColoredMobEntity {
             this.entityData.assignValues(oldEntity.getEntityData().getAll());
         }
 
-        this.setPos(oldEntity.getX(), oldEntity.getY(), oldEntity.getZ());
-        this.setYHeadRot(oldEntity.getYHeadRot());
-
-        this.setAge(oldEntity.getAge());
-        this.setHealth(oldEntity.getHealth());
-        this.setAggressive(oldEntity.isAggressive());
-        this.setBaby(oldEntity.isBaby());
+        MobUtils.initFromOldEntity(this, oldEntity);
         this.setStingerCount(oldEntity.getStingerCount());
-        this.setAggressive(oldEntity.isAggressive());
         this.setPersistentAngerTarget(oldEntity.getPersistentAngerTarget());
     }
 

@@ -20,8 +20,8 @@ public class ColoredWitherRenderer extends MobRenderer<ColoredWitherEntity, With
 
     public ColoredWitherRenderer(EntityRendererManager renderManager) {
         super(renderManager, new WitherModel<>(0.0F), 1.0F);
-        this.addLayer(new ColoredMobLayer<>(this));
         this.addLayer(new ColoredWitherAuraLayer(this));
+        this.addLayer(new ColoredMobLayer<>(this));
     }
 
     protected int getBlockLightLevel(ColoredWitherEntity entity, BlockPos blockPos) {

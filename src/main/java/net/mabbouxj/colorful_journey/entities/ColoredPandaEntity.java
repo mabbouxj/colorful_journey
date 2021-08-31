@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
+import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.PandaModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.PandaEntity;
@@ -48,11 +49,8 @@ public class ColoredPandaEntity extends PandaEntity implements IColoredMobEntity
             this.entityData.assignValues(oldEntity.getEntityData().getAll());
         }
 
-        this.setPos(oldEntity.getX(), oldEntity.getY(), oldEntity.getZ());
-        this.setYHeadRot(oldEntity.getYHeadRot());
+        MobUtils.initFromOldEntity(this, oldEntity);
 
-        this.setAge(oldEntity.getAge());
-        this.setHealth(oldEntity.getHealth());
     }
 
     @Override

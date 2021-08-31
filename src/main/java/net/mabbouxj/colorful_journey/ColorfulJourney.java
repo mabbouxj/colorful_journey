@@ -97,6 +97,7 @@ public class ColorfulJourney {
         REPLACEMENT_ITEMS.put(Items.ROTTEN_FLESH, ModItems.COLORED_ROTTEN_FLESH);
         REPLACEMENT_ITEMS.put(Items.ZOMBIE_HEAD, ModItems.COLORED_SKULL);
         REPLACEMENT_ITEMS.put(Items.NETHER_STAR, ModItems.COLORED_NETHER_STAR);
+        REPLACEMENT_ITEMS.put(Items.GUNPOWDER, ModItems.COLORED_GUNPOWDER);
     }
 
     private void populateReplacementMobs() {
@@ -110,6 +111,7 @@ public class ColorfulJourney {
         REPLACEMENT_MOBS.put(WitherSkeletonEntity.class, ColoredWitherSkeletonEntity.class);
         REPLACEMENT_MOBS.put(ZombieEntity.class, ColoredZombieEntity.class);
         REPLACEMENT_MOBS.put(WitherEntity.class, ColoredWitherEntity.class);
+        REPLACEMENT_MOBS.put(CreeperEntity.class, ColoredCreeperEntity.class);
     }
 
     @Mod.EventBusSubscriber(value = Dist.DEDICATED_SERVER, modid = ColorfulJourney.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -134,6 +136,7 @@ public class ColorfulJourney {
             event.put(ModEntities.COLORED_ENDERMAN.get(), EndermanEntity.createAttributes().build());
             event.put(ModEntities.COLORED_WITHER_SKELETON.get(), WitherSkeletonEntity.createAttributes().build());
             event.put(ModEntities.COLORED_WITHER.get(), WitherEntity.createAttributes().build());
+            event.put(ModEntities.COLORED_CREEPER.get(), CreeperEntity.createAttributes().build());
         }
 
     }
@@ -156,8 +159,10 @@ public class ColorfulJourney {
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_ENDERMAN.get(), ColoredEndermanRenderer::new);
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_WITHER_SKELETON.get(), ColoredWitherSkeletonRenderer::new);
             RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_WITHER.get(), ColoredWitherRenderer::new);
+            RenderingRegistry.registerEntityRenderingHandler(ModEntities.COLORED_CREEPER.get(), ColoredCreeperRenderer::new);
 
             RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_SKULL.get(), RenderType.solid());
+            RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_WALL_SKULL.get(), RenderType.solid());
         }
 
         @SubscribeEvent
@@ -169,6 +174,7 @@ public class ColorfulJourney {
                 event.getItemColors().register(new Multicolor.Item(), registryBlockItem.get());
             }
             event.getBlockColors().register(new Multicolor.Block(), ModBlocks.COLORED_SKULL.get());
+            event.getBlockColors().register(new Multicolor.Block(), ModBlocks.COLORED_WALL_SKULL.get());
         }
 
         @SubscribeEvent

@@ -1,10 +1,7 @@
 package net.mabbouxj.colorful_journey.init;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
-import net.mabbouxj.colorful_journey.items.ColorGunItem;
-import net.mabbouxj.colorful_journey.items.ColoredVariantsBlockItem;
-import net.mabbouxj.colorful_journey.items.ColoredVariantsItem;
-import net.mabbouxj.colorful_journey.items.InkBallItem;
+import net.mabbouxj.colorful_journey.items.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -36,8 +33,10 @@ public class ModItems {
     public static final RegistryObject<Item> COLORED_STRING = registerColoredVariantsItem("colored_string");
     public static final RegistryObject<Item> COLORED_ENDER_PEARL = registerColoredVariantsItem("colored_ender_pearl");
     public static final RegistryObject<Item> COLORED_NETHER_STAR = registerColoredVariantsItem("colored_nether_star");
+    public static final RegistryObject<Item> COLORED_GUNPOWDER = registerColoredVariantsItem("colored_gunpowder");
 
-    public static final RegistryObject<BlockItem> COLORED_SKULL = registerColoredVariantsBlockItem("colored_skull", ModBlocks.COLORED_SKULL);
+    public static final RegistryObject<BlockItem> COLORED_SKULL = registerColoredVariantsWallOrFloorItem("colored_skull", ModBlocks.COLORED_SKULL, ModBlocks.COLORED_WALL_SKULL);
+
 
     private static RegistryObject<Item> registerColoredVariantsItem(String name) {
         Item.Properties props = new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64);
@@ -49,6 +48,13 @@ public class ModItems {
     private static RegistryObject<BlockItem> registerColoredVariantsBlockItem(String name, RegistryObject<Block> block) {
         Item.Properties props = new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64);
         RegistryObject<BlockItem> itemRegistryObject = ITEMS.register(name, () -> new ColoredVariantsBlockItem(block.get(), props, name));
+        COLORED_VARIANTS_BLOCK_ITEMS.add(itemRegistryObject);
+        return itemRegistryObject;
+    }
+
+    private static RegistryObject<BlockItem> registerColoredVariantsWallOrFloorItem(String name, RegistryObject<Block> floorBlock, RegistryObject<Block> wallBlock) {
+        Item.Properties props = new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64);
+        RegistryObject<BlockItem> itemRegistryObject = ITEMS.register(name, () -> new ColoredVariantsWallOrFloorItem(floorBlock.get(), wallBlock.get(), props, name));
         COLORED_VARIANTS_BLOCK_ITEMS.add(itemRegistryObject);
         return itemRegistryObject;
     }

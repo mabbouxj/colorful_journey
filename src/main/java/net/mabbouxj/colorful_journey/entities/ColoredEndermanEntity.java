@@ -2,6 +2,7 @@ package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
+import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.EndermanModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.EndermanEntity;
@@ -33,13 +34,9 @@ public class ColoredEndermanEntity extends EndermanEntity implements IColoredMob
             this.entityData.assignValues(oldEntity.getEntityData().getAll());
         }
 
-        this.setPos(oldEntity.getX(), oldEntity.getY(), oldEntity.getZ());
-        this.setYHeadRot(oldEntity.getYHeadRot());
-
-        this.setHealth(oldEntity.getHealth());
-        this.setAggressive(oldEntity.isAggressive());
-
+        MobUtils.initFromOldEntity(this, oldEntity);
         this.setCarriedBlock(oldEntity.getCarriedBlock());
+
     }
 
     @Override

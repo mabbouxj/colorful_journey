@@ -2,6 +2,7 @@ package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntities;
+import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.WitherModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.boss.WitherEntity;
@@ -37,12 +38,10 @@ public class ColoredWitherEntity extends WitherEntity implements IColoredMobEnti
             this.entityData.assignValues(oldEntity.getEntityData().getAll());
         }
 
-        this.setPos(oldEntity.getX(), oldEntity.getY(), oldEntity.getZ());
-        this.setYHeadRot(oldEntity.getYHeadRot());
+        MobUtils.initFromOldEntity(this, oldEntity);
 
-        this.setHealth(oldEntity.getHealth());
-        this.setAggressive(oldEntity.isAggressive());
-
+        this.setInvulnerable(oldEntity.isInvulnerable());
+        this.setInvulnerableTicks(oldEntity.getInvulnerableTicks());
     }
 
     @Override

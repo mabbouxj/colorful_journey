@@ -4,14 +4,23 @@ import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.entities.InkBallEntity;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.init.ModSounds;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -65,6 +74,22 @@ public class ColorGunItem extends Item {
     @Override
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         return true;
+    }
+
+    @Override
+    public ITextComponent getName(ItemStack itemStack) {
+        String itemName = new TranslationTextComponent("item.colorful_journey.color_gun").getString();
+        return new StringTextComponent("§l" + itemName);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag flag) {
+        if (Screen.hasShiftDown()) {
+            tooltips.add(new TranslationTextComponent("tooltip.colorful_journey.color_gun"));
+        } else {
+            tooltips.add(new TranslationTextComponent("tooltip.colorful_journey.hold_shift_for_info"));
+        }
+        super.appendHoverText(itemStack, world, tooltips, flag);
     }
 
 }

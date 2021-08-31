@@ -5,10 +5,10 @@ import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.WallOrFloorItem;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -19,12 +19,12 @@ import org.apache.commons.lang3.StringUtils;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ColoredVariantsBlockItem extends BlockItem {
+public class ColoredVariantsWallOrFloorItem extends WallOrFloorItem {
 
     public final String registryName;
 
-    public ColoredVariantsBlockItem(Block block, Properties properties, String registryName) {
-        super(block, properties);
+    public ColoredVariantsWallOrFloorItem(Block floorBlock, Block wallBlock, Properties properties, String registryName) {
+        super(floorBlock, wallBlock, properties);
         this.registryName = registryName;
     }
 
@@ -59,5 +59,4 @@ public class ColoredVariantsBlockItem extends BlockItem {
         }
         super.appendHoverText(itemStack, world, tooltips, flag);
     }
-
 }

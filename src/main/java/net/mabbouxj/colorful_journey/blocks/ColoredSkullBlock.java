@@ -1,6 +1,8 @@
 package net.mabbouxj.colorful_journey.blocks;
 
+import net.mabbouxj.colorful_journey.entities.ColoredWitherEntity;
 import net.mabbouxj.colorful_journey.init.ModBlocks;
+import net.mabbouxj.colorful_journey.init.ModEntities;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -10,9 +12,7 @@ import net.minecraft.block.pattern.BlockMaterialMatcher;
 import net.minecraft.block.pattern.BlockPattern;
 import net.minecraft.block.pattern.BlockPatternBuilder;
 import net.minecraft.block.pattern.BlockStateMatcher;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.DyeColor;
@@ -87,7 +87,7 @@ public class ColoredSkullBlock extends SkullBlock {
 
     public static void checkSpawn(World world, BlockPos blockPos, BlockState blockState) {
         if (!world.isClientSide) {
-            boolean flag = blockState.is(ModBlocks.COLORED_SKULL.get());
+            boolean flag = blockState.is(ModBlocks.COLORED_SKULL.get()) || blockState.is(ModBlocks.COLORED_WALL_SKULL.get());
             if (flag && blockPos.getY() >= 0 && world.getDifficulty() != Difficulty.PEACEFUL) {
                 BlockPattern blockpattern = getOrCreateWitherFull();
                 BlockPattern.PatternHelper blockpattern$patternhelper = blockpattern.find(world, blockPos);
@@ -100,17 +100,18 @@ public class ColoredSkullBlock extends SkullBlock {
                         }
                     }
 
-                    WitherEntity witherentity = EntityType.WITHER.create(world);
+                    ColoredWitherEntity coloredWitherEntity = ModEntities.COLORED_WITHER.get().create(world);
+                    coloredWitherEntity.setColor(DyeColor.byId(ColorUtils.getColorId(blockState)));
                     BlockPos blockpos = blockpattern$patternhelper.getBlock(1, 2, 0).getPos();
-                    witherentity.moveTo((double) blockpos.getX() + 0.5D, (double) blockpos.getY() + 0.55D, (double) blockpos.getZ() + 0.5D, blockpattern$patternhelper.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F, 0.0F);
-                    witherentity.yBodyRot = blockpattern$patternhelper.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F;
-                    witherentity.makeInvulnerable();
+                    coloredWitherEntity.moveTo((double) blockpos.getX() + 0.5D, (double) blockpos.getY() + 0.55D, (double) blockpos.getZ() + 0.5D, blockpattern$patternhelper.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F, 0.0F);
+                    coloredWitherEntity.yBodyRot = blockpattern$patternhelper.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F;
+                    coloredWitherEntity.makeInvulnerable();
 
-                    for (ServerPlayerEntity serverplayerentity : world.getEntitiesOfClass(ServerPlayerEntity.class, witherentity.getBoundingBox().inflate(50.0D))) {
-                        CriteriaTriggers.SUMMONED_ENTITY.trigger(serverplayerentity, witherentity);
+                    for (ServerPlayerEntity serverplayerentity : world.getEntitiesOfClass(ServerPlayerEntity.class, coloredWitherEntity.getBoundingBox().inflate(50.0D))) {
+                        CriteriaTriggers.SUMMONED_ENTITY.trigger(serverplayerentity, coloredWitherEntity);
                     }
 
-                    world.addFreshEntity(witherentity);
+                    world.addFreshEntity(coloredWitherEntity);
 
                     for (int k = 0; k < blockpattern.getWidth(); ++k) {
                         for (int l = 0; l < blockpattern.getHeight(); ++l) {
@@ -134,15 +135,20 @@ public class ColoredSkullBlock extends SkullBlock {
         if (witherPatternFull == null) {
             witherPatternFull = BlockPatternBuilder.start().aisle("^^^", "###", "~#~").where('#', (blockInfo) -> {
                 return blockInfo.getState().is(BlockTags.WITHER_SUMMON_BASE_BLOCKS);
-            }).where('^', CachedBlockInfo.hasState(BlockStateMatcher.forBlock(ModBlocks.COLORED_SKULL.get()))).where('~', CachedBlockInfo.hasState(BlockMaterialMatcher.forMaterial(Material.AIR))).build();
+            }).where('^', CachedBlockInfo.hasState(
+                    BlockStateMatcher.forBlock(ModBlocks.COLORED_SKULL.get())
+                            .or(BlockStateMatcher.forBlock(ModBlocks.COLORED_WALL_SKULL.get()))
+                            .or(BlockStateMatcher.forBlock(Blocks.WITHER_SKELETON_SKULL))
+                            .or(BlockStateMatcher.forBlock(Blocks.WITHER_SKELETON_WALL_SKULL))
+            )).where('~', CachedBlockInfo.hasState(BlockMaterialMatcher.forMaterial(Material.AIR))).build();
         }
         return witherPatternFull;
     }
 
     private static BlockPattern getOrCreateWitherBase() {
         if (witherPatternBase == null) {
-            witherPatternBase = BlockPatternBuilder.start().aisle("   ", "###", "~#~").where('#', (p_235638_0_) -> {
-                return p_235638_0_.getState().is(BlockTags.WITHER_SUMMON_BASE_BLOCKS);
+            witherPatternBase = BlockPatternBuilder.start().aisle("   ", "###", "~#~").where('#', (blockInfo) -> {
+                return blockInfo.getState().is(BlockTags.WITHER_SUMMON_BASE_BLOCKS);
             }).where('~', CachedBlockInfo.hasState(BlockMaterialMatcher.forMaterial(Material.AIR))).build();
         }
         return witherPatternBase;
