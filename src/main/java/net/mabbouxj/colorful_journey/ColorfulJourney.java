@@ -72,7 +72,7 @@ public class ColorfulJourney {
         ModSounds.register(bus);
         ModParticles.register(bus);
         ModRecipeSerializers.register(bus);
-        ModFeatures.register(bus);
+        //ModFeatures.register(bus);
 
         bus.addListener(Common::onCommonSetup);
         bus.addListener(Common::onEntityAttributeCreationEvent);

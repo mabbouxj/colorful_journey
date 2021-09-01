@@ -12,7 +12,7 @@ public class ColoredSaplingBlock extends SaplingBlock implements IColoredBlock {
     private final DyeColor color;
 
     public ColoredSaplingBlock(DyeColor color) {
-        super(new ColoredTree(), AbstractBlock.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.GRASS));
+        super(new ColoredTree(color), AbstractBlock.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.GRASS));
         this.color = color;
     }
 

@@ -5,6 +5,8 @@ import net.mabbouxj.colorful_journey.data.client.ModBlockModelProvider;
 import net.mabbouxj.colorful_journey.data.client.ModBlockStateProvider;
 import net.mabbouxj.colorful_journey.data.client.ModItemModelProvider;
 import net.mabbouxj.colorful_journey.data.loot.ModLootTablesProvider;
+import net.mabbouxj.colorful_journey.data.tag.ModBlockTagProvider;
+import net.mabbouxj.colorful_journey.data.tag.ModItemTagProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -22,8 +24,11 @@ public final class DataGenerators {
         DataGenerator gen = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
-        gen.addProvider(new ModLootTablesProvider(gen));
+        ModBlockTagProvider blockTagsProvider = new ModBlockTagProvider(gen, existingFileHelper);
 
+        gen.addProvider(new ModLootTablesProvider(gen));
+        gen.addProvider(blockTagsProvider);
+        gen.addProvider(new ModItemTagProvider(gen, blockTagsProvider, existingFileHelper));
         gen.addProvider(new ModBlockStateProvider(gen, existingFileHelper));
         gen.addProvider(new ModItemModelProvider(gen, existingFileHelper));
         gen.addProvider(new ModBlockModelProvider(gen, existingFileHelper));
