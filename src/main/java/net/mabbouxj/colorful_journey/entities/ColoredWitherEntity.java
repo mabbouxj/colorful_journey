@@ -1,7 +1,7 @@
 package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
-import net.mabbouxj.colorful_journey.init.ModEntities;
+import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.WitherModel;
 import net.minecraft.entity.EntityType;
@@ -31,7 +31,7 @@ public class ColoredWitherEntity extends WitherEntity implements IColoredMobEnti
     }
 
     public ColoredWitherEntity(World world, WitherEntity oldEntity, DyeColor color) {
-        this(ModEntities.COLORED_WITHER.get(), world);
+        this(ModEntityTypes.COLORED_WITHER.get(), world);
         this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {

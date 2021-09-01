@@ -2,7 +2,7 @@ package net.mabbouxj.colorful_journey.entities;
 
 import com.google.common.collect.Maps;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
-import net.mabbouxj.colorful_journey.init.ModEntities;
+import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.PandaModel;
@@ -42,7 +42,7 @@ public class ColoredPandaEntity extends PandaEntity implements IColoredMobEntity
     }
 
     public ColoredPandaEntity(World world, PandaEntity oldEntity, DyeColor color) {
-        this(ModEntities.COLORED_PANDA.get(), world);
+        this(ModEntityTypes.COLORED_PANDA.get(), world);
         this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {

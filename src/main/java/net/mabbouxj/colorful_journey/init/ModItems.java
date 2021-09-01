@@ -4,6 +4,7 @@ import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.items.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
@@ -11,55 +12,66 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ModItems {
 
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ColorfulJourney.MOD_ID);
 
-    public static final List<RegistryObject<Item>> COLORED_VARIANTS_ITEMS = new ArrayList<>();
-    public static final List<RegistryObject<BlockItem>> COLORED_VARIANTS_BLOCK_ITEMS = new ArrayList<>();
+    public static final List<RegistryObject<Item>> ALL_COLORED_VARIANTS_ITEMS = new ArrayList<>();
+    public static final List<RegistryObject<BlockItem>> ALL_COLORED_VARIANTS_BLOCK_ITEMS = new ArrayList<>();
 
     public static final RegistryObject<Item> COLOR_GUN = ITEMS.register("color_gun", ColorGunItem::new);
     public static final RegistryObject<Item> INK_BALL = ITEMS.register("ink_ball", () -> new InkBallItem(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64)));
 
-    public static final RegistryObject<Item> COLORED_FEATHER = registerColoredVariantsItem("colored_feather");
-    public static final RegistryObject<Item> COLORED_EGG = registerColoredVariantsItem("colored_egg");
-    public static final RegistryObject<Item> COLORED_HONEYCOMB = registerColoredVariantsItem("colored_honeycomb");
-    public static final RegistryObject<Item> COLORED_BONE = registerColoredVariantsItem("colored_bone");
-    public static final RegistryObject<Item> COLORED_LEATHER = registerColoredVariantsItem("colored_leather");
-    public static final RegistryObject<Item> COLORED_BAMBOO = registerColoredVariantsItem("colored_bamboo");
-    public static final RegistryObject<Item> COLORED_ROTTEN_FLESH = registerColoredVariantsItem("colored_rotten_flesh");
-    public static final RegistryObject<Item> COLORED_STRING = registerColoredVariantsItem("colored_string");
-    public static final RegistryObject<Item> COLORED_ENDER_PEARL = registerColoredVariantsItem("colored_ender_pearl");
-    public static final RegistryObject<Item> COLORED_NETHER_STAR = registerColoredVariantsItem("colored_nether_star");
-    public static final RegistryObject<Item> COLORED_GUNPOWDER = registerColoredVariantsItem("colored_gunpowder");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_FEATHERS = registerColoredVariantsItem("colored_feather");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_EGGS = registerColoredVariantsItem("colored_egg");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_HONEYCOMBS = registerColoredVariantsItem("colored_honeycomb");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_BONES = registerColoredVariantsItem("colored_bone");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_LEATHERS = registerColoredVariantsItem("colored_leather");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_BAMBOOS = registerColoredVariantsItem("colored_bamboo");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_ROTTEN_FLESHES = registerColoredVariantsItem("colored_rotten_flesh");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_STRINGS = registerColoredVariantsItem("colored_string");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_ENDER_PEARLS = registerColoredVariantsItem("colored_ender_pearl");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_NETHER_STARS = registerColoredVariantsItem("colored_nether_star");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_GUNPOWDERS = registerColoredVariantsItem("colored_gunpowder");
 
-    public static final RegistryObject<BlockItem> COLORED_SKULL = registerColoredVariantsWallOrFloorItem("colored_skull", ModBlocks.COLORED_SKULL, ModBlocks.COLORED_WALL_SKULL);
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_SKULLS = registerColoredVariantsWallOrFloorItem("colored_skull", ModBlocks.COLORED_SKULLS, ModBlocks.COLORED_WALL_SKULLS);
 
-    public static final RegistryObject<BlockItem> COLORED_LOG = registerColoredVariantsBlockItem("colored_log", ModBlocks.COLORED_LOG);
-    public static final RegistryObject<BlockItem> COLORED_LEAVES = registerColoredVariantsBlockItem("colored_leaves", ModBlocks.COLORED_LEAVES);
-    public static final RegistryObject<BlockItem> COLORED_SAPLING = registerColoredVariantsBlockItem("colored_sapling", ModBlocks.COLORED_SAPLING);
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_LOGS = registerColoredVariantsBlockItem("colored_log", ModBlocks.COLORED_LOGS);
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_LEAVES = registerColoredVariantsBlockItem("colored_leaves", ModBlocks.COLORED_LEAVES);
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_SAPLINGS = registerColoredVariantsBlockItem("colored_sapling", ModBlocks.COLORED_SAPLINGS);
 
-    private static RegistryObject<Item> registerColoredVariantsItem(String name) {
-        Item.Properties props = new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64);
-        RegistryObject<Item> itemRegistryObject = ITEMS.register(name, () -> new ColoredVariantsItem(props, name));
-        COLORED_VARIANTS_ITEMS.add(itemRegistryObject);
-        return itemRegistryObject;
+    private static Map<DyeColor, RegistryObject<? extends Item>> registerColoredVariantsItem(String name) {
+        Map<DyeColor, RegistryObject<? extends Item>> map = new HashMap<>();
+        for (DyeColor color: ColorfulJourney.COLORS) {
+            RegistryObject<Item> itemRegistryObject = ITEMS.register(name + "_" + color.getName(), () -> new ColoredVariantsItem(name, color));
+            ALL_COLORED_VARIANTS_ITEMS.add(itemRegistryObject);
+            map.put(color, itemRegistryObject);
+        }
+        return map;
     }
 
-    private static RegistryObject<BlockItem> registerColoredVariantsBlockItem(String name, RegistryObject<Block> block) {
-        Item.Properties props = new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64);
-        RegistryObject<BlockItem> itemRegistryObject = ITEMS.register(name, () -> new ColoredVariantsBlockItem(block.get(), props, name));
-        COLORED_VARIANTS_BLOCK_ITEMS.add(itemRegistryObject);
-        return itemRegistryObject;
+    private static Map<DyeColor, RegistryObject<? extends Item>> registerColoredVariantsBlockItem(String name, Map<DyeColor, RegistryObject<Block>> blocks) {
+        Map<DyeColor, RegistryObject<? extends Item>> map = new HashMap<>();
+        for (DyeColor color: ColorfulJourney.COLORS) {
+            RegistryObject<BlockItem> itemRegistryObject = ITEMS.register(name + "_" + color.getName(), () -> new ColoredVariantsBlockItem(blocks.get(color).get(), name, color));
+            ALL_COLORED_VARIANTS_BLOCK_ITEMS.add(itemRegistryObject);
+            map.put(color, itemRegistryObject);
+        }
+        return map;
     }
 
-    private static RegistryObject<BlockItem> registerColoredVariantsWallOrFloorItem(String name, RegistryObject<Block> floorBlock, RegistryObject<Block> wallBlock) {
-        Item.Properties props = new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64);
-        RegistryObject<BlockItem> itemRegistryObject = ITEMS.register(name, () -> new ColoredVariantsWallOrFloorItem(floorBlock.get(), wallBlock.get(), props, name));
-        COLORED_VARIANTS_BLOCK_ITEMS.add(itemRegistryObject);
-        return itemRegistryObject;
+    private static Map<DyeColor, RegistryObject<? extends Item>> registerColoredVariantsWallOrFloorItem(String name, Map<DyeColor, RegistryObject<Block>> floorBlocks, Map<DyeColor, RegistryObject<Block>> wallBlocks) {
+        Map<DyeColor, RegistryObject<? extends Item>> map = new HashMap<>();
+        for (DyeColor color: ColorfulJourney.COLORS) {
+            RegistryObject<BlockItem> itemRegistryObject = ITEMS.register(name + "_" + color.getName(), () -> new ColoredVariantsWallOrFloorItem(floorBlocks.get(color).get(), wallBlocks.get(color).get(), name, color));
+            ALL_COLORED_VARIANTS_BLOCK_ITEMS.add(itemRegistryObject);
+            map.put(color, itemRegistryObject);
+        }
+        return map;
     }
 
 

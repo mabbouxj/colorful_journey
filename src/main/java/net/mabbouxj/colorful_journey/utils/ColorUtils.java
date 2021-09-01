@@ -1,11 +1,14 @@
 package net.mabbouxj.colorful_journey.utils;
 
+import joptsimple.internal.Strings;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
+import net.mabbouxj.colorful_journey.blocks.IColoredBlock;
+import net.mabbouxj.colorful_journey.items.ColoredVariantsBlockItem;
+import net.mabbouxj.colorful_journey.items.ColoredVariantsItem;
+import net.mabbouxj.colorful_journey.items.ColoredVariantsWallOrFloorItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.IntegerProperty;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -15,7 +18,6 @@ import java.util.Random;
 public class ColorUtils {
 
     public static final String NBT_TAG_NAME_COLOR = "color";
-    public static final IntegerProperty STATE_COLOR_ID = IntegerProperty.create("color", 0, 15);
     public static final Map<Integer, String> DYE_COLOR_TO_TEXT_FORMAT = new HashMap<Integer, String>(){{
         put(DyeColor.BLACK.getId(), "§0");
         put(DyeColor.GRAY.getId(), "§8");
@@ -39,21 +41,27 @@ public class ColorUtils {
         return Arrays.asList(ColorfulJourney.COLORS).get(new Random().nextInt(ColorfulJourney.COLORS.length));
     }
 
-    public static DyeColor getColor(ItemStack stack) {
-        CompoundNBT nbt = stack.getOrCreateTag();
-        if (nbt.contains(NBT_TAG_NAME_COLOR)) {
-            return DyeColor.byId(nbt.getInt(NBT_TAG_NAME_COLOR));
+    public static DyeColor getColor(ItemStack itemStack) {
+        if (itemStack.getItem() instanceof ColoredVariantsItem) {
+            return ((ColoredVariantsItem) itemStack.getItem()).getColor();
+        } else if (itemStack.getItem() instanceof ColoredVariantsBlockItem) {
+            return ((ColoredVariantsBlockItem) itemStack.getItem()).getColor();
+        } else if (itemStack.getItem() instanceof ColoredVariantsWallOrFloorItem) {
+            return ((ColoredVariantsWallOrFloorItem) itemStack.getItem()).getColor();
         }
         return DyeColor.WHITE;
     }
 
-    public static int getColorId(BlockState state) {
-        return state.getValue(STATE_COLOR_ID);
+    public static DyeColor getColor(BlockState blockState) {
+        if (blockState.getBlock() instanceof IColoredBlock) {
+            return ((IColoredBlock) blockState.getBlock()).getColor();
+        }
+        return DyeColor.WHITE;
     }
 
-    public static void setColor(ItemStack stack, DyeColor color) {
-        CompoundNBT nbt = stack.getOrCreateTag();
-        nbt.putInt(NBT_TAG_NAME_COLOR, color.getId());
+    public static String removeColorSuffix(String str) {
+        String[] splitted = str.split("_");
+        return Strings.join(Arrays.copyOf(splitted, splitted.length - 1), "_");
     }
 
 }

@@ -1,7 +1,7 @@
 package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
-import net.mabbouxj.colorful_journey.init.ModEntities;
+import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.CreeperModel;
 import net.minecraft.entity.EntityType;
@@ -27,7 +27,7 @@ public class ColoredCreeperEntity extends CreeperEntity implements IColoredMobEn
     }
 
     public ColoredCreeperEntity(World world, CreeperEntity oldEntity, DyeColor color) {
-        this(ModEntities.COLORED_CREEPER.get(), world);
+        this(ModEntityTypes.COLORED_CREEPER.get(), world);
         this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {

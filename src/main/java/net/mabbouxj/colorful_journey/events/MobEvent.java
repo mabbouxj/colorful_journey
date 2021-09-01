@@ -2,7 +2,6 @@ package net.mabbouxj.colorful_journey.events;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.entities.IColoredMobEntity;
-import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.DyeColor;
@@ -17,6 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Mod.EventBusSubscriber
 public class MobEvent {
@@ -45,11 +45,10 @@ public class MobEvent {
         // Replace "vanilla" items by their "colorful" equivalent
         for (ItemEntity itemEntity : e.getDrops()) {
 
-            RegistryObject<? extends Item> replacementItem = ColorfulJourney.REPLACEMENT_ITEMS.getOrDefault(itemEntity.getItem().getItem(), null);
+            Map<DyeColor, RegistryObject<? extends Item>> replacementItems = ColorfulJourney.REPLACEMENT_ITEMS.getOrDefault(itemEntity.getItem().getItem(), null);
 
-            if (replacementItem != null) {
-                ItemStack newItemStack = new ItemStack(replacementItem.get(), itemEntity.getItem().getCount());
-                ColorUtils.setColor(newItemStack, entityColor);
+            if (replacementItems != null) {
+                ItemStack newItemStack = new ItemStack(replacementItems.get(entityColor).get(), itemEntity.getItem().getCount());
                 dropsToAdd.add(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), newItemStack));
                 dropsToRemove.add(itemEntity);
             }

@@ -2,7 +2,7 @@ package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
-import net.mabbouxj.colorful_journey.init.ModEntities;
+import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.init.ModSounds;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
@@ -35,7 +35,7 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
     }
 
     public InkBallEntity(World world, LivingEntity livingEntity) {
-        super(ModEntities.INK_BALL.get(), livingEntity, world);
+        super(ModEntityTypes.INK_BALL.get(), livingEntity, world);
     }
 
     public DyeColor getColor() {

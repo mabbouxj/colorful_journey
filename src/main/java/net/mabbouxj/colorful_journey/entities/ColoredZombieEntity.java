@@ -1,7 +1,7 @@
 package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
-import net.mabbouxj.colorful_journey.init.ModEntities;
+import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.ZombieModel;
 import net.minecraft.entity.EntityType;
@@ -27,7 +27,7 @@ public class ColoredZombieEntity extends ZombieEntity implements IColoredMobEnti
     }
 
     public ColoredZombieEntity(World world, ZombieEntity oldEntity, DyeColor color) {
-        this(ModEntities.COLORED_ZOMBIE.get(), world);
+        this(ModEntityTypes.COLORED_ZOMBIE.get(), world);
         this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() != null) {

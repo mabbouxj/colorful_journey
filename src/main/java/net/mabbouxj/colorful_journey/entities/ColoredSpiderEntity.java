@@ -1,7 +1,7 @@
 package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
-import net.mabbouxj.colorful_journey.init.ModEntities;
+import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.SpiderModel;
 import net.minecraft.entity.EntityType;
@@ -27,7 +27,7 @@ public class ColoredSpiderEntity extends SpiderEntity implements IColoredMobEnti
     }
 
     public ColoredSpiderEntity(World world, SpiderEntity oldEntity, DyeColor color) {
-        this(ModEntities.COLORED_SPIDER.get(), world);
+        this(ModEntityTypes.COLORED_SPIDER.get(), world);
         this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {

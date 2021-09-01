@@ -1,7 +1,7 @@
 package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
-import net.mabbouxj.colorful_journey.init.ModEntities;
+import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.entity.model.ChickenModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.item.DyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -17,6 +18,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.RegistryObject;
 
 import static net.mabbouxj.colorful_journey.ColorfulJourney.NBT_COLOR_ID;
 
@@ -33,7 +35,7 @@ public class ColoredChickenEntity extends ChickenEntity implements IColoredMobEn
     }
 
     public ColoredChickenEntity(World world, ChickenEntity oldEntity, DyeColor color) {
-        this(ModEntities.COLORED_CHICKEN.get(), world);
+        this(ModEntityTypes.COLORED_CHICKEN.get(), world);
         this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
@@ -80,11 +82,12 @@ public class ColoredChickenEntity extends ChickenEntity implements IColoredMobEn
         if (!this.level.isClientSide && this.isAlive() && !this.isBaby() && !this.isChickenJockey() && --this.eggTime <= 0) {
             this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 
-            ItemStack coloredEggStack = new ItemStack(ModItems.COLORED_EGG.get(), 1);
-            ColorUtils.setColor(coloredEggStack, this.getColor());
-
-            this.spawnAtLocation(coloredEggStack);
-            this.eggTime = this.random.nextInt(6000) + 6000;
+            RegistryObject<? extends Item> coloredEgg = ModItems.COLORED_EGGS.getOrDefault(this.getColor(), null);
+            if (coloredEgg != null) {
+                ItemStack coloredEggStack = new ItemStack(coloredEgg.get(), 1);
+                this.spawnAtLocation(coloredEggStack);
+                this.eggTime = this.random.nextInt(6000) + 6000;
+            }
         }
         super.aiStep();
     }

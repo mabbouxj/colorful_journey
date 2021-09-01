@@ -1,20 +1,21 @@
 package net.mabbouxj.colorful_journey.blocks;
 
-import net.mabbouxj.colorful_journey.utils.ColorUtils;
-import net.minecraft.block.*;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.LeavesBlock;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.DyeColor;
-import net.minecraft.state.StateContainer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 
-import static net.mabbouxj.colorful_journey.utils.ColorUtils.STATE_COLOR_ID;
 
-public class ColoredLeavesBlock extends LeavesBlock {
+public class ColoredLeavesBlock extends LeavesBlock implements IColoredBlock {
 
-    public ColoredLeavesBlock() {
+    private final DyeColor color;
+
+    public ColoredLeavesBlock(DyeColor color) {
         super(AbstractBlock.Properties
                 .of(Material.LEAVES)
                 .strength(0.2F)
@@ -24,11 +25,7 @@ public class ColoredLeavesBlock extends LeavesBlock {
                 .isValidSpawn(ColoredLeavesBlock::ocelotOrParrot)
                 .isSuffocating(ColoredLeavesBlock::never)
                 .isViewBlocking(ColoredLeavesBlock::never));
-        this.registerDefaultState(this.getStateDefinition().any()
-                .setValue(DISTANCE, 7)
-                .setValue(PERSISTENT, false)
-                .setValue(STATE_COLOR_ID, DyeColor.WHITE.getId())
-        );
+        this.color = color;
     }
 
     private static Boolean ocelotOrParrot(BlockState blockState, IBlockReader blockReader, BlockPos blockPos, EntityType<?> entityType) {
@@ -40,17 +37,7 @@ public class ColoredLeavesBlock extends LeavesBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> stateBuilder) {
-        stateBuilder.add(DISTANCE, PERSISTENT, STATE_COLOR_ID);
+    public DyeColor getColor() {
+        return color;
     }
-
-    @Override
-    public BlockState getStateForPlacement(BlockItemUseContext useContext) {
-        BlockState blockState = super.getStateForPlacement(useContext);
-        if (blockState == null) {
-            blockState = defaultBlockState();
-        }
-        return blockState.setValue(STATE_COLOR_ID, ColorUtils.getColor(useContext.getItemInHand()).getId());
-    }
-
 }

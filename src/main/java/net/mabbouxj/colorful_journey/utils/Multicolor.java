@@ -3,7 +3,6 @@ package net.mabbouxj.colorful_journey.utils;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockDisplayReader;
@@ -27,8 +26,7 @@ public class Multicolor {
         @Override
         public int getColor(BlockState blockState, @Nullable IBlockDisplayReader blockDisplayReader, @Nullable BlockPos blockPos, int tint) {
             if (tint == 0) {
-                int colorId = ColorUtils.getColorId(blockState);
-                return DyeColor.byId(colorId).getColorValue();
+                return ColorUtils.getColor(blockState).getColorValue();
             }
             return Color.WHITE.getRGB();
         }

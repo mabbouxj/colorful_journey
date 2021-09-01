@@ -1,7 +1,7 @@
 package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
-import net.mabbouxj.colorful_journey.init.ModEntities;
+import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.SkeletonModel;
 import net.minecraft.entity.EntityType;
@@ -27,7 +27,7 @@ public class ColoredWitherSkeletonEntity extends WitherSkeletonEntity implements
     }
 
     public ColoredWitherSkeletonEntity(World world, WitherSkeletonEntity oldEntity, DyeColor color) {
-        this(ModEntities.COLORED_WITHER_SKELETON.get(), world);
+        this(ModEntityTypes.COLORED_WITHER_SKELETON.get(), world);
         this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {

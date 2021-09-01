@@ -6,9 +6,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -21,21 +19,16 @@ import java.util.List;
 public class ColoredVariantsItem extends Item {
 
     private final String registryName;
+    private DyeColor color;
 
-    public ColoredVariantsItem(Properties properties, String registryName) {
-        super(properties);
+    public ColoredVariantsItem(String registryName, DyeColor color) {
+        super(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64));
         this.registryName = registryName;
+        this.color = color;
     }
 
-    @Override
-    public void fillItemCategory(ItemGroup itemGroup, NonNullList<ItemStack> subItems) {
-        if (this.getItemCategory() == itemGroup) {
-            for (DyeColor color : ColorfulJourney.COLORS) {
-                ItemStack subItemStack = new ItemStack(this, 1);
-                ColorUtils.setColor(subItemStack, color);
-                subItems.add(subItemStack);
-            }
-        }
+    public DyeColor getColor() {
+        return this.color;
     }
 
     @Override
