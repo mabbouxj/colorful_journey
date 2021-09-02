@@ -8,6 +8,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.item.DyeColor;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -16,7 +17,6 @@ import net.minecraftforge.fml.RegistryObject;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
 
 
 public class ModBlockStateProvider extends BlockStateProvider {
@@ -31,43 +31,13 @@ public class ModBlockStateProvider extends BlockStateProvider {
         // Generate more complex block states
         for (DyeColor color: ColorfulJourney.COLORS) {
 
-            ModelFile coloredLogModelFile = new ModelFile.ExistingModelFile(modLoc("block/colored_log"), this.models().existingFileHelper);
-            ModelFile coloredLogHorizontalModelFile = new ModelFile.ExistingModelFile(modLoc("block/colored_log_horizontal"), this.models().existingFileHelper);
-            getVariantBuilder(ModBlocks.COLORED_LOGS.get(color).get())
-                    .partialState()
-                    .with(BlockStateProperties.AXIS, Direction.Axis.X)
-                    .setModels(new ConfiguredModel(coloredLogHorizontalModelFile, 90, 90, false))
-                    .partialState()
-                    .with(BlockStateProperties.AXIS, Direction.Axis.Y)
-                    .setModels(new ConfiguredModel(coloredLogModelFile, 0, 0, false))
-                    .partialState()
-                    .with(BlockStateProperties.AXIS, Direction.Axis.Z)
-                    .setModels(new ConfiguredModel(coloredLogHorizontalModelFile, 90, 0, false));
+            columnHorizontalBlock(ModBlocks.COLORED_LOGS.get(color).get(), modLoc("block/colored_log"), modLoc("block/colored_log_horizontal"));
+            columnHorizontalBlock(ModBlocks.COLORED_STRIPPED_LOGS.get(color).get(), modLoc("block/colored_stripped_log"), modLoc("block/colored_stripped_log_horizontal"));
+            columnHorizontalBlock(ModBlocks.COLORED_WOODS.get(color).get(), modLoc("block/colored_wood"), modLoc("block/colored_wood"));
+            columnHorizontalBlock(ModBlocks.COLORED_STRIPPED_WOODS.get(color).get(), modLoc("block/colored_stripped_wood"), modLoc("block/colored_stripped_wood"));
 
-            // Generate blockstates file with all possible values of rotation for skull
-            ModelFile coloredSkullModelFile = new ModelFile.ExistingModelFile(modLoc("block/colored_skull"), this.models().existingFileHelper);
-            int rotationY = 0;
-            for (int i = 0; i < 16; i++) {
-                if (i % 4 == 3) {
-                    rotationY = (rotationY + 90) % 360;
-                }
-                ConfiguredModel modelForState = new ConfiguredModel(coloredSkullModelFile, 0, rotationY, false);
-                getVariantBuilder(ModBlocks.COLORED_SKULLS.get(color).get())
-                        .partialState()
-                        .with(BlockStateProperties.ROTATION_16, i)
-                        .setModels(modelForState);
-            }
-
-            // Generate blockstates file with all possible values of facing for wall skull
-            ModelFile coloredWallSkullModelFile = new ModelFile.ExistingModelFile(modLoc("block/colored_wall_skull"), this.models().existingFileHelper);
-            List<Direction> faces = Arrays.asList(Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
-            for (int i = 0; i < faces.size(); i++) {
-                ConfiguredModel modelForState = new ConfiguredModel(coloredWallSkullModelFile, 0, i*90, false);
-                getVariantBuilder(ModBlocks.COLORED_WALL_SKULLS.get(color).get())
-                        .partialState()
-                        .with(BlockStateProperties.HORIZONTAL_FACING, faces.get(i))
-                        .setModels(modelForState);
-            }
+            skullBlock(ModBlocks.COLORED_SKULLS.get(color).get(), modLoc("block/colored_skull"));
+            wallSkullBlock(ModBlocks.COLORED_WALL_SKULLS.get(color).get(), modLoc("block/colored_wall_skull"));
 
         }
 
@@ -77,10 +47,50 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 String blockModelName = ColorUtils.removeColorSuffix(registryObject.get().getRegistryName().getPath());
                 ModelFile blockModel = new ModelFile.ExistingModelFile(modLoc("block/" + blockModelName), this.models().existingFileHelper);
                 simpleBlock(registryObject.get(), blockModel);
-            } catch (Exception e) {
-                Logger.getLogger(this.getName()).info("blockstates already generated for: " + registryObject.get().getRegistryName().toString());
-            }
+            } catch (Exception ignored) { }
         }
 
+    }
+
+    private void wallSkullBlock(Block block, ResourceLocation model) {
+        ModelFile coloredWallSkullModelFile = new ModelFile.ExistingModelFile(model, this.models().existingFileHelper);
+        List<Direction> faces = Arrays.asList(Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
+        for (int i = 0; i < faces.size(); i++) {
+            ConfiguredModel modelForState = new ConfiguredModel(coloredWallSkullModelFile, 0, i*90, false);
+            getVariantBuilder(block)
+                    .partialState()
+                    .with(BlockStateProperties.HORIZONTAL_FACING, faces.get(i))
+                    .setModels(modelForState);
+        }
+    }
+
+    private void skullBlock(Block block, ResourceLocation model) {
+        ModelFile skullModelFile = new ModelFile.ExistingModelFile(model, this.models().existingFileHelper);
+        int rotationY = 0;
+        for (int i = 0; i < 16; i++) {
+            if (i % 4 == 3) {
+                rotationY = (rotationY + 90) % 360;
+            }
+            ConfiguredModel modelForState = new ConfiguredModel(skullModelFile, 0, rotationY, false);
+            getVariantBuilder(block)
+                    .partialState()
+                    .with(BlockStateProperties.ROTATION_16, i)
+                    .setModels(modelForState);
+        }
+    }
+
+    private void columnHorizontalBlock(Block block, ResourceLocation baseModel, ResourceLocation horizontalModel) {
+        ModelFile baseModelFile = new ModelFile.ExistingModelFile(baseModel, this.models().existingFileHelper);
+        ModelFile horizontalModelFile = new ModelFile.ExistingModelFile(horizontalModel, this.models().existingFileHelper);
+        getVariantBuilder(block)
+                .partialState()
+                .with(BlockStateProperties.AXIS, Direction.Axis.X)
+                .setModels(new ConfiguredModel(horizontalModelFile, 90, 90, false))
+                .partialState()
+                .with(BlockStateProperties.AXIS, Direction.Axis.Y)
+                .setModels(new ConfiguredModel(baseModelFile, 0, 0, false))
+                .partialState()
+                .with(BlockStateProperties.AXIS, Direction.Axis.Z)
+                .setModels(new ConfiguredModel(horizontalModelFile, 90, 0, false));
     }
 }

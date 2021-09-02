@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " o ",
+    "###",
+    "  i"
+  ],
+  "key": {
+    "o": {
+      "item": "minecraft:glass_bottle"
+    },
+    "#": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "i": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "colorful_journey:color_gun"
+  }
+}

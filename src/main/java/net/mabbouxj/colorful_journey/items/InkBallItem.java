@@ -1,5 +1,6 @@
 package net.mabbouxj.colorful_journey.items;
 
+import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -15,8 +16,9 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class InkBallItem extends Item {
-    public InkBallItem(Properties properties) {
-        super(properties);
+
+    public InkBallItem() {
+        super(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64));
     }
 
     @Override

@@ -1,0 +1,7 @@
+{
+  "parent": "colorful_journey:block/cube_column_horizontal",
+  "textures": {
+    "end": "colorful_journey:block/colored_stripped_log_top",
+    "side": "colorful_journey:block/colored_stripped_log"
+  }
+}

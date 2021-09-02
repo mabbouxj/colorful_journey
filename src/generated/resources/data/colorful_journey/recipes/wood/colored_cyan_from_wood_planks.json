@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "colorful_journey:colored_wood_cyan"
+    }
+  ],
+  "result": {
+    "item": "colorful_journey:colored_plank_cyan",
+    "count": 4
+  }
+}

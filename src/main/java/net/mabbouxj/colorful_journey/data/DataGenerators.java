@@ -4,6 +4,7 @@ import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.data.client.ModBlockModelProvider;
 import net.mabbouxj.colorful_journey.data.client.ModBlockStateProvider;
 import net.mabbouxj.colorful_journey.data.client.ModItemModelProvider;
+import net.mabbouxj.colorful_journey.data.crafting.ModRecipesProvider;
 import net.mabbouxj.colorful_journey.data.loot.ModLootTablesProvider;
 import net.mabbouxj.colorful_journey.data.tag.ModBlockTagProvider;
 import net.mabbouxj.colorful_journey.data.tag.ModItemTagProvider;
@@ -32,6 +33,7 @@ public final class DataGenerators {
         gen.addProvider(new ModBlockStateProvider(gen, existingFileHelper));
         gen.addProvider(new ModItemModelProvider(gen, existingFileHelper));
         gen.addProvider(new ModBlockModelProvider(gen, existingFileHelper));
+        gen.addProvider(new ModRecipesProvider(gen));
     }
 
 }

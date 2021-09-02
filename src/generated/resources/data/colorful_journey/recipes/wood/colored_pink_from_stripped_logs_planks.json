@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "colorful_journey:colored_stripped_log_pink"
+    }
+  ],
+  "result": {
+    "item": "colorful_journey:colored_plank_pink",
+    "count": 4
+  }
+}

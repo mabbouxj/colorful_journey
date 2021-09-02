@@ -24,7 +24,7 @@ public class ModItems {
     public static final List<RegistryObject<BlockItem>> ALL_COLORED_VARIANTS_BLOCK_ITEMS = new ArrayList<>();
 
     public static final RegistryObject<Item> COLOR_GUN = ITEMS.register("color_gun", ColorGunItem::new);
-    public static final RegistryObject<Item> INK_BALL = ITEMS.register("ink_ball", () -> new InkBallItem(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64)));
+    public static final RegistryObject<Item> INK_BALL = ITEMS.register("ink_ball", InkBallItem::new);
 
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_FEATHERS = registerColoredVariantsItem("colored_feather");
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_EGGS = registerColoredVariantsItem("colored_egg");
@@ -41,8 +41,12 @@ public class ModItems {
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_SKULLS = registerColoredVariantsWallOrFloorItem("colored_skull", ModBlocks.COLORED_SKULLS, ModBlocks.COLORED_WALL_SKULLS);
 
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_LOGS = registerColoredVariantsBlockItem("colored_log", ModBlocks.COLORED_LOGS);
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_STRIPPED_LOGS = registerColoredVariantsBlockItem("colored_stripped_log", ModBlocks.COLORED_STRIPPED_LOGS);
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_WOODS = registerColoredVariantsBlockItem("colored_wood", ModBlocks.COLORED_WOODS);
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_STRIPPED_WOODS = registerColoredVariantsBlockItem("colored_stripped_wood", ModBlocks.COLORED_STRIPPED_WOODS);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_LEAVES = registerColoredVariantsBlockItem("colored_leaves", ModBlocks.COLORED_LEAVES);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_SAPLINGS = registerColoredVariantsBlockItem("colored_sapling", ModBlocks.COLORED_SAPLINGS);
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_PLANKS = registerColoredVariantsBlockItem("colored_plank", ModBlocks.COLORED_PLANKS);
 
     private static Map<DyeColor, RegistryObject<? extends Item>> registerColoredVariantsItem(String name) {
         Map<DyeColor, RegistryObject<? extends Item>> map = new HashMap<>();

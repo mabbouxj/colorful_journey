@@ -3,7 +3,8 @@ package net.mabbouxj.colorful_journey;
 import net.mabbouxj.colorful_journey.client.entity.render.*;
 import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
 import net.mabbouxj.colorful_journey.entities.*;
-import net.mabbouxj.colorful_journey.events.MobEvent;
+import net.mabbouxj.colorful_journey.events.BlockEvents;
+import net.mabbouxj.colorful_journey.events.MobEvents;
 import net.mabbouxj.colorful_journey.init.*;
 import net.mabbouxj.colorful_journey.utils.Multicolor;
 import net.minecraft.block.Block;
@@ -72,7 +73,6 @@ public class ColorfulJourney {
         ModSounds.register(bus);
         ModParticles.register(bus);
         ModRecipeSerializers.register(bus);
-        //ModFeatures.register(bus);
 
         bus.addListener(Common::onCommonSetup);
         bus.addListener(Common::onEntityAttributeCreationEvent);
@@ -123,7 +123,8 @@ public class ColorfulJourney {
 
         @SubscribeEvent
         public static void onCommonSetup(FMLCommonSetupEvent event) {
-            MinecraftForge.EVENT_BUS.register(new MobEvent());
+            MinecraftForge.EVENT_BUS.register(new MobEvents());
+            MinecraftForge.EVENT_BUS.register(new BlockEvents());
         }
 
         @SubscribeEvent
