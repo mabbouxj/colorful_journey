@@ -42,6 +42,20 @@ public class ModRecipesProvider extends RecipeProvider {
                 .unlockedBy("has_" + ModItems.COLOR_GUN.getId().getPath(), has(ModItems.COLOR_GUN.get()))
                 .save(consumer);
 
+        ShapedRecipeBuilder.shaped(ModItems.RUBIKS_CUBE_UNFINISHED.get(), 1)
+                .pattern("wr#")
+                .pattern("g#b")
+                .pattern("#oy")
+                .define('#', Tags.Items.NUGGETS_IRON)
+                .define('w', Tags.Items.DYES_WHITE)
+                .define('r', Tags.Items.DYES_RED)
+                .define('g', Tags.Items.DYES_GREEN)
+                .define('b', Tags.Items.DYES_BLUE)
+                .define('o', Tags.Items.DYES_ORANGE)
+                .define('y', Tags.Items.DYES_YELLOW)
+                .unlockedBy("has_" + ModItems.RUBIKS_CUBE_UNFINISHED.getId().getPath(), has(ModItems.RUBIKS_CUBE_UNFINISHED.get()))
+                .save(consumer);
+
     }
 
     private void woodRecipes(Consumer<IFinishedRecipe> consumer) {

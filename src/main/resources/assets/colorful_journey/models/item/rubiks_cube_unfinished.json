@@ -1,0 +1,17 @@
+{
+  "parent": "colorful_journey:block/rubiks_cube_unfinished",
+  "overrides": [
+    {
+      "predicate": { "colorful_journey:mix": 1 },
+      "model": "colorful_journey:block/rubiks_cube_unfinished_0"
+    },
+    {
+      "predicate": { "colorful_journey:mix": 2 },
+      "model": "colorful_journey:block/rubiks_cube_unfinished_1"
+    },
+    {
+      "predicate": { "colorful_journey:mix": 3 },
+      "model": "colorful_journey:block/rubiks_cube_unfinished_2"
+    }
+  ]
+}

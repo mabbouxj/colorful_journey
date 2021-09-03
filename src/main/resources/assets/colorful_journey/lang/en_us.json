@@ -13,6 +13,8 @@
   "item.colorful_journey.colored_ender_pearl": "Ender Pearl",
   "item.colorful_journey.colored_nether_star": "Nether Star",
   "item.colorful_journey.colored_gunpowder": "Gunpowder",
+  "block.colorful_journey.rubiks_cube": "Rubik's Cube",
+  "block.colorful_journey.rubiks_cube_unfinished": "Unfinished Rubik's Cube",
   "block.colorful_journey.colored_skull": "Skull",
   "block.colorful_journey.colored_log": "Log",
   "block.colorful_journey.colored_stripped_log": "Stripped Log",
@@ -25,5 +27,7 @@
   "tooltip.colorful_journey.color_gun": "Craft with §eInk Ball§r to repair",
   "tooltip.colorful_journey.ink_ball": "Eeny, meeny, miny, moe...",
   "tooltip.colorful_journey.colored_skull": "To spawn a §eWither§r with this beautiful skull, place it §elast§r",
+  "tooltip.colorful_journey.rubiks_cube": "You got lucky this time! §bSneak + Right-click§r to start over",
+  "tooltip.colorful_journey.rubiks_cube_unfinished": "§eShaking§r it in your hand seems to do something\nMaybe trying harder will end it up somewhere...",
   "message.colorful_journey.color_gun_out_of_ink": "Your gun is out of ink!"
 }

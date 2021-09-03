@@ -6,6 +6,7 @@ import net.mabbouxj.colorful_journey.entities.*;
 import net.mabbouxj.colorful_journey.events.BlockEvents;
 import net.mabbouxj.colorful_journey.events.MobEvents;
 import net.mabbouxj.colorful_journey.init.*;
+import net.mabbouxj.colorful_journey.items.RubiksCubeUnfinishedItem;
 import net.mabbouxj.colorful_journey.utils.Multicolor;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -20,6 +21,7 @@ import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.entity.passive.PandaEntity;
 import net.minecraft.item.*;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -171,6 +173,17 @@ public class ColorfulJourney {
                 RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_LEAVES.get(color).get(), RenderType.cutout());
                 RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_SAPLINGS.get(color).get(), RenderType.cutout());
             }
+
+            RenderTypeLookup.setRenderLayer(ModBlocks.RUBIKS_CUBE.get(), RenderType.solid());
+            RenderTypeLookup.setRenderLayer(ModBlocks.RUBIKS_CUBE_UNFINISHED.get(), RenderType.solid());
+
+            event.enqueueWork(() -> {
+                ItemModelsProperties.register(
+                        ModItems.RUBIKS_CUBE_UNFINISHED.get(),
+                        new ResourceLocation(MOD_ID, "mix"),
+                        (stack, world, player) -> stack.getItem() instanceof RubiksCubeUnfinishedItem ? RubiksCubeUnfinishedItem.getMixVariant(stack): 0
+                );
+            });
 
         }
 

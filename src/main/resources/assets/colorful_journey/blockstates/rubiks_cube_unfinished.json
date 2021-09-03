@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "mix=0,facing=north": { "model": "colorful_journey:block/rubiks_cube_unfinished" },
+    "mix=0,facing=south": { "model": "colorful_journey:block/rubiks_cube_unfinished", "y": 180 },
+    "mix=0,facing=west": { "model": "colorful_journey:block/rubiks_cube_unfinished", "y": 270 },
+    "mix=0,facing=east": { "model": "colorful_journey:block/rubiks_cube_unfinished", "y": 90 },
+    "mix=0,facing=up": { "model": "colorful_journey:block/rubiks_cube_unfinished", "x": 270 },
+    "mix=0,facing=down": { "model": "colorful_journey:block/rubiks_cube_unfinished", "x": 90 },
+    "mix=1,facing=north": { "model": "colorful_journey:block/rubiks_cube_unfinished_0" },
+    "mix=1,facing=south": { "model": "colorful_journey:block/rubiks_cube_unfinished_0", "y": 180 },
+    "mix=1,facing=west": { "model": "colorful_journey:block/rubiks_cube_unfinished_0", "y": 270 },
+    "mix=1,facing=east": { "model": "colorful_journey:block/rubiks_cube_unfinished_0", "y": 90 },
+    "mix=1,facing=up": { "model": "colorful_journey:block/rubiks_cube_unfinished_0", "x": 270 },
+    "mix=1,facing=down": { "model": "colorful_journey:block/rubiks_cube_unfinished_0", "x": 90 },
+    "mix=2,facing=north": { "model": "colorful_journey:block/rubiks_cube_unfinished_1" },
+    "mix=2,facing=south": { "model": "colorful_journey:block/rubiks_cube_unfinished_1", "y": 180 },
+    "mix=2,facing=west": { "model": "colorful_journey:block/rubiks_cube_unfinished_1", "y": 270 },
+    "mix=2,facing=east": { "model": "colorful_journey:block/rubiks_cube_unfinished_1", "y": 90 },
+    "mix=2,facing=up": { "model": "colorful_journey:block/rubiks_cube_unfinished_1", "x": 270 },
+    "mix=2,facing=down": { "model": "colorful_journey:block/rubiks_cube_unfinished_1", "x": 90 },
+    "mix=3,facing=north": { "model": "colorful_journey:block/rubiks_cube_unfinished_2" },
+    "mix=3,facing=south": { "model": "colorful_journey:block/rubiks_cube_unfinished_2", "y": 180 },
+    "mix=3,facing=west": { "model": "colorful_journey:block/rubiks_cube_unfinished_2", "y": 270 },
+    "mix=3,facing=east": { "model": "colorful_journey:block/rubiks_cube_unfinished_2", "y": 90 },
+    "mix=3,facing=up": { "model": "colorful_journey:block/rubiks_cube_unfinished_2", "x": 270 },
+    "mix=3,facing=down": { "model": "colorful_journey:block/rubiks_cube_unfinished_2", "x": 90 }
+  }
+}

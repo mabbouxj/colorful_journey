@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "wr#",
+    "g#b",
+    "#oy"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:nuggets/iron"
+    },
+    "w": {
+      "tag": "forge:dyes/white"
+    },
+    "r": {
+      "tag": "forge:dyes/red"
+    },
+    "g": {
+      "tag": "forge:dyes/green"
+    },
+    "b": {
+      "tag": "forge:dyes/blue"
+    },
+    "o": {
+      "tag": "forge:dyes/orange"
+    },
+    "y": {
+      "tag": "forge:dyes/yellow"
+    }
+  },
+  "result": {
+    "item": "colorful_journey:rubiks_cube_unfinished"
+  }
+}

@@ -25,6 +25,8 @@ public class ModItems {
 
     public static final RegistryObject<Item> COLOR_GUN = ITEMS.register("color_gun", ColorGunItem::new);
     public static final RegistryObject<Item> INK_BALL = ITEMS.register("ink_ball", InkBallItem::new);
+    public static final RegistryObject<BlockItem> RUBIKS_CUBE = ITEMS.register("rubiks_cube", RubiksCubeItem::new);
+    public static final RegistryObject<BlockItem> RUBIKS_CUBE_UNFINISHED = ITEMS.register("rubiks_cube_unfinished", RubiksCubeUnfinishedItem::new);
 
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_FEATHERS = registerColoredVariantsItem("colored_feather");
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_EGGS = registerColoredVariantsItem("colored_egg");

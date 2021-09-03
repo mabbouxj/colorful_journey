@@ -25,6 +25,9 @@ public class ModBlocks {
 
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ColorfulJourney.MOD_ID);
 
+    public static RegistryObject<Block> RUBIKS_CUBE = BLOCKS.register("rubiks_cube", RubiksCubeBlock::new);
+    public static RegistryObject<Block> RUBIKS_CUBE_UNFINISHED = BLOCKS.register("rubiks_cube_unfinished", RubiksCubeUnfinishedBlock::new);
+
     public static final List<RegistryObject<Block>> ALL_COLORED_VARIANTS_BLOCKS = new ArrayList<>();
     public static Map<DyeColor, RegistryObject<Block>> COLORED_SKULLS = registerColoredVariantsBlock("colored_skull", ColoredSkullBlock::new);
     public static Map<DyeColor, RegistryObject<Block>> COLORED_WALL_SKULLS = registerColoredVariantsBlock("colored_wall_skull", ColoredWallSkullBlock::new);
