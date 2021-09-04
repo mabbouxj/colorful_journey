@@ -9,6 +9,7 @@ import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.DyeColor;
@@ -29,6 +30,7 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
 
     private static final byte VANILLA_IMPACT_STATUS_ID = 3;
     private DyeColor color = ColorUtils.getRandomDyeColor();
+    private LivingEntity shooter;
 
     public InkBallEntity(EntityType<? extends InkBallEntity> entityType, World world) {
         super(entityType, world);
@@ -36,6 +38,7 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
 
     public InkBallEntity(World world, LivingEntity livingEntity) {
         super(ModEntityTypes.INK_BALL.get(), livingEntity, world);
+        this.shooter = livingEntity;
     }
 
     public DyeColor getColor() {
@@ -65,21 +68,28 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
                 EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
                 Entity entity = entityRayTraceResult.getEntity();
                 Entity newEntity = null;
+                Class<? extends Entity> targetClass = null;
 
-                if (entity instanceof IColoredMobEntity) {
-                    ((IColoredMobEntity) entity).setColor(this.getColor());
-                } else if (entity instanceof SheepEntity) {
+                if (entity instanceof MobEntity) {
+                    ((MobEntity) entity).setAggressive(true);
+                    ((MobEntity) entity).setTarget(this.shooter);
+                }
+
+                if (entity instanceof SheepEntity) {
                     ((SheepEntity) entity).setColor(this.getColor());
+                } else if (entity instanceof IColoredMobEntity) {
+                    targetClass = entity.getClass();
                 } else {
-                    Class<? extends Entity> targetClass = ColorfulJourney.REPLACEMENT_MOBS.getOrDefault(entity.getClass(), null);
-                    if (targetClass != null) {
-                        try {
-                            newEntity = targetClass
-                                    .getConstructor(World.class, entity.getClass(), DyeColor.class)
-                                    .newInstance(this.level, entity, this.getColor());
-                        } catch (Exception e) {
-                            ColorfulJourney.LOGGER.info("Could not create replacement mob for " + targetClass.getName());
-                        }
+                    targetClass = ColorfulJourney.REPLACEMENT_MOBS.getOrDefault(entity.getClass(), null);
+                }
+
+                if (targetClass != null) {
+                    try {
+                        newEntity = targetClass
+                                .getConstructor(World.class, targetClass.getSuperclass(), DyeColor.class)
+                                .newInstance(this.level, entity, this.getColor());
+                    } catch (Exception e) {
+                        ColorfulJourney.LOGGER.info("Could not create replacement mob for " + targetClass.getName());
                     }
                 }
 
@@ -95,13 +105,13 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
     @Override
     public void tick() {
         super.tick();
-        makeParticle(1, 3);
+        makeParticle(2, 3);
     }
 
     @Override
     public void handleEntityEvent(byte statusID) {
         if (statusID == VANILLA_IMPACT_STATUS_ID) {
-            makeParticle(10, 40);
+            makeParticle(8, 40);
         }
     }
 

@@ -2,10 +2,14 @@ package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
+import net.mabbouxj.colorful_journey.utils.ColorAttributeModifier;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.EndermanModel;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.EndermanEntity;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -27,7 +31,7 @@ public class ColoredEndermanEntity extends EndermanEntity implements IColoredMob
     }
 
     public ColoredEndermanEntity(World world, EndermanEntity oldEntity, DyeColor color) {
-        this(ModEntityTypes.COLORED_ENDERMAN.get(), world);
+        this(ModEntityTypes.COLORED_ENDERMAN.get(color).get(), world);
         this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
@@ -37,6 +41,14 @@ public class ColoredEndermanEntity extends EndermanEntity implements IColoredMob
         MobUtils.initFromOldEntity(this, oldEntity);
         this.setCarriedBlock(oldEntity.getCarriedBlock());
 
+    }
+
+    public static AttributeModifierMap.MutableAttribute createAttributes(DyeColor color) {
+        return MonsterEntity.createMonsterAttributes()
+                .add(Attributes.MAX_HEALTH, 40.0D * ColorAttributeModifier.HEALTH.byColor(color))
+                .add(Attributes.MOVEMENT_SPEED, 0.3D * ColorAttributeModifier.SPEED.byColor(color))
+                .add(Attributes.ATTACK_DAMAGE, 7.0D * ColorAttributeModifier.DAMAGE.byColor(color))
+                .add(Attributes.FOLLOW_RANGE, 64.0D);
     }
 
     @Override

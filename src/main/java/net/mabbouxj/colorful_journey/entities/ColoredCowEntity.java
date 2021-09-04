@@ -2,10 +2,14 @@ package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
+import net.mabbouxj.colorful_journey.utils.ColorAttributeModifier;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.CowModel;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.nbt.CompoundNBT;
@@ -29,7 +33,7 @@ public class ColoredCowEntity extends CowEntity implements IColoredMobEntity {
     }
 
     public ColoredCowEntity(World world, CowEntity oldEntity, DyeColor color) {
-        this(ModEntityTypes.COLORED_COW.get(), world);
+        this(ModEntityTypes.COLORED_COW.get(color).get(), world);
         this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
@@ -37,6 +41,12 @@ public class ColoredCowEntity extends CowEntity implements IColoredMobEntity {
         }
 
         MobUtils.initFromOldEntity(this, oldEntity);
+    }
+
+    public static AttributeModifierMap.MutableAttribute createAttributes(DyeColor color) {
+        return MobEntity.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 10.0D * ColorAttributeModifier.HEALTH.byColor(color))
+                .add(Attributes.MOVEMENT_SPEED, 0.2D * ColorAttributeModifier.SPEED.byColor(color));
     }
 
     @Override

@@ -2,9 +2,13 @@ package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
+import net.mabbouxj.colorful_journey.utils.ColorAttributeModifier;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.SpiderModel;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.monster.SpiderEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.nbt.CompoundNBT;
@@ -27,7 +31,7 @@ public class ColoredSpiderEntity extends SpiderEntity implements IColoredMobEnti
     }
 
     public ColoredSpiderEntity(World world, SpiderEntity oldEntity, DyeColor color) {
-        this(ModEntityTypes.COLORED_SPIDER.get(), world);
+        this(ModEntityTypes.COLORED_SPIDER.get(color).get(), world);
         this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
@@ -36,6 +40,12 @@ public class ColoredSpiderEntity extends SpiderEntity implements IColoredMobEnti
 
         MobUtils.initFromOldEntity(this, oldEntity);
 
+    }
+
+    public static AttributeModifierMap.MutableAttribute createAttributes(DyeColor color) {
+        return MonsterEntity.createMonsterAttributes()
+                .add(Attributes.MAX_HEALTH, 16.0D * ColorAttributeModifier.HEALTH.byColor(color))
+                .add(Attributes.MOVEMENT_SPEED, 0.3D * ColorAttributeModifier.SPEED.byColor(color));
     }
 
     @Override

@@ -2,9 +2,14 @@ package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
+import net.mabbouxj.colorful_journey.utils.ColorAttributeModifier;
+import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.BeeModel;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.nbt.CompoundNBT;
@@ -25,10 +30,11 @@ public class ColoredBeeEntity extends BeeEntity implements IColoredMobEntity {
 
     public ColoredBeeEntity(EntityType<? extends BeeEntity> entityType, World world) {
         super(entityType, world);
+        this.setColor(ColorUtils.getRandomDyeColor());
     }
 
     public ColoredBeeEntity(World world, BeeEntity oldEntity, DyeColor color) {
-        this(ModEntityTypes.COLORED_BEE.get(), world);
+        this(ModEntityTypes.COLORED_BEE.get(color).get(), world);
         this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
@@ -38,6 +44,15 @@ public class ColoredBeeEntity extends BeeEntity implements IColoredMobEntity {
         MobUtils.initFromOldEntity(this, oldEntity);
         this.setStingerCount(oldEntity.getStingerCount());
         this.setPersistentAngerTarget(oldEntity.getPersistentAngerTarget());
+    }
+
+    public static AttributeModifierMap.MutableAttribute createAttributes(DyeColor color) {
+        return MobEntity.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 10.0D * ColorAttributeModifier.HEALTH.byColor(color))
+                .add(Attributes.FLYING_SPEED, 0.6D * ColorAttributeModifier.SPEED.byColor(color))
+                .add(Attributes.MOVEMENT_SPEED, 0.3D * ColorAttributeModifier.SPEED.byColor(color))
+                .add(Attributes.ATTACK_DAMAGE, 2.0D * ColorAttributeModifier.DAMAGE.byColor(color))
+                .add(Attributes.FOLLOW_RANGE, 48.0D);
     }
 
     @Override

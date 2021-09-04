@@ -2,9 +2,13 @@ package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
+import net.mabbouxj.colorful_journey.utils.ColorAttributeModifier;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.ZombieModel;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.nbt.CompoundNBT;
@@ -27,7 +31,7 @@ public class ColoredZombieEntity extends ZombieEntity implements IColoredMobEnti
     }
 
     public ColoredZombieEntity(World world, ZombieEntity oldEntity, DyeColor color) {
-        this(ModEntityTypes.COLORED_ZOMBIE.get(), world);
+        this(ModEntityTypes.COLORED_ZOMBIE.get(color).get(), world);
         this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() != null) {
@@ -36,6 +40,15 @@ public class ColoredZombieEntity extends ZombieEntity implements IColoredMobEnti
 
         MobUtils.initFromOldEntity(this, oldEntity);
 
+    }
+
+    public static AttributeModifierMap.MutableAttribute createAttributes(DyeColor color) {
+        return MonsterEntity.createMonsterAttributes()
+                .add(Attributes.FOLLOW_RANGE, 35.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.23D * ColorAttributeModifier.SPEED.byColor(color))
+                .add(Attributes.ATTACK_DAMAGE, 3.0D * ColorAttributeModifier.DAMAGE.byColor(color))
+                .add(Attributes.ARMOR, 2.0D)
+                .add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
     }
 
     @Override

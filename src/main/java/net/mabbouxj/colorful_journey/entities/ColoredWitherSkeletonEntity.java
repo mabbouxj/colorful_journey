@@ -2,9 +2,13 @@ package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
+import net.mabbouxj.colorful_journey.utils.ColorAttributeModifier;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.SkeletonModel;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.monster.WitherSkeletonEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.nbt.CompoundNBT;
@@ -27,7 +31,7 @@ public class ColoredWitherSkeletonEntity extends WitherSkeletonEntity implements
     }
 
     public ColoredWitherSkeletonEntity(World world, WitherSkeletonEntity oldEntity, DyeColor color) {
-        this(ModEntityTypes.COLORED_WITHER_SKELETON.get(), world);
+        this(ModEntityTypes.COLORED_WITHER_SKELETON.get(color).get(), world);
         this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
@@ -36,6 +40,11 @@ public class ColoredWitherSkeletonEntity extends WitherSkeletonEntity implements
 
         MobUtils.initFromOldEntity(this, oldEntity);
 
+    }
+
+    public static AttributeModifierMap.MutableAttribute createAttributes(DyeColor color) {
+        return MonsterEntity.createMonsterAttributes()
+                .add(Attributes.MOVEMENT_SPEED, 0.25D * ColorAttributeModifier.SPEED.byColor(color));
     }
 
     @Override

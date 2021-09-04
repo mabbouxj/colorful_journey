@@ -2,10 +2,14 @@ package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
+import net.mabbouxj.colorful_journey.utils.ColorAttributeModifier;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.WitherModel;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.boss.WitherEntity;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -31,7 +35,7 @@ public class ColoredWitherEntity extends WitherEntity implements IColoredMobEnti
     }
 
     public ColoredWitherEntity(World world, WitherEntity oldEntity, DyeColor color) {
-        this(ModEntityTypes.COLORED_WITHER.get(), world);
+        this(ModEntityTypes.COLORED_WITHER.get(color).get(), world);
         this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
@@ -42,6 +46,14 @@ public class ColoredWitherEntity extends WitherEntity implements IColoredMobEnti
 
         this.setInvulnerable(oldEntity.isInvulnerable());
         this.setInvulnerableTicks(oldEntity.getInvulnerableTicks());
+    }
+
+    public static AttributeModifierMap.MutableAttribute createAttributes(DyeColor color) {
+        return MonsterEntity.createMonsterAttributes()
+                .add(Attributes.MAX_HEALTH, 300.0D * ColorAttributeModifier.HEALTH.byColor(color))
+                .add(Attributes.MOVEMENT_SPEED, 0.6D * ColorAttributeModifier.SPEED.byColor(color))
+                .add(Attributes.FOLLOW_RANGE, 40.0D)
+                .add(Attributes.ARMOR, 4.0D * ColorAttributeModifier.ARMOR.byColor(color));
     }
 
     @Override

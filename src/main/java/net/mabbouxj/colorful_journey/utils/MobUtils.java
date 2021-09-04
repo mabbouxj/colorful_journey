@@ -27,7 +27,7 @@ public class MobUtils {
     }
 
     private static void initAttributes(MobEntity newEntity, MobEntity oldEntity) {
-        newEntity.setHealth(oldEntity.getHealth());
+        newEntity.setHealth(oldEntity.getHealth() * newEntity.getMaxHealth() / oldEntity.getMaxHealth());
         newEntity.setAggressive(oldEntity.isAggressive());
         newEntity.setTarget(oldEntity.getTarget());
         newEntity.setCanPickUpLoot(oldEntity.canPickUpLoot());

@@ -131,19 +131,20 @@ public class ColorfulJourney {
 
         @SubscribeEvent
         public static void onEntityAttributeCreationEvent(EntityAttributeCreationEvent event) {
-            event.put(ModEntityTypes.COLORED_CHICKEN.get(), ChickenEntity.createAttributes().build());
-            event.put(ModEntityTypes.COLORED_BEE.get(), BeeEntity.createAttributes().build());
-            event.put(ModEntityTypes.COLORED_SKELETON.get(), SkeletonEntity.createAttributes().build());
-            event.put(ModEntityTypes.COLORED_COW.get(), CowEntity.createAttributes().build());
-            event.put(ModEntityTypes.COLORED_PANDA.get(), PandaEntity.createAttributes().build());
-            event.put(ModEntityTypes.COLORED_ZOMBIE.get(), ZombieEntity.createAttributes().build());
-            event.put(ModEntityTypes.COLORED_SPIDER.get(), SpiderEntity.createAttributes().build());
-            event.put(ModEntityTypes.COLORED_ENDERMAN.get(), EndermanEntity.createAttributes().build());
-            event.put(ModEntityTypes.COLORED_WITHER_SKELETON.get(), WitherSkeletonEntity.createAttributes().build());
-            event.put(ModEntityTypes.COLORED_WITHER.get(), WitherEntity.createAttributes().build());
-            event.put(ModEntityTypes.COLORED_CREEPER.get(), CreeperEntity.createAttributes().build());
+            for (DyeColor color: ColorfulJourney.COLORS) {
+                event.put(ModEntityTypes.COLORED_CHICKEN.get(color).get(), ColoredChickenEntity.createAttributes(color).build());
+                event.put(ModEntityTypes.COLORED_BEE.get(color).get(), ColoredBeeEntity.createAttributes(color).build());
+                event.put(ModEntityTypes.COLORED_SKELETON.get(color).get(), ColoredSkeletonEntity.createAttributes(color).build());
+                event.put(ModEntityTypes.COLORED_COW.get(color).get(), ColoredCowEntity.createAttributes(color).build());
+                event.put(ModEntityTypes.COLORED_PANDA.get(color).get(), ColoredPandaEntity.createAttributes(color).build());
+                event.put(ModEntityTypes.COLORED_ZOMBIE.get(color).get(), ColoredZombieEntity.createAttributes(color).build());
+                event.put(ModEntityTypes.COLORED_SPIDER.get(color).get(), ColoredSpiderEntity.createAttributes(color).build());
+                event.put(ModEntityTypes.COLORED_ENDERMAN.get(color).get(), ColoredEndermanEntity.createAttributes(color).build());
+                event.put(ModEntityTypes.COLORED_WITHER_SKELETON.get(color).get(), ColoredWitherSkeletonEntity.createAttributes(color).build());
+                event.put(ModEntityTypes.COLORED_WITHER.get(color).get(), ColoredWitherEntity.createAttributes(color).build());
+                event.put(ModEntityTypes.COLORED_CREEPER.get(color).get(), ColoredCreeperEntity.createAttributes(color).build());
+            }
         }
-
     }
 
     @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = ColorfulJourney.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -153,20 +154,22 @@ public class ColorfulJourney {
 
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+
             RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.INK_BALL.get(), erm -> new SpriteRenderer<>(erm, Minecraft.getInstance().getItemRenderer()));
-            RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_CHICKEN.get(), ColoredChickenRenderer::new);
-            RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_BEE.get(), ColoredBeeRenderer::new);
-            RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_SKELETON.get(), ColoredSkeletonRenderer::new);
-            RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_COW.get(), ColoredCowRenderer::new);
-            RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_PANDA.get(), ColoredPandaRenderer::new);
-            RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_ZOMBIE.get(), ColoredZombieRenderer::new);
-            RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_SPIDER.get(), ColoredSpiderRenderer::new);
-            RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_ENDERMAN.get(), ColoredEndermanRenderer::new);
-            RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_WITHER_SKELETON.get(), ColoredWitherSkeletonRenderer::new);
-            RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_WITHER.get(), ColoredWitherRenderer::new);
-            RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_CREEPER.get(), ColoredCreeperRenderer::new);
 
             for (DyeColor color: ColorfulJourney.COLORS) {
+                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_CHICKEN.get(color).get(), ColoredChickenRenderer::new);
+                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_BEE.get(color).get(), ColoredBeeRenderer::new);
+                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_SKELETON.get(color).get(), ColoredSkeletonRenderer::new);
+                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_COW.get(color).get(), ColoredCowRenderer::new);
+                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_PANDA.get(color).get(), ColoredPandaRenderer::new);
+                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_ZOMBIE.get(color).get(), ColoredZombieRenderer::new);
+                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_SPIDER.get(color).get(), ColoredSpiderRenderer::new);
+                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_ENDERMAN.get(color).get(), ColoredEndermanRenderer::new);
+                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_WITHER_SKELETON.get(color).get(), ColoredWitherSkeletonRenderer::new);
+                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_WITHER.get(color).get(), ColoredWitherRenderer::new);
+                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_CREEPER.get(color).get(), ColoredCreeperRenderer::new);
+
                 RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_SKULLS.get(color).get(), RenderType.solid());
                 RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_WALL_SKULLS.get(color).get(), RenderType.solid());
                 RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_LOGS.get(color).get(), RenderType.solid());

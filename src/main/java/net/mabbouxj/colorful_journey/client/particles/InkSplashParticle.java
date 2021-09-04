@@ -25,7 +25,7 @@ public class InkSplashParticle extends SpriteTexturedParticle {
 
     private final int MIN_LIFE_TIME = 20;
     private final int MAX_LIFE_TIME = 40;
-    final double GRAVITY_ACCELERATION_PER_TICK = -0.04;
+    final double GRAVITY_ACCELERATION_PER_TICK = -0.06;
     private final IAnimatedSprite sprites;
 
     protected InkSplashParticle(ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, IAnimatedSprite sprites, Color color, double diameter) {

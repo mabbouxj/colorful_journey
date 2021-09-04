@@ -3,10 +3,14 @@ package net.mabbouxj.colorful_journey.entities;
 import com.google.common.collect.Maps;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
+import net.mabbouxj.colorful_journey.utils.ColorAttributeModifier;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.PandaModel;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.PandaEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.nbt.CompoundNBT;
@@ -42,7 +46,7 @@ public class ColoredPandaEntity extends PandaEntity implements IColoredMobEntity
     }
 
     public ColoredPandaEntity(World world, PandaEntity oldEntity, DyeColor color) {
-        this(ModEntityTypes.COLORED_PANDA.get(), world);
+        this(ModEntityTypes.COLORED_PANDA.get(color).get(), world);
         this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
@@ -51,6 +55,12 @@ public class ColoredPandaEntity extends PandaEntity implements IColoredMobEntity
 
         MobUtils.initFromOldEntity(this, oldEntity);
 
+    }
+
+    public static AttributeModifierMap.MutableAttribute createAttributes(DyeColor color) {
+        return MobEntity.createMobAttributes()
+                .add(Attributes.MOVEMENT_SPEED, 0.15D * ColorAttributeModifier.SPEED.byColor(color))
+                .add(Attributes.ATTACK_DAMAGE, 6.0D * ColorAttributeModifier.DAMAGE.byColor(color));
     }
 
     @Override

@@ -3,10 +3,14 @@ package net.mabbouxj.colorful_journey.entities;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.init.ModItems;
+import net.mabbouxj.colorful_journey.utils.ColorAttributeModifier;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.ChickenModel;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
@@ -35,7 +39,7 @@ public class ColoredChickenEntity extends ChickenEntity implements IColoredMobEn
     }
 
     public ColoredChickenEntity(World world, ChickenEntity oldEntity, DyeColor color) {
-        this(ModEntityTypes.COLORED_CHICKEN.get(), world);
+        this(ModEntityTypes.COLORED_CHICKEN.get(color).get(), world);
         this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
@@ -43,6 +47,12 @@ public class ColoredChickenEntity extends ChickenEntity implements IColoredMobEn
         }
 
         MobUtils.initFromOldEntity(this, oldEntity);
+    }
+
+    public static AttributeModifierMap.MutableAttribute createAttributes(DyeColor color) {
+        return MobEntity.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 4.0D * ColorAttributeModifier.HEALTH.byColor(color))
+                .add(Attributes.MOVEMENT_SPEED, 0.25D * ColorAttributeModifier.SPEED.byColor(color));
     }
 
     @Override

@@ -63,7 +63,7 @@ public class ColoredSkullBlock extends WitherSkeletonSkullBlock implements IColo
                         }
                     }
 
-                    ColoredWitherEntity coloredWitherEntity = ModEntityTypes.COLORED_WITHER.get().create(world);
+                    ColoredWitherEntity coloredWitherEntity = ModEntityTypes.COLORED_WITHER.get(ColorUtils.getColor(blockState)).get().create(world);
                     coloredWitherEntity.setColor(ColorUtils.getColor(blockState));
                     BlockPos blockpos = blockpattern$patternhelper.getBlock(1, 2, 0).getPos();
                     coloredWitherEntity.moveTo((double) blockpos.getX() + 0.5D, (double) blockpos.getY() + 0.55D, (double) blockpos.getZ() + 0.5D, blockpattern$patternhelper.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F, 0.0F);
