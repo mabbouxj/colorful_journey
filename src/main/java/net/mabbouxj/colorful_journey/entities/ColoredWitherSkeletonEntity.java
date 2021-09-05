@@ -32,14 +32,13 @@ public class ColoredWitherSkeletonEntity extends WitherSkeletonEntity implements
 
     public ColoredWitherSkeletonEntity(World world, WitherSkeletonEntity oldEntity, DyeColor color) {
         this(ModEntityTypes.COLORED_WITHER_SKELETON.get(color).get(), world);
-        this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
             this.entityData.assignValues(oldEntity.getEntityData().getAll());
         }
 
+        this.setColor(color);
         MobUtils.initFromOldEntity(this, oldEntity);
-
     }
 
     public static AttributeModifierMap.MutableAttribute createAttributes(DyeColor color) {

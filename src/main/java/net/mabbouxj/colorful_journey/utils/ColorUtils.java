@@ -9,6 +9,7 @@ import net.mabbouxj.colorful_journey.items.ColoredVariantsWallOrFloorItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,7 +18,7 @@ import java.util.Random;
 
 public class ColorUtils {
 
-    public static final String NBT_TAG_NAME_COLOR = "color";
+    public static final String NBT_TAG_COLOR = "color";
     public static final Map<Integer, String> DYE_COLOR_TO_TEXT_FORMAT = new HashMap<Integer, String>(){{
         put(DyeColor.BLACK.getId(), "§0");
         put(DyeColor.GRAY.getId(), "§8");
@@ -48,8 +49,10 @@ public class ColorUtils {
             return ((ColoredVariantsBlockItem) itemStack.getItem()).getColor();
         } else if (itemStack.getItem() instanceof ColoredVariantsWallOrFloorItem) {
             return ((ColoredVariantsWallOrFloorItem) itemStack.getItem()).getColor();
+        } else {
+            CompoundNBT nbt = itemStack.getOrCreateTag();
+            return nbt.contains(NBT_TAG_COLOR) ? DyeColor.byId(nbt.getInt(NBT_TAG_COLOR)): DyeColor.WHITE;
         }
-        return DyeColor.WHITE;
     }
 
     public static DyeColor getColor(BlockState blockState) {
@@ -57,6 +60,11 @@ public class ColorUtils {
             return ((IColoredBlock) blockState.getBlock()).getColor();
         }
         return DyeColor.WHITE;
+    }
+
+    public static void setColor(ItemStack itemStack, DyeColor color) {
+        CompoundNBT nbt = itemStack.getOrCreateTag();
+        nbt.putInt(NBT_TAG_COLOR, color.getId());
     }
 
     public static String removeColorSuffix(String str) {

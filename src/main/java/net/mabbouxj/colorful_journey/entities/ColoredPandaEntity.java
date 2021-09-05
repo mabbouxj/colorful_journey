@@ -47,12 +47,12 @@ public class ColoredPandaEntity extends PandaEntity implements IColoredMobEntity
 
     public ColoredPandaEntity(World world, PandaEntity oldEntity, DyeColor color) {
         this(ModEntityTypes.COLORED_PANDA.get(color).get(), world);
-        this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
             this.entityData.assignValues(oldEntity.getEntityData().getAll());
         }
 
+        this.setColor(color);
         MobUtils.initFromOldEntity(this, oldEntity);
 
     }

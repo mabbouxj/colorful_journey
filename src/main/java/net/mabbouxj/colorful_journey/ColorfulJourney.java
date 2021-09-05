@@ -5,6 +5,7 @@ import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
 import net.mabbouxj.colorful_journey.entities.*;
 import net.mabbouxj.colorful_journey.events.BlockEvents;
 import net.mabbouxj.colorful_journey.events.MobEvents;
+import net.mabbouxj.colorful_journey.events.WorldEvents;
 import net.mabbouxj.colorful_journey.init.*;
 import net.mabbouxj.colorful_journey.items.RubiksCubeUnfinishedItem;
 import net.mabbouxj.colorful_journey.utils.Multicolor;
@@ -127,6 +128,7 @@ public class ColorfulJourney {
         public static void onCommonSetup(FMLCommonSetupEvent event) {
             MinecraftForge.EVENT_BUS.register(new MobEvents());
             MinecraftForge.EVENT_BUS.register(new BlockEvents());
+            MinecraftForge.EVENT_BUS.register(new WorldEvents());
         }
 
         @SubscribeEvent

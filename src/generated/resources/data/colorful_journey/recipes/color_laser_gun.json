@@ -10,13 +10,13 @@
       "item": "minecraft:glass_bottle"
     },
     "#": {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:netherite_ingot"
     },
     "i": {
-      "tag": "forge:rods/wooden"
+      "tag": "forge:rods/blaze"
     }
   },
   "result": {
-    "item": "colorful_journey:color_gun"
+    "item": "colorful_journey:color_laser_gun"
   }
 }

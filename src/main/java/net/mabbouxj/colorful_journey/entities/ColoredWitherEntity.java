@@ -36,14 +36,13 @@ public class ColoredWitherEntity extends WitherEntity implements IColoredMobEnti
 
     public ColoredWitherEntity(World world, WitherEntity oldEntity, DyeColor color) {
         this(ModEntityTypes.COLORED_WITHER.get(color).get(), world);
-        this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
             this.entityData.assignValues(oldEntity.getEntityData().getAll());
         }
 
+        this.setColor(color);
         MobUtils.initFromOldEntity(this, oldEntity);
-
         this.setInvulnerable(oldEntity.isInvulnerable());
         this.setInvulnerableTicks(oldEntity.getInvulnerableTicks());
     }

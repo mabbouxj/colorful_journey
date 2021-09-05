@@ -32,12 +32,12 @@ public class ColoredCreeperEntity extends CreeperEntity implements IColoredMobEn
 
     public ColoredCreeperEntity(World world, CreeperEntity oldEntity, DyeColor color) {
         this(ModEntityTypes.COLORED_CREEPER.get(color).get(), world);
-        this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
             this.entityData.assignValues(oldEntity.getEntityData().getAll());
         }
 
+        this.setColor(color);
         MobUtils.initFromOldEntity(this, oldEntity);
     }
 

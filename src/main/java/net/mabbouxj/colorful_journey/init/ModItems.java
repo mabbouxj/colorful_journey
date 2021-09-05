@@ -24,6 +24,7 @@ public class ModItems {
     public static final List<RegistryObject<BlockItem>> ALL_COLORED_VARIANTS_BLOCK_ITEMS = new ArrayList<>();
 
     public static final RegistryObject<Item> COLOR_GUN = ITEMS.register("color_gun", ColorGunItem::new);
+    public static final RegistryObject<Item> COLOR_LASER_GUN = ITEMS.register("color_laser_gun", ColorLaserGunItem::new);
     public static final RegistryObject<Item> INK_BALL = ITEMS.register("ink_ball", InkBallItem::new);
     public static final RegistryObject<BlockItem> RUBIKS_CUBE = ITEMS.register("rubiks_cube", RubiksCubeItem::new);
     public static final RegistryObject<BlockItem> RUBIKS_CUBE_UNFINISHED = ITEMS.register("rubiks_cube_unfinished", RubiksCubeUnfinishedItem::new);

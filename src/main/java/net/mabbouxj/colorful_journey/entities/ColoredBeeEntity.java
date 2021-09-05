@@ -35,12 +35,12 @@ public class ColoredBeeEntity extends BeeEntity implements IColoredMobEntity {
 
     public ColoredBeeEntity(World world, BeeEntity oldEntity, DyeColor color) {
         this(ModEntityTypes.COLORED_BEE.get(color).get(), world);
-        this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
             this.entityData.assignValues(oldEntity.getEntityData().getAll());
         }
 
+        this.setColor(color);
         MobUtils.initFromOldEntity(this, oldEntity);
         this.setStingerCount(oldEntity.getStingerCount());
         this.setPersistentAngerTarget(oldEntity.getPersistentAngerTarget());

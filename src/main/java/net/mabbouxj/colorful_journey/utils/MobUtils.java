@@ -1,11 +1,49 @@
 package net.mabbouxj.colorful_journey.utils;
 
+import net.mabbouxj.colorful_journey.ColorfulJourney;
+import net.mabbouxj.colorful_journey.entities.IColoredMobEntity;
 import net.minecraft.entity.AgeableEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.DyeColor;
 import net.minecraft.util.Hand;
+import net.minecraft.world.World;
 
 public class MobUtils {
+
+    public static Entity getNewColoredEntityFrom(LivingEntity player, Entity entity, DyeColor color) {
+        Entity newEntity = null;
+        Class<? extends Entity> targetClass = null;
+
+        if (entity instanceof MobEntity) {
+            ((MobEntity) entity).setAggressive(true);
+            ((MobEntity) entity).setTarget(player);
+        }
+
+        if (entity instanceof SheepEntity) {
+            ((SheepEntity) entity).setColor(color);
+        } else if (entity instanceof IColoredMobEntity) {
+            if (((IColoredMobEntity) entity).getColor() == color)
+                return null; // Spawn a new entity only if color changes
+            targetClass = entity.getClass();
+        } else {
+            targetClass = ColorfulJourney.REPLACEMENT_MOBS.getOrDefault(entity.getClass(), null);
+        }
+
+        if (targetClass != null) {
+            try {
+                newEntity = targetClass
+                        .getConstructor(World.class, targetClass.getSuperclass(), DyeColor.class)
+                        .newInstance(player.level, entity, color);
+            } catch (Exception e) {
+                ColorfulJourney.LOGGER.info("Could not create replacement mob for " + targetClass.getName());
+            }
+        }
+        return newEntity;
+    }
 
     public static void initFromOldEntity(MobEntity newEntity, MobEntity oldEntity) {
         initPosition(newEntity, oldEntity);

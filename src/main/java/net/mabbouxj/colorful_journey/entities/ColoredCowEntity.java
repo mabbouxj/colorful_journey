@@ -34,12 +34,12 @@ public class ColoredCowEntity extends CowEntity implements IColoredMobEntity {
 
     public ColoredCowEntity(World world, CowEntity oldEntity, DyeColor color) {
         this(ModEntityTypes.COLORED_COW.get(color).get(), world);
-        this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
             this.entityData.assignValues(oldEntity.getEntityData().getAll());
         }
 
+        this.setColor(color);
         MobUtils.initFromOldEntity(this, oldEntity);
     }
 

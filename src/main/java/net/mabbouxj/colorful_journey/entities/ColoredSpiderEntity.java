@@ -32,14 +32,13 @@ public class ColoredSpiderEntity extends SpiderEntity implements IColoredMobEnti
 
     public ColoredSpiderEntity(World world, SpiderEntity oldEntity, DyeColor color) {
         this(ModEntityTypes.COLORED_SPIDER.get(color).get(), world);
-        this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
             this.entityData.assignValues(oldEntity.getEntityData().getAll());
         }
 
+        this.setColor(color);
         MobUtils.initFromOldEntity(this, oldEntity);
-
     }
 
     public static AttributeModifierMap.MutableAttribute createAttributes(DyeColor color) {

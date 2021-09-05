@@ -32,15 +32,14 @@ public class ColoredEndermanEntity extends EndermanEntity implements IColoredMob
 
     public ColoredEndermanEntity(World world, EndermanEntity oldEntity, DyeColor color) {
         this(ModEntityTypes.COLORED_ENDERMAN.get(color).get(), world);
-        this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() == null) {
             this.entityData.assignValues(oldEntity.getEntityData().getAll());
         }
 
+        this.setColor(color);
         MobUtils.initFromOldEntity(this, oldEntity);
         this.setCarriedBlock(oldEntity.getCarriedBlock());
-
     }
 
     public static AttributeModifierMap.MutableAttribute createAttributes(DyeColor color) {

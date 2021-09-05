@@ -1,26 +1,32 @@
 {
   "color_gun_shoot": {
     "sounds": [
-      {
-        "name": "colorful_journey:color_gun_shoot",
-        "stream": true
-      }
+      {"name": "colorful_journey:color_gun_shoot", "stream": true}
     ]
   },
   "color_gun_handling": {
     "sounds": [
-      {
-        "name": "colorful_journey:color_gun_handling",
-        "stream": true
-      }
+      {"name": "colorful_journey:color_gun_handling", "stream": true}
     ]
   },
   "ink_splash": {
     "sounds": [
-      {
-        "name": "colorful_journey:ink_splash",
-        "stream": true
-      }
+      {"name": "colorful_journey:ink_splash", "stream": true}
+    ]
+  },
+  "laser_start": {
+    "sounds": [
+      {"name": "colorful_journey:laser_start", "stream": true}
+    ]
+  },
+  "laser_end": {
+    "sounds": [
+      {"name": "colorful_journey:laser_end", "stream": true}
+    ]
+  },
+  "laser_loop": {
+    "sounds": [
+      {"name": "colorful_journey:laser_loop", "stream": true}
     ]
   }
 }

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "colorful_journey:color_laser_gun"
+    ]
+  },
+  "criteria": {
+    "has_color_laser_gun": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "colorful_journey:color_laser_gun"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "colorful_journey:color_laser_gun"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_color_laser_gun",
+      "has_the_recipe"
+    ]
+  ]
+}

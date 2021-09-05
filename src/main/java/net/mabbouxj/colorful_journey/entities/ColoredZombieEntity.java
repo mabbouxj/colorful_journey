@@ -32,12 +32,12 @@ public class ColoredZombieEntity extends ZombieEntity implements IColoredMobEnti
 
     public ColoredZombieEntity(World world, ZombieEntity oldEntity, DyeColor color) {
         this(ModEntityTypes.COLORED_ZOMBIE.get(color).get(), world);
-        this.setColor(color);
 
         if (oldEntity.getEntityData().getAll() != null) {
             this.entityData.assignValues(oldEntity.getEntityData().getAll());
         }
 
+        this.setColor(color);
         MobUtils.initFromOldEntity(this, oldEntity);
 
     }

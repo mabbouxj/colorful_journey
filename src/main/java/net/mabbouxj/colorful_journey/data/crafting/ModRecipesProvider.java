@@ -37,9 +37,19 @@ public class ModRecipesProvider extends RecipeProvider {
                 .pattern("###")
                 .pattern("  i")
                 .define('o', Items.GLASS_BOTTLE)
-                .define('#', Items.NETHERITE_INGOT)
+                .define('#', Items.IRON_INGOT)
                 .define('i', Tags.Items.RODS_WOODEN)
                 .unlockedBy("has_" + ModItems.COLOR_GUN.getId().getPath(), has(ModItems.COLOR_GUN.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModItems.COLOR_LASER_GUN.get(), 1)
+                .pattern(" o ")
+                .pattern("###")
+                .pattern("  i")
+                .define('o', Items.GLASS_BOTTLE)
+                .define('#', Items.NETHERITE_INGOT)
+                .define('i', Tags.Items.RODS_BLAZE)
+                .unlockedBy("has_" + ModItems.COLOR_LASER_GUN.getId().getPath(), has(ModItems.COLOR_LASER_GUN.get()))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(ModItems.RUBIKS_CUBE_UNFINISHED.get(), 1)

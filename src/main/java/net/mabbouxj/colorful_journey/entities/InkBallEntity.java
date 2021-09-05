@@ -1,16 +1,14 @@
 package net.mabbouxj.colorful_journey.entities;
 
-import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.init.ModSounds;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
+import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
@@ -67,32 +65,7 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
             if (rayTraceResult.getType() == RayTraceResult.Type.ENTITY) {
                 EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
                 Entity entity = entityRayTraceResult.getEntity();
-                Entity newEntity = null;
-                Class<? extends Entity> targetClass = null;
-
-                if (entity instanceof MobEntity) {
-                    ((MobEntity) entity).setAggressive(true);
-                    ((MobEntity) entity).setTarget(this.shooter);
-                }
-
-                if (entity instanceof SheepEntity) {
-                    ((SheepEntity) entity).setColor(this.getColor());
-                } else if (entity instanceof IColoredMobEntity) {
-                    targetClass = entity.getClass();
-                } else {
-                    targetClass = ColorfulJourney.REPLACEMENT_MOBS.getOrDefault(entity.getClass(), null);
-                }
-
-                if (targetClass != null) {
-                    try {
-                        newEntity = targetClass
-                                .getConstructor(World.class, targetClass.getSuperclass(), DyeColor.class)
-                                .newInstance(this.level, entity, this.getColor());
-                    } catch (Exception e) {
-                        ColorfulJourney.LOGGER.info("Could not create replacement mob for " + targetClass.getName());
-                    }
-                }
-
+                Entity newEntity = MobUtils.getNewColoredEntityFrom(this.shooter, entity, this.getColor());
                 if (newEntity != null) {
                     entity.remove();
                     this.level.addFreshEntity(newEntity);

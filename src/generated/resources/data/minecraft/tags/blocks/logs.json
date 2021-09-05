@@ -1,12 +1,12 @@
 {
   "replace": false,
   "values": [
-    "colorful_journey:colored_log_blue",
+    "colorful_journey:colored_log_red",
+    "colorful_journey:colored_log_cyan",
+    "colorful_journey:colored_log_orange",
     "colorful_journey:colored_log_lime",
     "colorful_journey:colored_log_green",
     "colorful_journey:colored_log_pink",
-    "colorful_journey:colored_log_orange",
-    "colorful_journey:colored_log_cyan",
-    "colorful_journey:colored_log_red"
+    "colorful_journey:colored_log_blue"
   ]
 }

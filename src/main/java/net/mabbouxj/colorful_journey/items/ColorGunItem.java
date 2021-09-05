@@ -14,7 +14,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -74,12 +73,6 @@ public class ColorGunItem extends Item {
     @Override
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         return true;
-    }
-
-    @Override
-    public ITextComponent getName(ItemStack itemStack) {
-        String itemName = new TranslationTextComponent("item.colorful_journey.color_gun").getString();
-        return new StringTextComponent("§l" + itemName);
     }
 
     @Override

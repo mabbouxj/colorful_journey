@@ -1,12 +1,12 @@
 {
   "replace": false,
   "values": [
-    "colorful_journey:colored_ender_pearl_blue",
+    "colorful_journey:colored_ender_pearl_red",
+    "colorful_journey:colored_ender_pearl_cyan",
+    "colorful_journey:colored_ender_pearl_orange",
     "colorful_journey:colored_ender_pearl_lime",
     "colorful_journey:colored_ender_pearl_green",
     "colorful_journey:colored_ender_pearl_pink",
-    "colorful_journey:colored_ender_pearl_orange",
-    "colorful_journey:colored_ender_pearl_cyan",
-    "colorful_journey:colored_ender_pearl_red"
+    "colorful_journey:colored_ender_pearl_blue"
   ]
 }

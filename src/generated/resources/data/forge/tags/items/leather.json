@@ -1,12 +1,12 @@
 {
   "replace": false,
   "values": [
-    "colorful_journey:colored_leather_blue",
+    "colorful_journey:colored_leather_red",
+    "colorful_journey:colored_leather_cyan",
+    "colorful_journey:colored_leather_orange",
     "colorful_journey:colored_leather_lime",
     "colorful_journey:colored_leather_green",
     "colorful_journey:colored_leather_pink",
-    "colorful_journey:colored_leather_orange",
-    "colorful_journey:colored_leather_cyan",
-    "colorful_journey:colored_leather_red"
+    "colorful_journey:colored_leather_blue"
   ]
 }
