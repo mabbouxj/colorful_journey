@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "colorful_journey:colored_ingot_red"
+    }
+  ],
+  "result": {
+    "item": "colorful_journey:colored_nugget_red",
+    "count": 9
+  }
+}

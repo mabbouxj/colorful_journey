@@ -38,6 +38,8 @@ public class ModBlocks {
     public static Map<DyeColor, RegistryObject<Block>> COLORED_LEAVES = registerColoredVariantsBlock("colored_leaves",ColoredLeavesBlock::new);
     public static Map<DyeColor, RegistryObject<Block>> COLORED_SAPLINGS = registerColoredVariantsBlock("colored_sapling", ColoredSaplingBlock::new);
     public static Map<DyeColor, RegistryObject<Block>> COLORED_PLANKS = registerColoredVariantsBlock("colored_plank", ColoredBlock::new, AbstractBlock.Properties.of(Material.WOOD, MaterialColor.WOOD).strength(2.0F, 3.0F).sound(SoundType.WOOD));
+    public static Map<DyeColor, RegistryObject<Block>> COLORED_ORES = registerColoredVariantsBlock("colored_ore", ColoredBlock::new, AbstractBlock.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F));
+    public static Map<DyeColor, RegistryObject<Block>> COLORED_INGOT_BLOCKS = registerColoredVariantsBlock("colored_ingot_block", ColoredBlock::new, AbstractBlock.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL));
 
     private static Map<DyeColor, RegistryObject<Block>> registerColoredVariantsBlock(String name, Function<DyeColor, ? extends Block> supplier) {
         Map<DyeColor, RegistryObject<Block>> map = new HashMap<>();

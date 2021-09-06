@@ -2,6 +2,7 @@ package net.mabbouxj.colorful_journey.items;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
+import net.mabbouxj.colorful_journey.world.gen.OreGeneration;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -46,7 +47,13 @@ public class ColoredVariantsBlockItem extends BlockItem {
         TranslationTextComponent tooltip = new TranslationTextComponent("tooltip.colorful_journey." + this.registryName);
         if (!tooltip.getString().contains("tooltip.colorful_journey")) {
             if (Screen.hasShiftDown()) {
-                tooltips.add(tooltip);
+                if (this.registryName.equals("colored_ore")) {
+                    int minHeight = OreGeneration.COLORED_ORE_GEN_MIN_MAX.get(ColorUtils.getColor(itemStack)).getFirst();
+                    int maxHeight = OreGeneration.COLORED_ORE_GEN_MIN_MAX.get(ColorUtils.getColor(itemStack)).getSecond();
+                    tooltips.add(new StringTextComponent(tooltip.getString() + "[" + minHeight + ";" + maxHeight+ "]"));
+                } else {
+                    tooltips.add(tooltip);
+                }
             } else {
                 tooltips.add(new TranslationTextComponent("tooltip.colorful_journey.hold_shift_for_info"));
             }

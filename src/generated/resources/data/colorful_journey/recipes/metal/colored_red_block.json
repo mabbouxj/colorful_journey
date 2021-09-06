@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "colorful_journey:colored_ingot_red"
+    }
+  },
+  "result": {
+    "item": "colorful_journey:colored_ingot_block_red"
+  }
+}

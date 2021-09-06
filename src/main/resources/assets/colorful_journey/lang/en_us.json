@@ -1,5 +1,6 @@
 {
   "itemGroup.colorful_journey": "Colorful Journey",
+
   "item.colorful_journey.color_gun": "§bColor Gun",
   "item.colorful_journey.color_laser_gun": "§6Color Laser Gun",
   "item.colorful_journey.ink_ball": "Ink Ball",
@@ -14,6 +15,9 @@
   "item.colorful_journey.colored_ender_pearl": "Ender Pearl",
   "item.colorful_journey.colored_nether_star": "Nether Star",
   "item.colorful_journey.colored_gunpowder": "Gunpowder",
+  "item.colorful_journey.colored_nugget": "Nugget",
+  "item.colorful_journey.colored_ingot": "Ingot",
+
   "block.colorful_journey.rubiks_cube": "Rubik's Cube",
   "block.colorful_journey.rubiks_cube_unfinished": "Unfinished Rubik's Cube",
   "block.colorful_journey.colored_skull": "Skull",
@@ -24,11 +28,16 @@
   "block.colorful_journey.colored_leaves": "Leaves",
   "block.colorful_journey.colored_sapling": "Sapling",
   "block.colorful_journey.colored_plank": "Plank",
+  "block.colorful_journey.colored_ore": "Ore",
+  "block.colorful_journey.colored_ingot_block": "Ingots Block",
+
   "tooltip.colorful_journey.hold_shift_for_info": "Hold §bSHIFT§r for more Information",
   "tooltip.colorful_journey.color_gun": "Craft with §eInk Ball§r to repair",
   "tooltip.colorful_journey.ink_ball": "Eeny, meeny, miny, moe...",
   "tooltip.colorful_journey.colored_skull": "To spawn a §eWither§r with this beautiful skull, place it §elast§r",
   "tooltip.colorful_journey.rubiks_cube": "You got lucky this time! §eSneak + Right-click§r to start over",
   "tooltip.colorful_journey.rubiks_cube_unfinished": "§eShaking§r it in your hand seems to do something\nMaybe trying harder will end it up somewhere...",
+  "tooltip.colorful_journey.colored_ore": "Can be found in the §eOverworld§r at §eY=",
+
   "message.colorful_journey.color_gun_out_of_ink": "Your gun is out of ink!"
 }

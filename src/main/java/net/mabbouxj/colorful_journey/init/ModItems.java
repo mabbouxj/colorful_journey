@@ -40,6 +40,8 @@ public class ModItems {
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_ENDER_PEARLS = registerColoredVariantsItem("colored_ender_pearl");
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_NETHER_STARS = registerColoredVariantsItem("colored_nether_star");
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_GUNPOWDERS = registerColoredVariantsItem("colored_gunpowder");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_INGOTS = registerColoredVariantsItem("colored_ingot");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_NUGGETS = registerColoredVariantsItem("colored_nugget");
 
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_SKULLS = registerColoredVariantsWallOrFloorItem("colored_skull", ModBlocks.COLORED_SKULLS, ModBlocks.COLORED_WALL_SKULLS);
 
@@ -50,6 +52,8 @@ public class ModItems {
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_LEAVES = registerColoredVariantsBlockItem("colored_leaves", ModBlocks.COLORED_LEAVES);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_SAPLINGS = registerColoredVariantsBlockItem("colored_sapling", ModBlocks.COLORED_SAPLINGS);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_PLANKS = registerColoredVariantsBlockItem("colored_plank", ModBlocks.COLORED_PLANKS);
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_ORES = registerColoredVariantsBlockItem("colored_ore", ModBlocks.COLORED_ORES);
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_INGOT_BLOCKS = registerColoredVariantsBlockItem("colored_ingot_block", ModBlocks.COLORED_INGOT_BLOCKS);
 
     private static Map<DyeColor, RegistryObject<? extends Item>> registerColoredVariantsItem(String name) {
         Map<DyeColor, RegistryObject<? extends Item>> map = new HashMap<>();

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "colorful_journey:colored_ingot_block_blue"
+    }
+  ],
+  "result": {
+    "item": "colorful_journey:colored_ingot_blue",
+    "count": 9
+  }
+}

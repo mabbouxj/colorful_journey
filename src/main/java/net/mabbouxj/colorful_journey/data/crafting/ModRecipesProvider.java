@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.data.*;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 
@@ -23,6 +24,7 @@ public class ModRecipesProvider extends RecipeProvider {
     protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
 
         woodRecipes(consumer);
+        metalRecipes(consumer);
 
         ShapedRecipeBuilder.shaped(ModItems.INK_BALL.get(), 4)
                 .pattern(" # ")
@@ -66,6 +68,44 @@ public class ModRecipesProvider extends RecipeProvider {
                 .unlockedBy("has_" + ModItems.RUBIKS_CUBE_UNFINISHED.getId().getPath(), has(ModItems.RUBIKS_CUBE_UNFINISHED.get()))
                 .save(consumer);
 
+
+
+    }
+
+    private void metalRecipes(Consumer<IFinishedRecipe> consumer) {
+        for (DyeColor color: ColorfulJourney.COLORS) {
+            String name = "colored_" + color.getName();
+
+            CookingRecipeBuilder.smelting(Ingredient.of(ModBlocks.COLORED_ORES.get(color).get()), ModItems.COLORED_INGOTS.get(color).get(), 0.7f, 200)
+                    .unlockedBy("has_item", has(ModBlocks.COLORED_ORES.get(color).get()))
+                    .save(consumer, locMetal(name + "_ingots_from_smelting"));
+
+            ShapelessRecipeBuilder.shapeless(ModItems.COLORED_NUGGETS.get(color).get(), 9)
+                    .requires(ModItems.COLORED_INGOTS.get(color).get())
+                    .unlockedBy("has_item", has(ModItems.COLORED_INGOTS.get(color).get()))
+                    .save(consumer, locMetal(name + "_nuggets"));
+
+            ShapelessRecipeBuilder.shapeless(ModItems.COLORED_INGOTS.get(color).get(), 9)
+                    .requires(ModItems.COLORED_INGOT_BLOCKS.get(color).get())
+                    .unlockedBy("has_item", has(ModItems.COLORED_INGOT_BLOCKS.get(color).get()))
+                    .save(consumer, locMetal(name + "_ingots_from_block"));
+
+            ShapedRecipeBuilder.shaped(ModItems.COLORED_INGOTS.get(color).get(), 1)
+                    .pattern("###")
+                    .pattern("###")
+                    .pattern("###")
+                    .define('#', ModItems.COLORED_NUGGETS.get(color).get())
+                    .unlockedBy("has_item", has(ModItems.COLORED_NUGGETS.get(color).get()))
+                    .save(consumer, locMetal(name + "_ingots_from_nuggets"));
+
+            ShapedRecipeBuilder.shaped(ModItems.COLORED_INGOT_BLOCKS.get(color).get(), 1)
+                    .pattern("###")
+                    .pattern("###")
+                    .pattern("###")
+                    .define('#', ModItems.COLORED_INGOTS.get(color).get())
+                    .unlockedBy("has_item", has(ModItems.COLORED_INGOTS.get(color).get()))
+                    .save(consumer, locMetal(name + "_block"));
+        }
     }
 
     private void woodRecipes(Consumer<IFinishedRecipe> consumer) {
@@ -109,6 +149,10 @@ public class ModRecipesProvider extends RecipeProvider {
 
     protected final ResourceLocation locWood(String name) {
         return new ResourceLocation(ColorfulJourney.MOD_ID, "wood/" + name);
+    }
+
+    protected  final ResourceLocation locMetal(String name) {
+        return new ResourceLocation(ColorfulJourney.MOD_ID, "metal/" + name);
     }
 
 }

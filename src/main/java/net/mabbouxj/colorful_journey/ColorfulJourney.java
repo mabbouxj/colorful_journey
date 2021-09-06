@@ -9,6 +9,7 @@ import net.mabbouxj.colorful_journey.events.WorldEvents;
 import net.mabbouxj.colorful_journey.init.*;
 import net.mabbouxj.colorful_journey.items.RubiksCubeUnfinishedItem;
 import net.mabbouxj.colorful_journey.utils.Multicolor;
+import net.mabbouxj.colorful_journey.world.gen.OreGeneration;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
@@ -28,6 +29,7 @@ import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
@@ -81,9 +83,10 @@ public class ColorfulJourney {
         bus.addListener(Common::onEntityAttributeCreationEvent);
         bus.addListener(Client::onClientSetup);
         bus.addListener(Client::onColorHandlerEvent);
-        bus.addListener(Client::onParticleFactoryRegistration);
+        bus.addListener(Client::onParticleFactoryRegistrationEvent);
 
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, OreGeneration::generateOres);
 
         populateReplacementItems();
         populateReplacementMobs();
@@ -177,6 +180,7 @@ public class ColorfulJourney {
                 RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_LOGS.get(color).get(), RenderType.solid());
                 RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_LEAVES.get(color).get(), RenderType.cutout());
                 RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_SAPLINGS.get(color).get(), RenderType.cutout());
+                RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_ORES.get(color).get(), RenderType.cutout());
             }
 
             RenderTypeLookup.setRenderLayer(ModBlocks.RUBIKS_CUBE.get(), RenderType.solid());
@@ -206,7 +210,7 @@ public class ColorfulJourney {
         }
 
         @SubscribeEvent
-        public static void onParticleFactoryRegistration(ParticleFactoryRegisterEvent event) {
+        public static void onParticleFactoryRegistrationEvent(ParticleFactoryRegisterEvent event) {
             Minecraft.getInstance().particleEngine.register(ModParticles.INK_SPLASH.get(), InkSplashParticle.Factory::new);
         }
 
