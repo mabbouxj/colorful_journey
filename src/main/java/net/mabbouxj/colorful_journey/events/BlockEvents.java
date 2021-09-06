@@ -1,6 +1,5 @@
 package net.mabbouxj.colorful_journey.events;
 
-import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -23,7 +22,7 @@ import java.util.Map;
 public class BlockEvents {
 
     public Map<Block, Block> BLOCK_STRIPPING_MAP = new HashMap<Block, Block>() {{
-        for (DyeColor color: ColorfulJourney.COLORS) {
+        for (DyeColor color: DyeColor.values()) {
             put(ModBlocks.COLORED_LOGS.get(color).get(), ModBlocks.COLORED_STRIPPED_LOGS.get(color).get());
             put(ModBlocks.COLORED_WOODS.get(color).get(), ModBlocks.COLORED_STRIPPED_WOODS.get(color).get());
         }

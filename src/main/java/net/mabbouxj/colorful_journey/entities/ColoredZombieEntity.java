@@ -1,8 +1,9 @@
 package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
+import net.mabbouxj.colorful_journey.enums.ColorAttributesModifier;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
-import net.mabbouxj.colorful_journey.utils.ColorAttributeModifier;
+import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.ZombieModel;
 import net.minecraft.entity.EntityType;
@@ -17,8 +18,6 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-
-import static net.mabbouxj.colorful_journey.ColorfulJourney.NBT_COLOR_ID;
 
 public class ColoredZombieEntity extends ZombieEntity implements IColoredMobEntity {
 
@@ -45,8 +44,8 @@ public class ColoredZombieEntity extends ZombieEntity implements IColoredMobEnti
     public static AttributeModifierMap.MutableAttribute createAttributes(DyeColor color) {
         return MonsterEntity.createMonsterAttributes()
                 .add(Attributes.FOLLOW_RANGE, 35.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.23D * ColorAttributeModifier.SPEED.byColor(color))
-                .add(Attributes.ATTACK_DAMAGE, 3.0D * ColorAttributeModifier.DAMAGE.byColor(color))
+                .add(Attributes.MOVEMENT_SPEED, 0.23D * ColorAttributesModifier.SPEED.byColor(color))
+                .add(Attributes.ATTACK_DAMAGE, 3.0D * ColorAttributesModifier.DAMAGE.byColor(color))
                 .add(Attributes.ARMOR, 2.0D)
                 .add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
     }
@@ -60,13 +59,13 @@ public class ColoredZombieEntity extends ZombieEntity implements IColoredMobEnti
     @Override
     public void addAdditionalSaveData(CompoundNBT nbt) {
         super.addAdditionalSaveData(nbt);
-        nbt.putInt(NBT_COLOR_ID, this.getColor().getId());
+        nbt.putInt(ColorUtils.NBT_TAG_COLOR, this.getColor().getId());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundNBT nbt) {
         super.readAdditionalSaveData(nbt);
-        this.setColor(DyeColor.byId(nbt.getInt(NBT_COLOR_ID)));
+        this.setColor(DyeColor.byId(nbt.getInt(ColorUtils.NBT_TAG_COLOR)));
     }
 
     public DyeColor getColor() {

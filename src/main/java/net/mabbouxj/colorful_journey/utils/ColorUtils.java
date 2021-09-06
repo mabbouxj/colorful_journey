@@ -1,6 +1,5 @@
 package net.mabbouxj.colorful_journey.utils;
 
-import joptsimple.internal.Strings;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.blocks.IColoredBlock;
 import net.mabbouxj.colorful_journey.items.ColoredVariantsBlockItem;
@@ -10,17 +9,21 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class ColorUtils {
 
     public static final String NBT_TAG_COLOR = "color";
     public static final Map<Integer, String> DYE_COLOR_TO_TEXT_FORMAT = new HashMap<Integer, String>(){{
-        put(DyeColor.BLACK.getId(), "§0");
+        put(DyeColor.BLACK.getId(), "§f");
         put(DyeColor.GRAY.getId(), "§8");
         put(DyeColor.LIGHT_GRAY.getId(), "§7");
         put(DyeColor.WHITE.getId(), "§f");
@@ -38,8 +41,8 @@ public class ColorUtils {
         put(DyeColor.BROWN.getId(), "§4");
     }};
 
-    public static DyeColor getRandomDyeColor() {
-        return Arrays.asList(ColorfulJourney.COLORS).get(new Random().nextInt(ColorfulJourney.COLORS.length));
+    public static DyeColor getRandomEnableColor() {
+        return (DyeColor) ColorfulJourney.ENABLED_COLORS.toArray()[new Random().nextInt(ColorfulJourney.ENABLED_COLORS.size())];
     }
 
     public static DyeColor getColor(ItemStack itemStack) {
@@ -68,8 +71,17 @@ public class ColorUtils {
     }
 
     public static String removeColorSuffix(String str) {
-        String[] splitted = str.split("_");
-        return Strings.join(Arrays.copyOf(splitted, splitted.length - 1), "_");
+        for (DyeColor color: DyeColor.values()) {
+            str = str.replaceAll("(_light)?_" + color.getName(), "");
+        }
+        return str;
+    }
+
+    public static ITextComponent getDisplayColorName(ItemStack itemStack, String itemName) {
+        DyeColor color = ColorUtils.getColor(itemStack);
+        String colorName = color.getName().replace("_", " ");
+        colorName = Arrays.stream(colorName.split(" ")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
+        return new StringTextComponent(ColorUtils.DYE_COLOR_TO_TEXT_FORMAT.get(color.getId()) + colorName + " " + itemName);
     }
 
 }

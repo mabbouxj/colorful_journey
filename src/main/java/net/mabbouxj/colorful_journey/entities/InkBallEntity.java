@@ -27,7 +27,7 @@ import java.util.Random;
 public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditionalSpawnData {
 
     private static final byte VANILLA_IMPACT_STATUS_ID = 3;
-    private DyeColor color = ColorUtils.getRandomDyeColor();
+    private DyeColor color = ColorUtils.getRandomEnableColor();
     private LivingEntity shooter;
 
     public InkBallEntity(EntityType<? extends InkBallEntity> entityType, World world) {

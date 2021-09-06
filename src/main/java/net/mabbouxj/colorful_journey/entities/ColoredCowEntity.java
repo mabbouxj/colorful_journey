@@ -1,8 +1,8 @@
 package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
+import net.mabbouxj.colorful_journey.enums.ColorAttributesModifier;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
-import net.mabbouxj.colorful_journey.utils.ColorAttributeModifier;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.CowModel;
@@ -19,8 +19,6 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-import static net.mabbouxj.colorful_journey.ColorfulJourney.NBT_COLOR_ID;
-
 public class ColoredCowEntity extends CowEntity implements IColoredMobEntity {
 
     private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredCowEntity.class, DataSerializers.INT);
@@ -29,7 +27,7 @@ public class ColoredCowEntity extends CowEntity implements IColoredMobEntity {
 
     public ColoredCowEntity(EntityType<? extends CowEntity> type, World world) {
         super(type, world);
-        this.setColor(ColorUtils.getRandomDyeColor());
+        this.setColor(ColorUtils.getRandomEnableColor());
     }
 
     public ColoredCowEntity(World world, CowEntity oldEntity, DyeColor color) {
@@ -45,8 +43,8 @@ public class ColoredCowEntity extends CowEntity implements IColoredMobEntity {
 
     public static AttributeModifierMap.MutableAttribute createAttributes(DyeColor color) {
         return MobEntity.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 10.0D * ColorAttributeModifier.HEALTH.byColor(color))
-                .add(Attributes.MOVEMENT_SPEED, 0.2D * ColorAttributeModifier.SPEED.byColor(color));
+                .add(Attributes.MAX_HEALTH, 10.0D * ColorAttributesModifier.HEALTH.byColor(color))
+                .add(Attributes.MOVEMENT_SPEED, 0.2D * ColorAttributesModifier.SPEED.byColor(color));
     }
 
     @Override
@@ -58,13 +56,13 @@ public class ColoredCowEntity extends CowEntity implements IColoredMobEntity {
     @Override
     public void addAdditionalSaveData(CompoundNBT nbt) {
         super.addAdditionalSaveData(nbt);
-        nbt.putInt(NBT_COLOR_ID, this.getColor().getId());
+        nbt.putInt(ColorUtils.NBT_TAG_COLOR, this.getColor().getId());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundNBT nbt) {
         super.readAdditionalSaveData(nbt);
-        this.setColor(DyeColor.byId(nbt.getInt(NBT_COLOR_ID)));
+        this.setColor(DyeColor.byId(nbt.getInt(ColorUtils.NBT_TAG_COLOR)));
     }
 
     public DyeColor getColor() {

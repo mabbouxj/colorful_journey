@@ -15,8 +15,8 @@ import java.util.Map;
 
 public class ModBlockTagProvider extends BlockTagsProvider {
 
-    public ModBlockTagProvider(DataGenerator p_i48256_1_, @Nullable ExistingFileHelper existingFileHelper) {
-        super(p_i48256_1_, ColorfulJourney.MOD_ID, existingFileHelper);
+    public ModBlockTagProvider(DataGenerator dataGenerator, @Nullable ExistingFileHelper existingFileHelper) {
+        super(dataGenerator, ColorfulJourney.MOD_ID, existingFileHelper);
     }
 
     @Override

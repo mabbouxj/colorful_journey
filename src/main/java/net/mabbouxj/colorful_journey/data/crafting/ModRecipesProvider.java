@@ -73,7 +73,7 @@ public class ModRecipesProvider extends RecipeProvider {
     }
 
     private void metalRecipes(Consumer<IFinishedRecipe> consumer) {
-        for (DyeColor color: ColorfulJourney.COLORS) {
+        for (DyeColor color: DyeColor.values()) {
             String name = "colored_" + color.getName();
 
             CookingRecipeBuilder.smelting(Ingredient.of(ModBlocks.COLORED_ORES.get(color).get()), ModItems.COLORED_INGOTS.get(color).get(), 0.7f, 200)
@@ -109,7 +109,7 @@ public class ModRecipesProvider extends RecipeProvider {
     }
 
     private void woodRecipes(Consumer<IFinishedRecipe> consumer) {
-        for (DyeColor color: ColorfulJourney.COLORS) {
+        for (DyeColor color: DyeColor.values()) {
             String name = "colored_" + color.getName();
             planksBlock(consumer, name + "_from_logs", ModBlocks.COLORED_PLANKS.get(color), ModBlocks.COLORED_LOGS.get(color));
             planksBlock(consumer, name + "_from_stripped_logs", ModBlocks.COLORED_PLANKS.get(color), ModBlocks.COLORED_STRIPPED_LOGS.get(color));

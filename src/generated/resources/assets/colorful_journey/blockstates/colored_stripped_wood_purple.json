@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "colorful_journey:block/colored_stripped_wood",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "colorful_journey:block/colored_stripped_wood"
+    },
+    "axis=z": {
+      "model": "colorful_journey:block/colored_stripped_wood",
+      "x": 90
+    }
+  }
+}

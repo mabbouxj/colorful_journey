@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "colorful_journey:block/colored_wall_skull"
+    },
+    "facing=south": {
+      "model": "colorful_journey:block/colored_wall_skull",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "colorful_journey:block/colored_wall_skull",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "colorful_journey:block/colored_wall_skull",
+      "y": 90
+    }
+  }
+}

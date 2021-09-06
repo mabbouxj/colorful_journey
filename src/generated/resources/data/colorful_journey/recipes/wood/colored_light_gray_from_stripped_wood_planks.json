@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "colorful_journey:colored_stripped_wood_light_gray"
+    }
+  ],
+  "result": {
+    "item": "colorful_journey:colored_plank_light_gray",
+    "count": 4
+  }
+}

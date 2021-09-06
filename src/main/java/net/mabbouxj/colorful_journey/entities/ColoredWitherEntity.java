@@ -1,8 +1,9 @@
 package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
+import net.mabbouxj.colorful_journey.enums.ColorAttributesModifier;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
-import net.mabbouxj.colorful_journey.utils.ColorAttributeModifier;
+import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.minecraft.client.renderer.entity.model.WitherModel;
 import net.minecraft.entity.EntityType;
@@ -21,8 +22,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.StringUtils;
-
-import static net.mabbouxj.colorful_journey.ColorfulJourney.NBT_COLOR_ID;
 
 public class ColoredWitherEntity extends WitherEntity implements IColoredMobEntity {
 
@@ -49,10 +48,10 @@ public class ColoredWitherEntity extends WitherEntity implements IColoredMobEnti
 
     public static AttributeModifierMap.MutableAttribute createAttributes(DyeColor color) {
         return MonsterEntity.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 300.0D * ColorAttributeModifier.HEALTH.byColor(color))
-                .add(Attributes.MOVEMENT_SPEED, 0.6D * ColorAttributeModifier.SPEED.byColor(color))
+                .add(Attributes.MAX_HEALTH, 300.0D * ColorAttributesModifier.HEALTH.byColor(color))
+                .add(Attributes.MOVEMENT_SPEED, 0.6D * ColorAttributesModifier.SPEED.byColor(color))
                 .add(Attributes.FOLLOW_RANGE, 40.0D)
-                .add(Attributes.ARMOR, 4.0D * ColorAttributeModifier.ARMOR.byColor(color));
+                .add(Attributes.ARMOR, 4.0D * ColorAttributesModifier.ARMOR.byColor(color));
     }
 
     @Override
@@ -64,13 +63,13 @@ public class ColoredWitherEntity extends WitherEntity implements IColoredMobEnti
     @Override
     public void addAdditionalSaveData(CompoundNBT nbt) {
         super.addAdditionalSaveData(nbt);
-        nbt.putInt(NBT_COLOR_ID, this.getColor().getId());
+        nbt.putInt(ColorUtils.NBT_TAG_COLOR, this.getColor().getId());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundNBT nbt) {
         super.readAdditionalSaveData(nbt);
-        this.setColor(DyeColor.byId(nbt.getInt(NBT_COLOR_ID)));
+        this.setColor(DyeColor.byId(nbt.getInt(ColorUtils.NBT_TAG_COLOR)));
     }
 
     public DyeColor getColor() {

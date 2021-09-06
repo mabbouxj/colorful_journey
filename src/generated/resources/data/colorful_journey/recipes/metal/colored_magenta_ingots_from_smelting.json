@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "colorful_journey:colored_ore_magenta"
+  },
+  "result": "colorful_journey:colored_ingot_magenta",
+  "experience": 0.7,
+  "cookingtime": 200
+}

@@ -50,7 +50,7 @@ public class ColorLaserGunItem extends Item {
         ItemStack stack = player.getItemInHand(hand);
 
         if (player.isCrouching()) {
-            DyeColor color = ColorUtils.getRandomDyeColor();
+            DyeColor color = ColorUtils.getRandomEnableColor();
             ColorUtils.setColor(stack, color);
             player.displayClientMessage(new StringTextComponent("Color set to: " + ColorUtils.DYE_COLOR_TO_TEXT_FORMAT.get(color.getId()) + color.getName()), true);
             return ActionResult.pass(stack);

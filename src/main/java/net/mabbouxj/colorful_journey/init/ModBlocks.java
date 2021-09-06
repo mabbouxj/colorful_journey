@@ -43,7 +43,7 @@ public class ModBlocks {
 
     private static Map<DyeColor, RegistryObject<Block>> registerColoredVariantsBlock(String name, Function<DyeColor, ? extends Block> supplier) {
         Map<DyeColor, RegistryObject<Block>> map = new HashMap<>();
-        for (DyeColor color: ColorfulJourney.COLORS) {
+        for (DyeColor color: DyeColor.values()) {
             RegistryObject<Block> registryObject = BLOCKS.register(name + "_" + color.getName(), () -> supplier.apply(color));
             ALL_COLORED_VARIANTS_BLOCKS.add(registryObject);
             map.put(color, registryObject);
@@ -53,7 +53,7 @@ public class ModBlocks {
 
     private static Map<DyeColor, RegistryObject<Block>> registerColoredVariantsBlock(String name, BiFunction<AbstractBlock.Properties, DyeColor, ? extends Block> supplier, AbstractBlock.Properties props) {
         Map<DyeColor, RegistryObject<Block>> map = new HashMap<>();
-        for (DyeColor color: ColorfulJourney.COLORS) {
+        for (DyeColor color: DyeColor.values()) {
             RegistryObject<Block> registryObject = BLOCKS.register(name + "_" + color.getName(), () -> supplier.apply(props, color));
             ALL_COLORED_VARIANTS_BLOCKS.add(registryObject);
             map.put(color, registryObject);

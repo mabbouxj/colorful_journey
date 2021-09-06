@@ -1,12 +1,21 @@
 {
   "replace": false,
   "values": [
-    "colorful_journey:colored_nether_star_red",
-    "colorful_journey:colored_nether_star_cyan",
-    "colorful_journey:colored_nether_star_orange",
+    "colorful_journey:colored_nether_star_brown",
+    "colorful_journey:colored_nether_star_purple",
     "colorful_journey:colored_nether_star_lime",
     "colorful_journey:colored_nether_star_green",
     "colorful_journey:colored_nether_star_pink",
-    "colorful_journey:colored_nether_star_blue"
+    "colorful_journey:colored_nether_star_light_blue",
+    "colorful_journey:colored_nether_star_blue",
+    "colorful_journey:colored_nether_star_gray",
+    "colorful_journey:colored_nether_star_magenta",
+    "colorful_journey:colored_nether_star_light_gray",
+    "colorful_journey:colored_nether_star_orange",
+    "colorful_journey:colored_nether_star_black",
+    "colorful_journey:colored_nether_star_cyan",
+    "colorful_journey:colored_nether_star_white",
+    "colorful_journey:colored_nether_star_yellow",
+    "colorful_journey:colored_nether_star_red"
   ]
 }

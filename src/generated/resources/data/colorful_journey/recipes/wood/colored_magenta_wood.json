@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "colorful_journey:colored_log_magenta"
+    }
+  },
+  "result": {
+    "item": "colorful_journey:colored_wood_magenta",
+    "count": 3
+  }
+}

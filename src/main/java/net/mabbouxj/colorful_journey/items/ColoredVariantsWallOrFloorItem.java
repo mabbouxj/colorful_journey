@@ -10,10 +10,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.WallOrFloorItem;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -24,7 +22,9 @@ public class ColoredVariantsWallOrFloorItem extends WallOrFloorItem {
     private final DyeColor color;
 
     public ColoredVariantsWallOrFloorItem(Block floorBlock, Block wallBlock, String registryName, DyeColor color) {
-        super(floorBlock, wallBlock, new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64));
+        super(floorBlock, wallBlock, new Item.Properties()
+                .tab(ColorfulJourney.ENABLED_COLORS.contains(color) ? ColorfulJourney.MOD_ITEM_GROUP: null)
+                .stacksTo(64));
         this.registryName = registryName;
         this.color = color;
     }
@@ -35,10 +35,7 @@ public class ColoredVariantsWallOrFloorItem extends WallOrFloorItem {
 
     @Override
     public ITextComponent getName(ItemStack itemStack) {
-        DyeColor color = ColorUtils.getColor(itemStack);
-        String colorName = StringUtils.capitalize(color.getName());
-        String itemName = new TranslationTextComponent("block.colorful_journey." + this.registryName).getString();
-        return new StringTextComponent(ColorUtils.DYE_COLOR_TO_TEXT_FORMAT.get(color.getId()) + colorName + " " + itemName);
+        return ColorUtils.getDisplayColorName(itemStack, new TranslationTextComponent("block.colorful_journey." + this.registryName).getString());
     }
 
     @Override

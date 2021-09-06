@@ -27,20 +27,26 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import static net.mabbouxj.colorful_journey.ColorfulJourney.MOD_ID;
@@ -54,22 +60,22 @@ public class ColorfulJourney {
     public static final String MOD_NAME = "Colorful Journey";
     public static final String MOD_VERSION = "0.0.1";
     public static final ItemGroup MOD_ITEM_GROUP = new ColorfulJourneyItemGroup();
-    public static final String NBT_COLOR_ID = "color";
 
     public static final Map<Item, Map<DyeColor, RegistryObject<? extends Item>>> REPLACEMENT_ITEMS = new HashMap<>();
     public static final Map<Class<? extends Entity>, Class<? extends Entity>> REPLACEMENT_MOBS = new HashMap<>();
-    public static final DyeColor[] COLORS = new DyeColor[]{
-            DyeColor.RED,
-            DyeColor.GREEN,
-            DyeColor.BLUE,
-            DyeColor.CYAN,
-            DyeColor.PINK,
-            DyeColor.ORANGE,
-            DyeColor.LIME
-    };
+    public static final Set<DyeColor> ENABLED_COLORS = new HashSet<>();
 
-    public ColorfulJourney() {
+    public ColorfulJourney() throws Exception {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        final Pair<ModConfigs.Common, ForgeConfigSpec> specPairCommon = new ForgeConfigSpec.Builder().configure(ModConfigs.Common::new);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, specPairCommon.getRight());
+        ModConfigs.COMMON_CONFIG = specPairCommon.getLeft();
+        final Pair<ModConfigs.Client, ForgeConfigSpec> specPairClient = new ForgeConfigSpec.Builder().configure(ModConfigs.Client::new);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, specPairClient.getRight());
+        ModConfigs.CLIENT_CONFIG = specPairClient.getLeft();
+
+        initEnabledColors();
 
         bus.register(this);
         ModBlocks.register(bus);
@@ -90,6 +96,16 @@ public class ColorfulJourney {
 
         populateReplacementItems();
         populateReplacementMobs();
+    }
+
+    private void initEnabledColors() throws Exception {
+        for (String colorName: ModConfigs.COMMON_CONFIG.ENABLED_COLORS.get()) {
+            DyeColor color = DyeColor.byName(colorName, DyeColor.WHITE);
+            if (!colorName.equals(color.getName())) {
+                throw new Exception("Error while loading enabled colors from configuration file, unknown color: " + colorName);
+            }
+            ENABLED_COLORS.add(color);
+        }
     }
 
     private void populateReplacementItems() {
@@ -129,6 +145,7 @@ public class ColorfulJourney {
 
         @SubscribeEvent
         public static void onCommonSetup(FMLCommonSetupEvent event) {
+            ModConfigs.build();
             MinecraftForge.EVENT_BUS.register(new MobEvents());
             MinecraftForge.EVENT_BUS.register(new BlockEvents());
             MinecraftForge.EVENT_BUS.register(new WorldEvents());
@@ -136,7 +153,7 @@ public class ColorfulJourney {
 
         @SubscribeEvent
         public static void onEntityAttributeCreationEvent(EntityAttributeCreationEvent event) {
-            for (DyeColor color: ColorfulJourney.COLORS) {
+            for (DyeColor color: DyeColor.values()) {
                 event.put(ModEntityTypes.COLORED_CHICKEN.get(color).get(), ColoredChickenEntity.createAttributes(color).build());
                 event.put(ModEntityTypes.COLORED_BEE.get(color).get(), ColoredBeeEntity.createAttributes(color).build());
                 event.put(ModEntityTypes.COLORED_SKELETON.get(color).get(), ColoredSkeletonEntity.createAttributes(color).build());
@@ -162,7 +179,7 @@ public class ColorfulJourney {
 
             RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.INK_BALL.get(), erm -> new SpriteRenderer<>(erm, Minecraft.getInstance().getItemRenderer()));
 
-            for (DyeColor color: ColorfulJourney.COLORS) {
+            for (DyeColor color: DyeColor.values()) {
                 RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_CHICKEN.get(color).get(), ColoredChickenRenderer::new);
                 RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_BEE.get(color).get(), ColoredBeeRenderer::new);
                 RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_SKELETON.get(color).get(), ColoredSkeletonRenderer::new);

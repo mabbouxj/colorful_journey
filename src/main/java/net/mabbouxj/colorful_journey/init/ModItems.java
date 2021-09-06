@@ -57,8 +57,10 @@ public class ModItems {
 
     private static Map<DyeColor, RegistryObject<? extends Item>> registerColoredVariantsItem(String name) {
         Map<DyeColor, RegistryObject<? extends Item>> map = new HashMap<>();
-        for (DyeColor color: ColorfulJourney.COLORS) {
-            RegistryObject<Item> itemRegistryObject = ITEMS.register(name + "_" + color.getName(), () -> new ColoredVariantsItem(name, color));
+        for (DyeColor color: DyeColor.values()) {
+            RegistryObject<Item> itemRegistryObject = ITEMS.register(
+                    name + "_" + color.getName(),
+                    () -> new ColoredVariantsItem(name, color));
             ALL_COLORED_VARIANTS_ITEMS.add(itemRegistryObject);
             map.put(color, itemRegistryObject);
         }
@@ -67,8 +69,10 @@ public class ModItems {
 
     private static Map<DyeColor, RegistryObject<? extends Item>> registerColoredVariantsBlockItem(String name, Map<DyeColor, RegistryObject<Block>> blocks) {
         Map<DyeColor, RegistryObject<? extends Item>> map = new HashMap<>();
-        for (DyeColor color: ColorfulJourney.COLORS) {
-            RegistryObject<BlockItem> itemRegistryObject = ITEMS.register(name + "_" + color.getName(), () -> new ColoredVariantsBlockItem(blocks.get(color).get(), name, color));
+        for (DyeColor color: DyeColor.values()) {
+            RegistryObject<BlockItem> itemRegistryObject = ITEMS.register(
+                    name + "_" + color.getName(),
+                    () -> new ColoredVariantsBlockItem(blocks.get(color).get(), name, color));
             ALL_COLORED_VARIANTS_BLOCK_ITEMS.add(itemRegistryObject);
             map.put(color, itemRegistryObject);
         }
@@ -77,8 +81,10 @@ public class ModItems {
 
     private static Map<DyeColor, RegistryObject<? extends Item>> registerColoredVariantsWallOrFloorItem(String name, Map<DyeColor, RegistryObject<Block>> floorBlocks, Map<DyeColor, RegistryObject<Block>> wallBlocks) {
         Map<DyeColor, RegistryObject<? extends Item>> map = new HashMap<>();
-        for (DyeColor color: ColorfulJourney.COLORS) {
-            RegistryObject<BlockItem> itemRegistryObject = ITEMS.register(name + "_" + color.getName(), () -> new ColoredVariantsWallOrFloorItem(floorBlocks.get(color).get(), wallBlocks.get(color).get(), name, color));
+        for (DyeColor color: DyeColor.values()) {
+            RegistryObject<BlockItem> itemRegistryObject = ITEMS.register(
+                    name + "_" + color.getName(),
+                    () -> new ColoredVariantsWallOrFloorItem(floorBlocks.get(color).get(), wallBlocks.get(color).get(), name, color));
             ALL_COLORED_VARIANTS_BLOCK_ITEMS.add(itemRegistryObject);
             map.put(color, itemRegistryObject);
         }

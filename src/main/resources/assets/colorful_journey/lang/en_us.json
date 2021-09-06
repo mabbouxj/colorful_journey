@@ -39,5 +39,8 @@
   "tooltip.colorful_journey.rubiks_cube_unfinished": "§eShaking§r it in your hand seems to do something\nMaybe trying harder will end it up somewhere...",
   "tooltip.colorful_journey.colored_ore": "Can be found in the §eOverworld§r at §eY=",
 
-  "message.colorful_journey.color_gun_out_of_ink": "Your gun is out of ink!"
+  "message.colorful_journey.color_gun_out_of_ink": "Your gun is out of ink!",
+
+  "config.colorful_journey.enabled_colors": "Enabled colors",
+  "config.colorful_journey.enabled_colors.tooltip": "To enable colored variants items/blocks. Possible values are the 16 Minecraft Vanilla dye color names. If empty, this mod is useless, uninstall it ;)"
 }

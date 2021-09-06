@@ -29,7 +29,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
 
         // Generate more complex block states
-        for (DyeColor color: ColorfulJourney.COLORS) {
+        for (DyeColor color: DyeColor.values()) {
 
             columnHorizontalBlock(ModBlocks.COLORED_LOGS.get(color).get(), modLoc("block/colored_log"), modLoc("block/colored_log_horizontal"));
             columnHorizontalBlock(ModBlocks.COLORED_STRIPPED_LOGS.get(color).get(), modLoc("block/colored_stripped_log"), modLoc("block/colored_stripped_log_horizontal"));

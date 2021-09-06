@@ -1,8 +1,8 @@
-package net.mabbouxj.colorful_journey.utils;
+package net.mabbouxj.colorful_journey.enums;
 
 import net.minecraft.item.DyeColor;
 
-public enum ColorAttributeModifier {
+public enum ColorAttributesModifier {
     // white      orange  magenta light_blue
     // yellow     lime    pink    gray
     // light_gray cyan    purple  blue
@@ -30,7 +30,7 @@ public enum ColorAttributeModifier {
 
     private final double[] colors;
 
-    ColorAttributeModifier(double[] colors) {
+    ColorAttributesModifier(double[] colors) {
         this.colors = colors;
     }
 

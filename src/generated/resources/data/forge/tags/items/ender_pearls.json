@@ -1,12 +1,21 @@
 {
   "replace": false,
   "values": [
-    "colorful_journey:colored_ender_pearl_red",
-    "colorful_journey:colored_ender_pearl_cyan",
-    "colorful_journey:colored_ender_pearl_orange",
+    "colorful_journey:colored_ender_pearl_brown",
+    "colorful_journey:colored_ender_pearl_purple",
     "colorful_journey:colored_ender_pearl_lime",
     "colorful_journey:colored_ender_pearl_green",
     "colorful_journey:colored_ender_pearl_pink",
-    "colorful_journey:colored_ender_pearl_blue"
+    "colorful_journey:colored_ender_pearl_light_blue",
+    "colorful_journey:colored_ender_pearl_blue",
+    "colorful_journey:colored_ender_pearl_gray",
+    "colorful_journey:colored_ender_pearl_magenta",
+    "colorful_journey:colored_ender_pearl_light_gray",
+    "colorful_journey:colored_ender_pearl_orange",
+    "colorful_journey:colored_ender_pearl_black",
+    "colorful_journey:colored_ender_pearl_cyan",
+    "colorful_journey:colored_ender_pearl_white",
+    "colorful_journey:colored_ender_pearl_yellow",
+    "colorful_journey:colored_ender_pearl_red"
   ]
 }

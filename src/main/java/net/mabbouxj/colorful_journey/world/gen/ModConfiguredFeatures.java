@@ -1,6 +1,5 @@
 package net.mabbouxj.colorful_journey.world.gen;
 
-import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModBlocks;
 import net.minecraft.item.DyeColor;
 import net.minecraft.util.registry.Registry;
@@ -54,7 +53,7 @@ public class ModConfiguredFeatures {
 
     private static Map<DyeColor, ConfiguredFeature<BaseTreeFeatureConfig, ?>> registerColoredTreeFeature(String name, Function<DyeColor, ConfiguredFeature<BaseTreeFeatureConfig, ? extends Feature<?>>> supplier) {
         Map<DyeColor, ConfiguredFeature<BaseTreeFeatureConfig, ?>> map = new HashMap<>();
-        for (DyeColor color: ColorfulJourney.COLORS) {
+        for (DyeColor color: DyeColor.values()) {
             map.put(color, Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, name + "_" + color.getName(), supplier.apply(color)));
         }
         return map;

@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "rotation=0": {
+      "model": "colorful_journey:block/colored_skull"
+    },
+    "rotation=1": {
+      "model": "colorful_journey:block/colored_skull"
+    },
+    "rotation=2": {
+      "model": "colorful_journey:block/colored_skull"
+    },
+    "rotation=3": {
+      "model": "colorful_journey:block/colored_skull",
+      "y": 90
+    },
+    "rotation=4": {
+      "model": "colorful_journey:block/colored_skull",
+      "y": 90
+    },
+    "rotation=5": {
+      "model": "colorful_journey:block/colored_skull",
+      "y": 90
+    },
+    "rotation=6": {
+      "model": "colorful_journey:block/colored_skull",
+      "y": 90
+    },
+    "rotation=7": {
+      "model": "colorful_journey:block/colored_skull",
+      "y": 180
+    },
+    "rotation=8": {
+      "model": "colorful_journey:block/colored_skull",
+      "y": 180
+    },
+    "rotation=9": {
+      "model": "colorful_journey:block/colored_skull",
+      "y": 180
+    },
+    "rotation=10": {
+      "model": "colorful_journey:block/colored_skull",
+      "y": 180
+    },
+    "rotation=11": {
+      "model": "colorful_journey:block/colored_skull",
+      "y": 270
+    },
+    "rotation=12": {
+      "model": "colorful_journey:block/colored_skull",
+      "y": 270
+    },
+    "rotation=13": {
+      "model": "colorful_journey:block/colored_skull",
+      "y": 270
+    },
+    "rotation=14": {
+      "model": "colorful_journey:block/colored_skull",
+      "y": 270
+    },
+    "rotation=15": {
+      "model": "colorful_journey:block/colored_skull"
+    }
+  }
+}

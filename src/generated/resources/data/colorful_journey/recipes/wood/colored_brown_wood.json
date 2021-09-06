@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "colorful_journey:colored_log_brown"
+    }
+  },
+  "result": {
+    "item": "colorful_journey:colored_wood_brown",
+    "count": 3
+  }
+}

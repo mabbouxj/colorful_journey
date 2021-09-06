@@ -22,7 +22,7 @@ public class ModBlockLootTables extends BlockLootTables {
         }
 
         // Override dropSelf loot
-        for (DyeColor color: ColorfulJourney.COLORS) {
+        for (DyeColor color: DyeColor.values()) {
             add(ModBlocks.COLORED_LEAVES.get(color).get(), (block) -> createLeavesDrops(block, ModBlocks.COLORED_SAPLINGS.get(color).get(), NORMAL_LEAVES_SAPLING_CHANCES));
         }
 

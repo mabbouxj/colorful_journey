@@ -37,7 +37,7 @@ public class ModEntityTypes {
 
     private static <T extends Entity> Map<DyeColor, RegistryObject<EntityType<T>>> registerColoredMob(String name, EntityType.IFactory<T> factory, EntityType<?> fromEntity) {
         Map<DyeColor, RegistryObject<EntityType<T>>> map = new HashMap<>();
-        for (DyeColor color: ColorfulJourney.COLORS) {
+        for (DyeColor color: DyeColor.values()) {
             EntityType<T> entityType = EntityType.Builder
                     .of(factory, fromEntity.getCategory())
                     .sized(fromEntity.getWidth(), fromEntity.getHeight())
