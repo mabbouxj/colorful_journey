@@ -21,6 +21,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -36,6 +37,9 @@ public class ColorLaserGunItem extends Item {
     public static final Integer LASER_RANGE = 100;
     public static final float LASER_THICKNESS = 0.04f;
     private LaserLoopSound laserLoopSound;
+    private boolean isRandom = true;
+    private Integer nbTicksChangeRandomColor = 20;
+    private Integer randomColorTimer = 0;
 
     public ColorLaserGunItem() {
         super(new Item.Properties()
@@ -50,6 +54,13 @@ public class ColorLaserGunItem extends Item {
         ItemStack stack = player.getItemInHand(hand);
 
         if (player.isCrouching()) {
+            if (new Random().nextInt(100) > 80) {
+                isRandom = true;
+                ColorUtils.setColor(stack, ColorUtils.getRandomEnableColor());
+                player.displayClientMessage(new StringTextComponent("Color set to: random"), true);
+                return ActionResult.pass(stack);
+            }
+            isRandom = false;
             DyeColor color = ColorUtils.getRandomEnableColor();
             ColorUtils.setColor(stack, color);
             player.displayClientMessage(new StringTextComponent("Color set to: " + ColorUtils.DYE_COLOR_TO_TEXT_FORMAT.get(color.getId()) + color.getName()), true);
@@ -81,7 +92,13 @@ public class ColorLaserGunItem extends Item {
         if (player.level.isClientSide) {
             this.playLoopSound(player, stack);
         }
-        if (player instanceof PlayerEntity) {
+
+        if(isRandom && randomColorTimer++ >= nbTicksChangeRandomColor) {
+            ColorUtils.setColor(stack, ColorUtils.getRandomEnableColor());
+            randomColorTimer = 0;
+        }
+
+        if (!player.level.isClientSide && player instanceof PlayerEntity) {
 
             Vector3d laserHitLocation = player.pick(LASER_RANGE, 0.0F, false).getLocation();
             Optional<Entity> entityOptional = LaserUtils.getFirstEntityOnLine(player.level, getLaserGunCannonPosition((PlayerEntity) player), laserHitLocation, e -> true);
@@ -111,6 +128,9 @@ public class ColorLaserGunItem extends Item {
                 laserLoopSound = null;
             }
         }
+
+        randomColorTimer = 0;
+        ColorUtils.setColor(itemStack, ColorUtils.getRandomEnableColor());
 
         if (player instanceof PlayerEntity)
             player.stopUsingItem();
@@ -199,7 +219,12 @@ public class ColorLaserGunItem extends Item {
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag flag) {
         DyeColor color = ColorUtils.getColor(itemStack);
-        tooltips.add(new StringTextComponent("Laser color: " + ColorUtils.DYE_COLOR_TO_TEXT_FORMAT.get(color.getId()) + color.getName()));
+        if (isRandom) {
+            tooltips.add(new StringTextComponent("Laser color: random"));
+        } else {
+            tooltips.add(new StringTextComponent("Laser color: " + ColorUtils.DYE_COLOR_TO_TEXT_FORMAT.get(color.getId()) + color.getName()));
+        }
+        tooltips.add(new TranslationTextComponent("tooltip.colorful_journey.color_laser_gun"));
         super.appendHoverText(itemStack, world, tooltips, flag);
     }
 

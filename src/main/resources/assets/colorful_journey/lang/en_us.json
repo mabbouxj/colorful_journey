@@ -33,6 +33,7 @@
 
   "tooltip.colorful_journey.hold_shift_for_info": "Hold §bSHIFT§r for more Information",
   "tooltip.colorful_journey.color_gun": "Craft with §eInk Ball§r to repair",
+  "tooltip.colorful_journey.color_laser_gun": "§eSneak + Right-click§r to change color mode",
   "tooltip.colorful_journey.ink_ball": "Eeny, meeny, miny, moe...",
   "tooltip.colorful_journey.colored_skull": "To spawn a §eWither§r with this beautiful skull, place it §elast§r",
   "tooltip.colorful_journey.rubiks_cube": "You got lucky this time! §eSneak + Right-click§r to start over",

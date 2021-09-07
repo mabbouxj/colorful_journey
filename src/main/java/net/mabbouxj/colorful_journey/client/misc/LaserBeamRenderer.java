@@ -80,15 +80,15 @@ public class LaserBeamRenderer {
 
         //additive laser beam
         builder = buffer.getBuffer(ModRenderTypes.RENDERTYPE_LASER_ADDITIVE);
-        drawBeam(stack, xOffset, yOffset, zOffset, builder, positionMatrix, matrixNormal, additiveThickness, activeHand, distance, 0.5, 1, ticks, RGB[0], RGB[1], RGB[2],0.7f);
+        drawBeam(stack, xOffset, yOffset, zOffset, builder, positionMatrix, matrixNormal, additiveThickness, activeHand, distance, 0.5, 1, ticks, RGB[0] * 0.8f, RGB[1] * 0.8f, RGB[2] * 0.8f,0.7f);
 
         //main laser, colored part
         builder = buffer.getBuffer(ModRenderTypes.RENDERTYPE_LASER_BEAM);
-        drawBeam(stack, xOffset, yOffset, zOffset, builder, positionMatrix, matrixNormal, thickness, activeHand, distance, v, v + distance * 1.5, ticks, RGB[0], RGB[1], RGB[2],1f);
+        drawBeam(stack, xOffset, yOffset, zOffset, builder, positionMatrix, matrixNormal, thickness, activeHand, distance, v, v + distance * 1.5, ticks, RGB[0] * 0.8f, RGB[1] * 0.8f, RGB[2] * 0.8f,1f);
 
         //core
         builder = buffer.getBuffer(ModRenderTypes.RENDERTYPE_LASER_CORE);
-        drawBeam(stack, xOffset, yOffset, zOffset, builder, positionMatrix, matrixNormal, thickness/2, activeHand, distance, v, v + distance * 1.5, ticks, RGB[0]*0.9f, RGB[1]*0.9f, RGB[2]*0.9f,1f);
+        drawBeam(stack, xOffset, yOffset, zOffset, builder, positionMatrix, matrixNormal, thickness/2, activeHand, distance, v, v + distance * 1.5, ticks, RGB[0], RGB[1], RGB[2],1f);
         matrix.popPose();
 //        RenderSystem.disableDepthTest();
         buffer.endBatch();
