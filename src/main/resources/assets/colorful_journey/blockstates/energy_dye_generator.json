@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "colorful_journey:block/energy_dye_generator"
+    },
+    "lit=true": {
+      "model": "colorful_journey:block/energy_dye_generator_lit"
+    }
+  }
+}

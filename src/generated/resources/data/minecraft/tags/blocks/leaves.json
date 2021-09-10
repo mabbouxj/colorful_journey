@@ -1,21 +1,21 @@
 {
   "replace": false,
   "values": [
+    "colorful_journey:colored_leaves_black",
+    "colorful_journey:colored_leaves_yellow",
+    "colorful_journey:colored_leaves_orange",
+    "colorful_journey:colored_leaves_white",
+    "colorful_journey:colored_leaves_light_blue",
+    "colorful_journey:colored_leaves_light_gray",
+    "colorful_journey:colored_leaves_pink",
+    "colorful_journey:colored_leaves_blue",
+    "colorful_journey:colored_leaves_red",
+    "colorful_journey:colored_leaves_cyan",
+    "colorful_journey:colored_leaves_magenta",
+    "colorful_journey:colored_leaves_gray",
     "colorful_journey:colored_leaves_brown",
     "colorful_journey:colored_leaves_purple",
     "colorful_journey:colored_leaves_lime",
-    "colorful_journey:colored_leaves_green",
-    "colorful_journey:colored_leaves_pink",
-    "colorful_journey:colored_leaves_light_blue",
-    "colorful_journey:colored_leaves_blue",
-    "colorful_journey:colored_leaves_gray",
-    "colorful_journey:colored_leaves_magenta",
-    "colorful_journey:colored_leaves_light_gray",
-    "colorful_journey:colored_leaves_orange",
-    "colorful_journey:colored_leaves_black",
-    "colorful_journey:colored_leaves_cyan",
-    "colorful_journey:colored_leaves_white",
-    "colorful_journey:colored_leaves_yellow",
-    "colorful_journey:colored_leaves_red"
+    "colorful_journey:colored_leaves_green"
   ]
 }

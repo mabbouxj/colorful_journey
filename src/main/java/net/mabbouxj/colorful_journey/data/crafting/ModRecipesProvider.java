@@ -1,6 +1,7 @@
 package net.mabbouxj.colorful_journey.data.crafting;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
+import net.mabbouxj.colorful_journey.data.tag.ModItemTagProvider;
 import net.mabbouxj.colorful_journey.init.ModBlocks;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.minecraft.block.Block;
@@ -68,6 +69,20 @@ public class ModRecipesProvider extends RecipeProvider {
                 .unlockedBy("has_" + ModItems.RUBIKS_CUBE_UNFINISHED.getId().getPath(), has(ModItems.RUBIKS_CUBE_UNFINISHED.get()))
                 .save(consumer);
 
+        ShapedRecipeBuilder.shaped(ModItems.ENERGY_DYE_GENERATOR.get(), 1)
+                .pattern("#x#")
+                .pattern("xox")
+                .pattern("#x#")
+                .define('#', ModItemTagProvider.COLORED_INGOTS)
+                .define('x', ModItems.RUBIKS_CUBE.get())
+                .define('o', Items.NETHERITE_INGOT)
+                .unlockedBy("has_" + ModItems.ENERGY_DYE_GENERATOR.getId().getPath(), has(ModItems.ENERGY_DYE_GENERATOR.get()))
+                .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(ModItems.ENERGY_DYE_GENERATOR.get(), 1)
+                .requires(ModItems.ENERGY_DYE_GENERATOR.get())
+                .unlockedBy("has_item", has(ModItems.ENERGY_DYE_GENERATOR.get()))
+                .save(consumer, ModItems.ENERGY_DYE_GENERATOR.getId().getPath() + "_reset");
 
 
     }

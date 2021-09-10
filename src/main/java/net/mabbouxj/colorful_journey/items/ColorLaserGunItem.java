@@ -130,7 +130,9 @@ public class ColorLaserGunItem extends Item {
         }
 
         randomColorTimer = 0;
-        ColorUtils.setColor(itemStack, ColorUtils.getRandomEnableColor());
+        if (isRandom) {
+            ColorUtils.setColor(itemStack, ColorUtils.getRandomEnableColor());
+        }
 
         if (player instanceof PlayerEntity)
             player.stopUsingItem();

@@ -1,20 +1,8 @@
 package net.mabbouxj.colorful_journey;
 
-import net.mabbouxj.colorful_journey.client.entity.render.*;
-import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
 import net.mabbouxj.colorful_journey.entities.*;
-import net.mabbouxj.colorful_journey.events.BlockEvents;
-import net.mabbouxj.colorful_journey.events.MobEvents;
-import net.mabbouxj.colorful_journey.events.WorldEvents;
 import net.mabbouxj.colorful_journey.init.*;
-import net.mabbouxj.colorful_journey.items.RubiksCubeUnfinishedItem;
-import net.mabbouxj.colorful_journey.utils.Multicolor;
 import net.mabbouxj.colorful_journey.world.gen.OreGeneration;
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.monster.*;
@@ -23,23 +11,14 @@ import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.entity.passive.PandaEntity;
 import net.minecraft.item.*;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -68,6 +47,7 @@ public class ColorfulJourney {
     public ColorfulJourney() throws Exception {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        // Load configs
         final Pair<ModConfigs.Common, ForgeConfigSpec> specPairCommon = new ForgeConfigSpec.Builder().configure(ModConfigs.Common::new);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, specPairCommon.getRight());
         ModConfigs.COMMON_CONFIG = specPairCommon.getLeft();
@@ -77,19 +57,23 @@ public class ColorfulJourney {
 
         initEnabledColors();
 
+        // Register all stuff
         bus.register(this);
         ModBlocks.register(bus);
+        ModTiles.register(bus);
+        ModContainers.register(bus);
         ModItems.register(bus);
         ModEntityTypes.register(bus);
         ModSounds.register(bus);
         ModParticles.register(bus);
         ModRecipeSerializers.register(bus);
 
-        bus.addListener(Common::onCommonSetup);
-        bus.addListener(Common::onEntityAttributeCreationEvent);
-        bus.addListener(Client::onClientSetup);
-        bus.addListener(Client::onColorHandlerEvent);
-        bus.addListener(Client::onParticleFactoryRegistrationEvent);
+        bus.addListener(CommonEventBusSubscriber::onCommonSetup);
+        bus.addListener(CommonEventBusSubscriber::onEntityAttributeCreationEvent);
+        bus.addListener(CommonEventBusSubscriber::onClientSetup);
+        bus.addListener(ClientEventBusSubscriber::onClientSetup);
+        bus.addListener(ClientEventBusSubscriber::onColorHandlerEvent);
+        bus.addListener(ClientEventBusSubscriber::onParticleFactoryRegistrationEvent);
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, OreGeneration::generateOres);
@@ -136,101 +120,6 @@ public class ColorfulJourney {
         REPLACEMENT_MOBS.put(ZombieEntity.class, ColoredZombieEntity.class);
         REPLACEMENT_MOBS.put(WitherEntity.class, ColoredWitherEntity.class);
         REPLACEMENT_MOBS.put(CreeperEntity.class, ColoredCreeperEntity.class);
-    }
-
-    @Mod.EventBusSubscriber(value = Dist.DEDICATED_SERVER, modid = ColorfulJourney.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static final class Common {
-        private Common() {
-        }
-
-        @SubscribeEvent
-        public static void onCommonSetup(FMLCommonSetupEvent event) {
-            ModConfigs.build();
-            MinecraftForge.EVENT_BUS.register(new MobEvents());
-            MinecraftForge.EVENT_BUS.register(new BlockEvents());
-            MinecraftForge.EVENT_BUS.register(new WorldEvents());
-        }
-
-        @SubscribeEvent
-        public static void onEntityAttributeCreationEvent(EntityAttributeCreationEvent event) {
-            for (DyeColor color: DyeColor.values()) {
-                event.put(ModEntityTypes.COLORED_CHICKEN.get(color).get(), ColoredChickenEntity.createAttributes(color).build());
-                event.put(ModEntityTypes.COLORED_BEE.get(color).get(), ColoredBeeEntity.createAttributes(color).build());
-                event.put(ModEntityTypes.COLORED_SKELETON.get(color).get(), ColoredSkeletonEntity.createAttributes(color).build());
-                event.put(ModEntityTypes.COLORED_COW.get(color).get(), ColoredCowEntity.createAttributes(color).build());
-                event.put(ModEntityTypes.COLORED_PANDA.get(color).get(), ColoredPandaEntity.createAttributes(color).build());
-                event.put(ModEntityTypes.COLORED_ZOMBIE.get(color).get(), ColoredZombieEntity.createAttributes(color).build());
-                event.put(ModEntityTypes.COLORED_SPIDER.get(color).get(), ColoredSpiderEntity.createAttributes(color).build());
-                event.put(ModEntityTypes.COLORED_ENDERMAN.get(color).get(), ColoredEndermanEntity.createAttributes(color).build());
-                event.put(ModEntityTypes.COLORED_WITHER_SKELETON.get(color).get(), ColoredWitherSkeletonEntity.createAttributes(color).build());
-                event.put(ModEntityTypes.COLORED_WITHER.get(color).get(), ColoredWitherEntity.createAttributes(color).build());
-                event.put(ModEntityTypes.COLORED_CREEPER.get(color).get(), ColoredCreeperEntity.createAttributes(color).build());
-            }
-        }
-    }
-
-    @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = ColorfulJourney.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static final class Client {
-        private Client() {
-        }
-
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-
-            RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.INK_BALL.get(), erm -> new SpriteRenderer<>(erm, Minecraft.getInstance().getItemRenderer()));
-
-            for (DyeColor color: DyeColor.values()) {
-                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_CHICKEN.get(color).get(), ColoredChickenRenderer::new);
-                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_BEE.get(color).get(), ColoredBeeRenderer::new);
-                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_SKELETON.get(color).get(), ColoredSkeletonRenderer::new);
-                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_COW.get(color).get(), ColoredCowRenderer::new);
-                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_PANDA.get(color).get(), ColoredPandaRenderer::new);
-                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_ZOMBIE.get(color).get(), ColoredZombieRenderer::new);
-                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_SPIDER.get(color).get(), ColoredSpiderRenderer::new);
-                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_ENDERMAN.get(color).get(), ColoredEndermanRenderer::new);
-                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_WITHER_SKELETON.get(color).get(), ColoredWitherSkeletonRenderer::new);
-                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_WITHER.get(color).get(), ColoredWitherRenderer::new);
-                RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_CREEPER.get(color).get(), ColoredCreeperRenderer::new);
-
-                RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_SKULLS.get(color).get(), RenderType.solid());
-                RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_WALL_SKULLS.get(color).get(), RenderType.solid());
-                RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_LOGS.get(color).get(), RenderType.solid());
-                RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_LEAVES.get(color).get(), RenderType.cutout());
-                RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_SAPLINGS.get(color).get(), RenderType.cutout());
-                RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_ORES.get(color).get(), RenderType.cutout());
-            }
-
-            RenderTypeLookup.setRenderLayer(ModBlocks.RUBIKS_CUBE.get(), RenderType.solid());
-            RenderTypeLookup.setRenderLayer(ModBlocks.RUBIKS_CUBE_UNFINISHED.get(), RenderType.solid());
-
-            event.enqueueWork(() -> {
-                ItemModelsProperties.register(
-                        ModItems.RUBIKS_CUBE_UNFINISHED.get(),
-                        new ResourceLocation(MOD_ID, "mix"),
-                        (stack, world, player) -> stack.getItem() instanceof RubiksCubeUnfinishedItem ? RubiksCubeUnfinishedItem.getMixVariant(stack): 0
-                );
-            });
-
-        }
-
-        @SubscribeEvent
-        public static void onColorHandlerEvent(ColorHandlerEvent.Item event) {
-            for (RegistryObject<Item> registryItem : ModItems.ALL_COLORED_VARIANTS_ITEMS) {
-                event.getItemColors().register(new Multicolor.Item(), registryItem.get());
-            }
-            for (RegistryObject<BlockItem> registryBlockItem : ModItems.ALL_COLORED_VARIANTS_BLOCK_ITEMS) {
-                event.getItemColors().register(new Multicolor.Item(), registryBlockItem.get());
-            }
-            for (RegistryObject<Block> registryBlock: ModBlocks.ALL_COLORED_VARIANTS_BLOCKS) {
-                event.getBlockColors().register(new Multicolor.Block(), registryBlock.get());
-            }
-        }
-
-        @SubscribeEvent
-        public static void onParticleFactoryRegistrationEvent(ParticleFactoryRegisterEvent event) {
-            Minecraft.getInstance().particleEngine.register(ModParticles.INK_SPLASH.get(), InkSplashParticle.Factory::new);
-        }
-
     }
 
     private static class ColorfulJourneyItemGroup extends ItemGroup {

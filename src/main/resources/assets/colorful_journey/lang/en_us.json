@@ -30,6 +30,7 @@
   "block.colorful_journey.colored_plank": "Plank",
   "block.colorful_journey.colored_ore": "Ore",
   "block.colorful_journey.colored_ingot_block": "Ingots Block",
+  "block.colorful_journey.energy_dye_generator": "Energy Dye Generator",
 
   "tooltip.colorful_journey.hold_shift_for_info": "Hold §bSHIFT§r for more Information",
   "tooltip.colorful_journey.color_gun": "Craft with §eInk Ball§r to repair",
@@ -42,6 +43,12 @@
 
   "message.colorful_journey.color_gun_out_of_ink": "Your gun is out of ink!",
 
-  "config.colorful_journey.enabled_colors": "Enabled colors",
-  "config.colorful_journey.enabled_colors.tooltip": "To enable colored variants items/blocks. Possible values are the 16 Minecraft Vanilla dye color names. If empty, this mod is useless, uninstall it ;)"
+  "container.colorful_journey.energy_dye_generator": "Energy Dye Generator",
+
+  "screen.colorful_journey.energy": "Energy: %s/%s FE",
+  "screen.colorful_journey.no_fuel": "Fuel is empty",
+  "screen.colorful_journey.no_material": "Nothing to burn",
+  "screen.colorful_journey.fuel_time": "Fuel time left: %ss",
+  "screen.colorful_journey.material_time": "Material left: %s FE"
+
 }

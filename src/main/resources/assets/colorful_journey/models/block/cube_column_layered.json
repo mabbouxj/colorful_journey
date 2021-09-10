@@ -1,0 +1,18 @@
+{
+  "parent": "colorful_journey:block/cube_layered",
+  "textures": {
+    "particle": "#side",
+    "down": "#end",
+    "up": "#end",
+    "north": "#side",
+    "east": "#side",
+    "south": "#side",
+    "west": "#side",
+    "down_layer": "#end_layer",
+    "up_layer": "#end_layer",
+    "north_layer": "#side_layer",
+    "east_layer": "#side_layer",
+    "south_layer": "#side_layer",
+    "west_layer": "#side_layer"
+  }
+}
