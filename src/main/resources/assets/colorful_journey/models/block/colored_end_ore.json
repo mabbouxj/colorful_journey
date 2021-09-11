@@ -1,0 +1,7 @@
+{
+  "parent": "colorful_journey:block/cube_all_layered",
+  "textures": {
+    "all": "minecraft:block/end_stone",
+    "overlay": "colorful_journey:block/colored_ore_layer"
+  }
+}

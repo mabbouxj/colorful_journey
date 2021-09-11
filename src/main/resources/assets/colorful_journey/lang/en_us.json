@@ -20,7 +20,7 @@
 
   "block.colorful_journey.rubiks_cube": "Rubik's Cube",
   "block.colorful_journey.rubiks_cube_unfinished": "Unfinished Rubik's Cube",
-  "block.colorful_journey.colored_skull": "Skull",
+  "block.colorful_journey.colored_skull": "Wither Skull",
   "block.colorful_journey.colored_log": "Log",
   "block.colorful_journey.colored_stripped_log": "Stripped Log",
   "block.colorful_journey.colored_wood": "Wood",
@@ -29,6 +29,11 @@
   "block.colorful_journey.colored_sapling": "Sapling",
   "block.colorful_journey.colored_plank": "Plank",
   "block.colorful_journey.colored_ore": "Ore",
+  "block.colorful_journey.colored_nether_ore": "Nether Ore",
+  "block.colorful_journey.colored_end_ore": "End Ore",
+  "block.colorful_journey.colored_grass_block": "Grass Block",
+  "block.colorful_journey.colored_grass_path": "Grass Path",
+  "block.colorful_journey.colored_grass": "Grass",
   "block.colorful_journey.colored_ingot_block": "Ingots Block",
   "block.colorful_journey.energy_dye_generator": "Energy Dye Generator",
 
@@ -40,6 +45,8 @@
   "tooltip.colorful_journey.rubiks_cube": "You got lucky this time! §eSneak + Right-click§r to start over",
   "tooltip.colorful_journey.rubiks_cube_unfinished": "§eShaking§r it in your hand seems to do something\nMaybe trying harder will end it up somewhere...",
   "tooltip.colorful_journey.colored_ore": "Can be found in the §eOverworld§r at §eY=",
+  "tooltip.colorful_journey.colored_nether_ore": "Can be found in the §eNether§r",
+  "tooltip.colorful_journey.colored_end_ore": "Can be found in the §eEnd§r",
 
   "message.colorful_journey.color_gun_out_of_ink": "Your gun is out of ink!",
 

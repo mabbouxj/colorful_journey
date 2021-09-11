@@ -1,0 +1,18 @@
+{
+  "parent": "colorful_journey:block/cube_layered",
+  "textures": {
+    "particle": "block/dirt",
+    "down": "block/dirt",
+    "up": "colorful_journey:block/colored_grass_block_top",
+    "north": "block/dirt",
+    "south": "block/dirt",
+    "west": "block/dirt",
+    "east": "block/dirt",
+    "down_layer": "block/dirt",
+    "up_layer": "colorful_journey:block/colored_grass_block_top",
+    "north_layer": "colorful_journey:block/colored_grass_block_side_layer",
+    "south_layer": "colorful_journey:block/colored_grass_block_side_layer",
+    "west_layer": "colorful_journey:block/colored_grass_block_side_layer",
+    "east_layer": "colorful_journey:block/colored_grass_block_side_layer"
+  }
+}

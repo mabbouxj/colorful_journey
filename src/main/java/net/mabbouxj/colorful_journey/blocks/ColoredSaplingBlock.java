@@ -1,5 +1,6 @@
 package net.mabbouxj.colorful_journey.blocks;
 
+import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.world.ColoredTree;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.SaplingBlock;
@@ -7,7 +8,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.DyeColor;
 
-public class ColoredSaplingBlock extends SaplingBlock implements IColoredBlock {
+public class ColoredSaplingBlock extends SaplingBlock implements ColorUtils.IColored {
 
     private final DyeColor color;
 

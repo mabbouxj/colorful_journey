@@ -3,6 +3,8 @@ package net.mabbouxj.colorful_journey;
 import net.mabbouxj.colorful_journey.entities.*;
 import net.mabbouxj.colorful_journey.init.*;
 import net.mabbouxj.colorful_journey.world.gen.OreGeneration;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.monster.*;
@@ -41,6 +43,7 @@ public class ColorfulJourney {
     public static final ItemGroup MOD_ITEM_GROUP = new ColorfulJourneyItemGroup();
 
     public static final Map<Item, Map<DyeColor, RegistryObject<? extends Item>>> REPLACEMENT_ITEMS = new HashMap<>();
+    public static final Map<Block, Map<DyeColor, RegistryObject<? extends Block>>> REPLACEMENT_BLOCKS = new HashMap<>();
     public static final Map<Class<? extends Entity>, Class<? extends Entity>> REPLACEMENT_MOBS = new HashMap<>();
     public static final Set<DyeColor> ENABLED_COLORS = new HashSet<>();
 
@@ -79,6 +82,7 @@ public class ColorfulJourney {
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, OreGeneration::generateOres);
 
         populateReplacementItems();
+        populateReplacementBlocks();
         populateReplacementMobs();
     }
 
@@ -106,6 +110,11 @@ public class ColorfulJourney {
         REPLACEMENT_ITEMS.put(Items.ZOMBIE_HEAD, ModItems.COLORED_SKULLS);
         REPLACEMENT_ITEMS.put(Items.NETHER_STAR, ModItems.COLORED_NETHER_STARS);
         REPLACEMENT_ITEMS.put(Items.GUNPOWDER, ModItems.COLORED_GUNPOWDERS);
+    }
+
+    private void populateReplacementBlocks() {
+        REPLACEMENT_BLOCKS.put(Blocks.DIRT, ModBlocks.COLORED_GRASS_BLOCKS);
+        REPLACEMENT_BLOCKS.put(Blocks.GRASS_BLOCK, ModBlocks.COLORED_GRASS_BLOCKS);
     }
 
     private void populateReplacementMobs() {

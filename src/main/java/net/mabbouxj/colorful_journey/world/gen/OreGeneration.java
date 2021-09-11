@@ -4,11 +4,13 @@ import com.mojang.datafixers.util.Pair;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModBlocks;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.DyeColor;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
+import net.minecraft.world.gen.feature.template.BlockMatchRuleTest;
 import net.minecraft.world.gen.feature.template.RuleTest;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.placement.TopSolidRangeConfig;
@@ -20,7 +22,8 @@ import java.util.Map;
 
 public class OreGeneration {
 
-    public static Map<DyeColor, Pair<Integer, Integer>> COLORED_ORE_GEN_MIN_MAX = new HashMap<>();
+    public static final RuleTest END_STONE_RULE_TEST = new BlockMatchRuleTest(Blocks.END_STONE);
+    public static Map<DyeColor, Pair<Integer, Integer>> OVERWORLD_COLORED_ORE_GEN_MIN_MAX = new HashMap<>();
 
     static {
         int nbColors = ColorfulJourney.ENABLED_COLORS.size();
@@ -33,7 +36,7 @@ public class OreGeneration {
         for (DyeColor color: ColorfulJourney.ENABLED_COLORS) {
             int minHeight = (int) (i++ * ratio) + allMinHeight;
             int maxHeight = minHeight + oreVeinHeight;
-            COLORED_ORE_GEN_MIN_MAX.put(color, Pair.of(minHeight, maxHeight));
+            OVERWORLD_COLORED_ORE_GEN_MIN_MAX.put(color, Pair.of(minHeight, maxHeight));
         }
     }
 
@@ -41,8 +44,24 @@ public class OreGeneration {
         if (!(event.getCategory().equals(Biome.Category.NETHER) || event.getCategory().equals(Biome.Category.THEEND))) {
             for (DyeColor color: ColorfulJourney.ENABLED_COLORS) {
                 generateOre(event.getGeneration(), OreFeatureConfig.FillerBlockType.NATURAL_STONE,
-                        ModBlocks.COLORED_ORES.get(color).get().defaultBlockState(), 7,
-                        COLORED_ORE_GEN_MIN_MAX.get(color).getFirst(), COLORED_ORE_GEN_MIN_MAX.get(color).getSecond(), 12);
+                        ModBlocks.COLORED_ORES.get(color).get().defaultBlockState(), 10,
+                        OVERWORLD_COLORED_ORE_GEN_MIN_MAX.get(color).getFirst(), OVERWORLD_COLORED_ORE_GEN_MIN_MAX.get(color).getSecond(), 10);
+            }
+        }
+
+        if (event.getCategory().equals(Biome.Category.NETHER)) {
+            for (DyeColor color: ColorfulJourney.ENABLED_COLORS) {
+                generateOre(event.getGeneration(), OreFeatureConfig.FillerBlockType.NETHERRACK,
+                        ModBlocks.COLORED_NETHER_ORES.get(color).get().defaultBlockState(), 8,
+                        0, 256, 10);
+            }
+        }
+
+        if (event.getCategory().equals(Biome.Category.THEEND)) {
+            for (DyeColor color: ColorfulJourney.ENABLED_COLORS) {
+                generateOre(event.getGeneration(), END_STONE_RULE_TEST,
+                        ModBlocks.COLORED_END_ORES.get(color).get().defaultBlockState(), 6,
+                        0, 256, 10);
             }
         }
     }

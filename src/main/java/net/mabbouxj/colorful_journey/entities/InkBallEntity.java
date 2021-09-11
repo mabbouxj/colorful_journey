@@ -1,11 +1,14 @@
 package net.mabbouxj.colorful_journey.entities;
 
+import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.init.ModSounds;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -15,13 +18,16 @@ import net.minecraft.item.Item;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import java.util.Map;
 import java.util.Random;
 
 public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditionalSpawnData {
@@ -69,6 +75,18 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
                 if (newEntity != null) {
                     entity.remove();
                     this.level.addFreshEntity(newEntity);
+                }
+            } else if (rayTraceResult.getType() == RayTraceResult.Type.BLOCK) {
+                BlockRayTraceResult blockRayTraceResult = (BlockRayTraceResult) rayTraceResult;
+                BlockState oldBlockState = this.level.getBlockState(blockRayTraceResult.getBlockPos());
+                Map<DyeColor, RegistryObject<? extends Block>> targets = ColorfulJourney.REPLACEMENT_BLOCKS.getOrDefault(oldBlockState.getBlock(), null);
+                if (targets != null) {
+                    try {
+                        Block newBlock = targets.get(this.getColor()).get();
+                        this.level.setBlock(blockRayTraceResult.getBlockPos(), newBlock.defaultBlockState(), 3);
+                    } catch (Exception e) {
+                        ColorfulJourney.LOGGER.info("Could not create replacement block for " + oldBlockState.getBlock().getName());
+                    }
                 }
             }
             this.remove();

@@ -7,6 +7,7 @@ import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.DyeColor;
 import net.minecraft.tags.BlockTags;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.RegistryObject;
 
@@ -27,9 +28,11 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(mapToBlock(ModBlocks.COLORED_SAPLINGS));
         tag(BlockTags.LEAVES)
                 .add(mapToBlock(ModBlocks.COLORED_LEAVES));
+        tag(Tags.Blocks.DIRT)
+                .add(mapToBlock(ModBlocks.COLORED_GRASS_BLOCKS));
     }
 
-    private Block[] mapToBlock(Map<DyeColor, RegistryObject<Block>> map) {
+    private Block[] mapToBlock(Map<DyeColor, RegistryObject<? extends Block>> map) {
         return map.values().stream().map(RegistryObject::get).toArray(Block[]::new);
     }
 

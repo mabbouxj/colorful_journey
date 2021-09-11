@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class ColoredSkullBlock extends WitherSkeletonSkullBlock implements IColoredBlock {
+public class ColoredSkullBlock extends WitherSkeletonSkullBlock implements ColorUtils.IColored {
 
     @Nullable
     private static BlockPattern witherPatternFull;

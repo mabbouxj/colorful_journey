@@ -1,10 +1,6 @@
 package net.mabbouxj.colorful_journey.utils;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
-import net.mabbouxj.colorful_journey.blocks.IColoredBlock;
-import net.mabbouxj.colorful_journey.items.ColoredVariantsBlockItem;
-import net.mabbouxj.colorful_journey.items.ColoredVariantsItem;
-import net.mabbouxj.colorful_journey.items.ColoredVariantsWallOrFloorItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
@@ -46,12 +42,8 @@ public class ColorUtils {
     }
 
     public static DyeColor getColor(ItemStack itemStack) {
-        if (itemStack.getItem() instanceof ColoredVariantsItem) {
-            return ((ColoredVariantsItem) itemStack.getItem()).getColor();
-        } else if (itemStack.getItem() instanceof ColoredVariantsBlockItem) {
-            return ((ColoredVariantsBlockItem) itemStack.getItem()).getColor();
-        } else if (itemStack.getItem() instanceof ColoredVariantsWallOrFloorItem) {
-            return ((ColoredVariantsWallOrFloorItem) itemStack.getItem()).getColor();
+        if (itemStack.getItem() instanceof IColored) {
+            return ((IColored) itemStack.getItem()).getColor();
         } else {
             CompoundNBT nbt = itemStack.getOrCreateTag();
             return nbt.contains(NBT_TAG_COLOR) ? DyeColor.byId(nbt.getInt(NBT_TAG_COLOR)): DyeColor.WHITE;
@@ -59,8 +51,8 @@ public class ColorUtils {
     }
 
     public static DyeColor getColor(BlockState blockState) {
-        if (blockState.getBlock() instanceof IColoredBlock) {
-            return ((IColoredBlock) blockState.getBlock()).getColor();
+        if (blockState.getBlock() instanceof IColored) {
+            return ((IColored) blockState.getBlock()).getColor();
         }
         return DyeColor.WHITE;
     }
@@ -84,4 +76,9 @@ public class ColorUtils {
         return new StringTextComponent(ColorUtils.DYE_COLOR_TO_TEXT_FORMAT.get(color.getId()) + colorName + " " + itemName);
     }
 
+    public static interface IColored {
+
+        DyeColor getColor();
+
+    }
 }

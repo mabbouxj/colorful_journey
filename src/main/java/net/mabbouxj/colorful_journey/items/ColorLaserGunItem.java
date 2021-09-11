@@ -7,6 +7,8 @@ import net.mabbouxj.colorful_journey.init.ModSounds;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.LaserUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -18,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -25,9 +28,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.RegistryObject;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
@@ -102,6 +107,7 @@ public class ColorLaserGunItem extends Item {
 
             Vector3d laserHitLocation = player.pick(LASER_RANGE, 0.0F, false).getLocation();
             Optional<Entity> entityOptional = LaserUtils.getFirstEntityOnLine(player.level, getLaserGunCannonPosition((PlayerEntity) player), laserHitLocation, e -> true);
+            BlockState hitBlock = player.level.getBlockState(new BlockPos(laserHitLocation));
 
             makeParticle(player.level, (PlayerEntity) player, 2, 1, ColorUtils.getColor(stack));
             makeParticle(player.level, 3, 20, ColorUtils.getColor(stack), laserHitLocation);
@@ -112,6 +118,16 @@ public class ColorLaserGunItem extends Item {
                 if (newEntity != null) {
                     entity.remove();
                     player.level.addFreshEntity(newEntity);
+                }
+            } else {
+                Map<DyeColor, RegistryObject<? extends Block>> targets = ColorfulJourney.REPLACEMENT_BLOCKS.getOrDefault(hitBlock.getBlock(), null);
+                if (targets != null) {
+                    try {
+                        Block newBlock = targets.get(ColorUtils.getColor(stack)).get();
+                        player.level.setBlock(new BlockPos(laserHitLocation), newBlock.defaultBlockState(), 3);
+                    } catch (Exception e) {
+                        ColorfulJourney.LOGGER.info("Could not create replacement block for " + hitBlock.getBlock().getName());
+                    }
                 }
             }
         }

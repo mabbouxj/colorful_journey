@@ -51,18 +51,21 @@ public class ClientEventBusSubscriber {
             RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_LEAVES.get(color).get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_SAPLINGS.get(color).get(), RenderType.cutout());
             RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_ORES.get(color).get(), RenderType.cutout());
+            RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_NETHER_ORES.get(color).get(), RenderType.cutout());
+            RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_END_ORES.get(color).get(), RenderType.cutout());
+            RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_GRASS_BLOCKS.get(color).get(), RenderType.cutout());
+            RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_GRASS_PATH.get(color).get(), RenderType.cutout());
+            RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_GRASS.get(color).get(), RenderType.cutout());
         }
 
         RenderTypeLookup.setRenderLayer(ModBlocks.RUBIKS_CUBE.get(), RenderType.solid());
         RenderTypeLookup.setRenderLayer(ModBlocks.RUBIKS_CUBE_UNFINISHED.get(), RenderType.solid());
 
-        event.enqueueWork(() -> {
-            ItemModelsProperties.register(
-                    ModItems.RUBIKS_CUBE_UNFINISHED.get(),
-                    new ResourceLocation(ColorfulJourney.MOD_ID, "mix"),
-                    (stack, world, player) -> stack.getItem() instanceof RubiksCubeUnfinishedItem ? RubiksCubeUnfinishedItem.getMixVariant(stack): 0
-            );
-        });
+        event.enqueueWork(() -> ItemModelsProperties.register(
+                ModItems.RUBIKS_CUBE_UNFINISHED.get(),
+                new ResourceLocation(ColorfulJourney.MOD_ID, "mix"),
+                (stack, world, player) -> stack.getItem() instanceof RubiksCubeUnfinishedItem ? RubiksCubeUnfinishedItem.getMixVariant(stack): 0
+        ));
 
     }
 

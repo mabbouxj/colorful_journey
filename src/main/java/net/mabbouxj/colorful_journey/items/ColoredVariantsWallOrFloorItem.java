@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ColoredVariantsWallOrFloorItem extends WallOrFloorItem {
+public class ColoredVariantsWallOrFloorItem extends WallOrFloorItem implements ColorUtils.IColored {
 
     public final String registryName;
     private final DyeColor color;

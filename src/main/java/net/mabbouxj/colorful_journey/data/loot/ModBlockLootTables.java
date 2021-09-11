@@ -3,6 +3,7 @@ package net.mabbouxj.colorful_journey.data.loot;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.item.DyeColor;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -24,6 +25,8 @@ public class ModBlockLootTables extends BlockLootTables {
         // Override dropSelf loot
         for (DyeColor color: DyeColor.values()) {
             add(ModBlocks.COLORED_LEAVES.get(color).get(), (block) -> createLeavesDrops(block, ModBlocks.COLORED_SAPLINGS.get(color).get(), NORMAL_LEAVES_SAPLING_CHANCES));
+            add(ModBlocks.COLORED_GRASS_BLOCKS.get(color).get(), (block) -> createSingleItemTableWithSilkTouch(block, Blocks.DIRT));
+            dropOther(ModBlocks.COLORED_GRASS_PATH.get(color).get(), Blocks.DIRT);
         }
 
     }

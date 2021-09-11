@@ -1,6 +1,7 @@
 package net.mabbouxj.colorful_journey.blocks;
 
 import net.mabbouxj.colorful_journey.init.ModBlocks;
+import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -14,7 +15,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class ColoredWallSkullBlock extends WitherSkeletonWallSkullBlock implements IColoredBlock {
+public class ColoredWallSkullBlock extends WitherSkeletonWallSkullBlock implements ColorUtils.IColored {
 
     private final DyeColor color;
 

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 public class ModItems {
 
@@ -38,7 +39,7 @@ public class ModItems {
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_BAMBOOS = registerColoredVariantsItem("colored_bamboo");
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_ROTTEN_FLESHES = registerColoredVariantsItem("colored_rotten_flesh");
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_STRINGS = registerColoredVariantsItem("colored_string");
-    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_ENDER_PEARLS = registerColoredVariantsItem("colored_ender_pearl");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_ENDER_PEARLS = registerColoredVariantsItem("colored_ender_pearl", ColoredEnderPearl::new);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_NETHER_STARS = registerColoredVariantsItem("colored_nether_star");
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_GUNPOWDERS = registerColoredVariantsItem("colored_gunpowder");
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_INGOTS = registerColoredVariantsItem("colored_ingot");
@@ -54,21 +55,34 @@ public class ModItems {
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_SAPLINGS = registerColoredVariantsBlockItem("colored_sapling", ModBlocks.COLORED_SAPLINGS);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_PLANKS = registerColoredVariantsBlockItem("colored_plank", ModBlocks.COLORED_PLANKS);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_ORES = registerColoredVariantsBlockItem("colored_ore", ModBlocks.COLORED_ORES);
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_NETHER_ORES = registerColoredVariantsBlockItem("colored_nether_ore", ModBlocks.COLORED_NETHER_ORES);
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_END_ORES = registerColoredVariantsBlockItem("colored_end_ore", ModBlocks.COLORED_END_ORES);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_INGOT_BLOCKS = registerColoredVariantsBlockItem("colored_ingot_block", ModBlocks.COLORED_INGOT_BLOCKS);
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_GRASS_BLOCKS = registerColoredVariantsBlockItem("colored_grass_block", ModBlocks.COLORED_GRASS_BLOCKS);
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_GRASS_PATH = registerColoredVariantsBlockItem("colored_grass_path", ModBlocks.COLORED_GRASS_PATH);
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_GRASS = registerColoredVariantsBlockItem("colored_grass", ModBlocks.COLORED_GRASS);
 
     private static Map<DyeColor, RegistryObject<? extends Item>> registerColoredVariantsItem(String name) {
         Map<DyeColor, RegistryObject<? extends Item>> map = new HashMap<>();
         for (DyeColor color: DyeColor.values()) {
-            RegistryObject<Item> itemRegistryObject = ITEMS.register(
-                    name + "_" + color.getName(),
-                    () -> new ColoredVariantsItem(name, color));
+            RegistryObject<Item> itemRegistryObject = ITEMS.register(name + "_" + color.getName(), () -> new ColoredVariantsItem(name, color));
             ALL_COLORED_VARIANTS_ITEMS.add(itemRegistryObject);
             map.put(color, itemRegistryObject);
         }
         return map;
     }
 
-    private static Map<DyeColor, RegistryObject<? extends Item>> registerColoredVariantsBlockItem(String name, Map<DyeColor, RegistryObject<Block>> blocks) {
+    private static Map<DyeColor, RegistryObject<? extends Item>> registerColoredVariantsItem(String name, Function<DyeColor, ? extends Item> supplier) {
+        Map<DyeColor, RegistryObject<? extends Item>> map = new HashMap<>();
+        for (DyeColor color: DyeColor.values()) {
+            RegistryObject<Item> itemRegistryObject = ITEMS.register(name + "_" + color.getName(), () -> supplier.apply(color));
+            ALL_COLORED_VARIANTS_ITEMS.add(itemRegistryObject);
+            map.put(color, itemRegistryObject);
+        }
+        return map;
+    }
+
+    private static Map<DyeColor, RegistryObject<? extends Item>> registerColoredVariantsBlockItem(String name, Map<DyeColor, RegistryObject<? extends Block>> blocks) {
         Map<DyeColor, RegistryObject<? extends Item>> map = new HashMap<>();
         for (DyeColor color: DyeColor.values()) {
             RegistryObject<BlockItem> itemRegistryObject = ITEMS.register(
@@ -80,7 +94,7 @@ public class ModItems {
         return map;
     }
 
-    private static Map<DyeColor, RegistryObject<? extends Item>> registerColoredVariantsWallOrFloorItem(String name, Map<DyeColor, RegistryObject<Block>> floorBlocks, Map<DyeColor, RegistryObject<Block>> wallBlocks) {
+    private static Map<DyeColor, RegistryObject<? extends Item>> registerColoredVariantsWallOrFloorItem(String name, Map<DyeColor, RegistryObject<? extends Block>> floorBlocks, Map<DyeColor, RegistryObject<? extends Block>> wallBlocks) {
         Map<DyeColor, RegistryObject<? extends Item>> map = new HashMap<>();
         for (DyeColor color: DyeColor.values()) {
             RegistryObject<BlockItem> itemRegistryObject = ITEMS.register(

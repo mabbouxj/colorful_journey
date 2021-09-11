@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ColoredVariantsItem extends Item {
+public class ColoredVariantsItem extends Item implements ColorUtils.IColored {
 
     private final String registryName;
     private DyeColor color;

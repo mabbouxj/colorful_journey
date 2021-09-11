@@ -1,10 +1,11 @@
 package net.mabbouxj.colorful_journey.blocks;
 
+import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.item.DyeColor;
 
 
-public class ColoredRotatedPillarBlock extends RotatedPillarBlock implements IColoredBlock {
+public class ColoredRotatedPillarBlock extends RotatedPillarBlock implements ColorUtils.IColored {
 
     private final DyeColor color;
     

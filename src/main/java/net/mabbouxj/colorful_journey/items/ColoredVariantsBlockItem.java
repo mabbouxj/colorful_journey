@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ColoredVariantsBlockItem extends BlockItem {
+public class ColoredVariantsBlockItem extends BlockItem implements ColorUtils.IColored {
 
     public final String registryName;
     private final DyeColor color;
@@ -46,8 +46,8 @@ public class ColoredVariantsBlockItem extends BlockItem {
         if (!tooltip.getString().contains("tooltip.colorful_journey")) {
             if (Screen.hasShiftDown()) {
                 if (this.registryName.equals("colored_ore")) {
-                    int minHeight = OreGeneration.COLORED_ORE_GEN_MIN_MAX.get(ColorUtils.getColor(itemStack)).getFirst();
-                    int maxHeight = OreGeneration.COLORED_ORE_GEN_MIN_MAX.get(ColorUtils.getColor(itemStack)).getSecond();
+                    int minHeight = OreGeneration.OVERWORLD_COLORED_ORE_GEN_MIN_MAX.get(ColorUtils.getColor(itemStack)).getFirst();
+                    int maxHeight = OreGeneration.OVERWORLD_COLORED_ORE_GEN_MIN_MAX.get(ColorUtils.getColor(itemStack)).getSecond();
                     tooltips.add(new StringTextComponent(tooltip.getString() + "[" + minHeight + ";" + maxHeight+ "]"));
                 } else {
                     tooltips.add(tooltip);

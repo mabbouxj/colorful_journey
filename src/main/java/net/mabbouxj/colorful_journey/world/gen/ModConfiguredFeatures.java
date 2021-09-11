@@ -9,6 +9,8 @@ import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.foliageplacer.BlobFoliagePlacer;
 import net.minecraft.world.gen.foliageplacer.FancyFoliagePlacer;
 import net.minecraft.world.gen.foliageplacer.MegaPineFoliagePlacer;
+import net.minecraft.world.gen.placement.NoiseDependant;
+import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.trunkplacer.FancyTrunkPlacer;
 import net.minecraft.world.gen.trunkplacer.GiantTrunkPlacer;
 import net.minecraft.world.gen.trunkplacer.StraightTrunkPlacer;
@@ -23,6 +25,16 @@ public class ModConfiguredFeatures {
     public static final Map<DyeColor, ConfiguredFeature<BaseTreeFeatureConfig, ? extends Feature<?>>> COLORED_TREE = registerColoredTreeFeature("colored_tree", ModConfiguredFeatures::baseColoredTreeFeatures);
     public static final Map<DyeColor, ConfiguredFeature<BaseTreeFeatureConfig, ? extends Feature<?>>> FANCY_COLORED_TREE = registerColoredTreeFeature("fancy_colored_tree", ModConfiguredFeatures::fancyColoredTreeFeatures);
     public static final Map<DyeColor, ConfiguredFeature<BaseTreeFeatureConfig, ? extends Feature<?>>> MEGA_COLORED_TREE = registerColoredTreeFeature("mega_colored_tree", ModConfiguredFeatures::megaColoredTreeFeatures);
+    public static final Map<DyeColor, ConfiguredFeature<?, ?>> PATCH_COLORED_GRASS = registerColoredFeature("patch_colored_grass", Feature.RANDOM_PATCH.configured(Features.Configs.DEFAULT_GRASS_CONFIG).decorated(Features.Placements.HEIGHTMAP_DOUBLE_SQUARE).decorated(Placement.COUNT_NOISE.configured(new NoiseDependant(-0.8D, 5, 10))));
+
+    private static Map<DyeColor, ConfiguredFeature<?, ?>> registerColoredFeature(String name, ConfiguredFeature<?, ?> feature) {
+        Map<DyeColor, ConfiguredFeature<?, ?>> map = new HashMap<>();
+        for (DyeColor color: DyeColor.values()) {
+            ConfiguredFeature<?, ?> fc = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, name + "_" + color.getName(), feature);
+            map.put(color, fc);
+        }
+        return map;
+    }
 
     private static ConfiguredFeature<BaseTreeFeatureConfig, ? extends Feature<?>> baseColoredTreeFeatures (DyeColor color) {
         return Feature.TREE.configured((new BaseTreeFeatureConfig.Builder(
