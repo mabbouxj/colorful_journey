@@ -2,6 +2,7 @@ package net.mabbouxj.colorful_journey.init;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.ModConfigs;
+import net.mabbouxj.colorful_journey.client.gui.EnergyCapacitorScreen;
 import net.mabbouxj.colorful_journey.client.gui.EnergyDyeGeneratorScreen;
 import net.mabbouxj.colorful_journey.entities.*;
 import net.mabbouxj.colorful_journey.events.BlockEvents;
@@ -51,6 +52,7 @@ public class CommonEventBusSubscriber {
     @SubscribeEvent
     public static void onClientSetup(final FMLClientSetupEvent event) {
         ScreenManager.register(ModContainers.ENERGY_DYE_GENERATOR.get(), EnergyDyeGeneratorScreen::new);
+        ScreenManager.register(ModContainers.ENERGY_CAPACITOR.get(), EnergyCapacitorScreen::new);
     }
 
 }

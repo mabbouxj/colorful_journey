@@ -81,6 +81,17 @@ public class ModRecipesProvider extends RecipeProvider {
                 .unlockedBy("has_" + ModItems.ENERGY_DYE_GENERATOR.getId().getPath(), has(ModItems.ENERGY_DYE_GENERATOR.get()))
                 .save(consumer);
 
+        resetNBTRecipe(consumer, ModItems.ENERGY_CAPACITOR.get());
+        ShapedRecipeBuilder.shaped(ModItems.ENERGY_CAPACITOR.get(), 1)
+                .pattern("#x#")
+                .pattern("xox")
+                .pattern("#x#")
+                .define('x', ModItemTagProvider.COLORED_INGOTS)
+                .define('#', ModItems.RUBIKS_CUBE.get())
+                .define('o', Items.NETHERITE_INGOT)
+                .unlockedBy("has_" + ModItems.ENERGY_CAPACITOR.getId().getPath(), has(ModItems.ENERGY_CAPACITOR.get()))
+                .save(consumer);
+
     }
 
     private void resetNBTRecipe(Consumer<IFinishedRecipe> consumer, IItemProvider itemProvider) {

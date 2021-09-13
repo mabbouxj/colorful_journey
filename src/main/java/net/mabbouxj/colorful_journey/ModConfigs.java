@@ -18,17 +18,34 @@ public class ModConfigs {
     public static class Common {
 
         public ForgeConfigSpec.ConfigValue<List<String>> ENABLED_COLORS;
+        public ForgeConfigSpec.IntValue LASER_GUN_BUFFER_CAPACITY;
+        public ForgeConfigSpec.IntValue LASER_GUN_ENERGY_COST_PER_TICK;
+        public ForgeConfigSpec.IntValue LASER_GUN_ENERGY_COST_PER_TRANSFORMATION;
         public ForgeConfigSpec.IntValue ENERGY_DYE_GENERATOR_BUFFER_CAPACITY;
         public ForgeConfigSpec.IntValue ENERGY_DYE_GENERATOR_PRODUCTION_PER_TICK;
         public ForgeConfigSpec.IntValue ENERGY_DYE_GENERATOR_PRODUCTION_PER_MATERIAL;
         public ForgeConfigSpec.DoubleValue ENERGY_DYE_GENERATOR_FUEL_CONSUMPTION_SPEED;
         public ForgeConfigSpec.IntValue ENERGY_DYE_GENERATOR_MAX_IN_OUT;
+        public ForgeConfigSpec.IntValue ENERGY_CAPACITOR_BUFFER_CAPACITY;
+        public ForgeConfigSpec.IntValue ENERGY_CAPACITOR_MAX_IN_OUT;
 
         public Common(ForgeConfigSpec.Builder builder) {
 
             ENABLED_COLORS = builder
                     .comment("To enable colored variants items/blocks. Possible values are the 16 Minecraft Vanilla dye color names. If empty, this mod is useless ;)")
                     .define("enabled_colors", Arrays.stream(DyeColor.values()).map(DyeColor::getName).collect(Collectors.toList()));
+
+            LASER_GUN_BUFFER_CAPACITY = builder
+                    .comment("Buffer capacity (in FE) of the Laser gun")
+                    .defineInRange("laser_gun_buffer_capacity", 50000, 100, 1000000000);
+
+            LASER_GUN_ENERGY_COST_PER_TICK = builder
+                    .comment("Energy cost (in FE/tick) while using the Laser gun")
+                    .defineInRange("laser_gun_cost_per_tick", 100, 0, 1000000);
+
+            LASER_GUN_ENERGY_COST_PER_TRANSFORMATION = builder
+                    .comment("Energy cost (in FE) when the Laser gun transforms something")
+                    .defineInRange("laser_gun_cost_per_transformation", 1000, 0, 1000000);
 
             ENERGY_DYE_GENERATOR_BUFFER_CAPACITY = builder
                     .comment("Buffer capacity (in FE) of the Energy dye generator")
@@ -47,8 +64,16 @@ public class ModConfigs {
                     .defineInRange("energy_dye_generator_fuel_consumption_speed", 10, 0.001, 1000);
 
             ENERGY_DYE_GENERATOR_MAX_IN_OUT = builder
-                    .comment("Maximum IN/OUT energy flow (in FE)")
+                    .comment("Maximum IN/OUT energy flow (in FE) of the Eergy dye generator")
                     .defineInRange("energy_dye_generator_max_in_out", 1000, 1, 1000000000);
+
+            ENERGY_CAPACITOR_BUFFER_CAPACITY = builder
+                    .comment("Buffer capacity (in FE) of the Energy capacitor")
+                    .defineInRange("energy_capacitor_buffer_capacity", 1000000, 1000, 1000000000);
+
+            ENERGY_CAPACITOR_MAX_IN_OUT = builder
+                    .comment("Maximum IN/OUT energy flow (in FE) of the Energy capacitor")
+                    .defineInRange("energy_capacitor_max_in_out", 10000, 1, 1000000000);
 
         }
 

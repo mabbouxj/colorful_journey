@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "colorful_journey:colored_nether_ore_red"
+  },
+  "result": "colorful_journey:colored_ingot_red",
+  "experience": 1.0,
+  "cookingtime": 180
+}

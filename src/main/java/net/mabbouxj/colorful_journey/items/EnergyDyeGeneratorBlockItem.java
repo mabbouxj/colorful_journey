@@ -41,8 +41,7 @@ public class EnergyDyeGeneratorBlockItem extends BlockItem {
     protected boolean updateCustomBlockEntityTag(BlockPos pos, World world, @Nullable PlayerEntity player, ItemStack stack, BlockState state) {
         TileEntity te = world.getBlockEntity(pos);
         if (te instanceof EnergyDyeGeneratorTile) {
-            EnergyDyeGeneratorTile tile = (EnergyDyeGeneratorTile) te;
-            tile.energyStorage.receiveEnergy(stack.getOrCreateTag().getInt("energy"), false);
+            ((EnergyDyeGeneratorTile) te).energyStorage.setEnergy(stack.getOrCreateTag().getInt("energy"));
         }
         return super.updateCustomBlockEntityTag(pos, world, player, stack, state);
     }

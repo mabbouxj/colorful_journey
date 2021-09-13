@@ -36,6 +36,7 @@
   "block.colorful_journey.colored_grass": "Grass",
   "block.colorful_journey.colored_ingot_block": "Ingots Block",
   "block.colorful_journey.energy_dye_generator": "Energy Dye Generator",
+  "block.colorful_journey.energy_capacitor": "Energy Capacitor",
 
   "tooltip.colorful_journey.hold_shift_for_info": "Hold §bSHIFT§r for more Information",
   "tooltip.colorful_journey.color_gun": "Craft with §eInk Ball§r to repair",
@@ -51,6 +52,7 @@
   "message.colorful_journey.color_gun_out_of_ink": "Your gun is out of ink!",
 
   "container.colorful_journey.energy_dye_generator": "Energy Dye Generator",
+  "container.colorful_journey.energy_capacitor": "Energy Capacitor",
 
   "screen.colorful_journey.energy": "Energy: %s/%s FE",
   "screen.colorful_journey.no_fuel": "Fuel is empty",

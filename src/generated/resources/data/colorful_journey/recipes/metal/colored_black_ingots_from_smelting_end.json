@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "colorful_journey:colored_end_ore_black"
+  },
+  "result": "colorful_journey:colored_ingot_black",
+  "experience": 1.5,
+  "cookingtime": 160
+}

@@ -30,6 +30,7 @@ public class ModItems {
     public static final RegistryObject<BlockItem> RUBIKS_CUBE = ITEMS.register("rubiks_cube", RubiksCubeItem::new);
     public static final RegistryObject<BlockItem> RUBIKS_CUBE_UNFINISHED = ITEMS.register("rubiks_cube_unfinished", RubiksCubeUnfinishedItem::new);
     public static final RegistryObject<BlockItem> ENERGY_DYE_GENERATOR = ITEMS.register("energy_dye_generator", EnergyDyeGeneratorBlockItem::new);
+    public static final RegistryObject<BlockItem> ENERGY_CAPACITOR = ITEMS.register("energy_capacitor", EnergyCapacitorBlockItem::new);
 
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_FEATHERS = registerColoredVariantsItem("colored_feather");
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_EGGS = registerColoredVariantsItem("colored_egg");

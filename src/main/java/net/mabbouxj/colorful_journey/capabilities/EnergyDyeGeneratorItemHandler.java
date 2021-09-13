@@ -9,11 +9,11 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 
-public class EnergyDyeItemHandler extends ItemStackHandler {
+public class EnergyDyeGeneratorItemHandler extends ItemStackHandler {
 
     private final EnergyDyeGeneratorTile tile;
 
-    public EnergyDyeItemHandler(EnergyDyeGeneratorTile t) {
+    public EnergyDyeGeneratorItemHandler(EnergyDyeGeneratorTile t) {
         super(2);
         this.tile = t;
     }

@@ -1,22 +1,31 @@
 package net.mabbouxj.colorful_journey.capabilities;
 
-import net.mabbouxj.colorful_journey.tiles.EnergyDyeGeneratorTile;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class EnergyDyeStorage implements IEnergyStorage, INBTSerializable<CompoundNBT> {
+public class TileEnergyStorageCapability implements IEnergyStorage, INBTSerializable<CompoundNBT> {
 
     private static final String KEY = "energy";
     private int energy;
     private int capacity;
-    private int maxInOut = 100000;
-    private EnergyDyeGeneratorTile tile;
+    private int maxInOut;
+    private TileEntity tile;
+    private boolean canExtract = true;
+    private boolean canReceive = true;
 
-    public EnergyDyeStorage(EnergyDyeGeneratorTile tile,int energy, int capacity) {
+    public TileEnergyStorageCapability(TileEntity tile, int energy, int capacity, int maxInOut) {
         this.energy = energy;
         this.capacity = capacity;
         this.tile = tile;
+        this.maxInOut = maxInOut;
+    }
+
+    public TileEnergyStorageCapability(TileEntity tile, int energy, int capacity, int maxInOut, boolean canExtract, boolean canReceive) {
+        this(tile, energy, capacity, maxInOut);
+        this.canExtract = canExtract;
+        this.canReceive = canReceive;
     }
 
     @Override
@@ -43,15 +52,6 @@ public class EnergyDyeStorage implements IEnergyStorage, INBTSerializable<Compou
         return energyReceived;
     }
 
-    public int consumeEnergy(int maxExtract, boolean simulate) {
-        int energyExtracted = Math.min(energy, Math.min(this.maxInOut, maxExtract));
-
-        if (!simulate)
-            energy -= energyExtracted;
-
-        return energyExtracted;
-    }
-
     public void setEnergy(int energy) {
         this.energy = energy;
     }
@@ -59,7 +59,12 @@ public class EnergyDyeStorage implements IEnergyStorage, INBTSerializable<Compou
     // We don't use this method and thus we don't let other people use it either
     @Override
     public int extractEnergy(int maxExtract, boolean simulate) {
-        return 0;
+        int energyExtracted = Math.min(energy, Math.min(this.maxInOut, maxExtract));
+
+        if (!simulate)
+            energy -= energyExtracted;
+
+        return energyExtracted;
     }
 
     @Override
@@ -74,12 +79,16 @@ public class EnergyDyeStorage implements IEnergyStorage, INBTSerializable<Compou
 
     @Override
     public boolean canExtract() {
-        return false;
+        return canExtract;
     }
 
     @Override
     public boolean canReceive() {
-        return true;
+        return canReceive;
+    }
+
+    public int getMaxInOut() {
+        return maxInOut;
     }
 
     @Override

@@ -1,12 +1,15 @@
 package net.mabbouxj.colorful_journey.items;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
+import net.mabbouxj.colorful_journey.ModConfigs;
+import net.mabbouxj.colorful_journey.capabilities.ItemEnergyStorageCapability;
 import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
 import net.mabbouxj.colorful_journey.client.sounds.LaserLoopSound;
 import net.mabbouxj.colorful_journey.init.ModSounds;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.LaserUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
+import net.mabbouxj.colorful_journey.utils.StringUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
@@ -18,16 +21,22 @@ import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.RegistryObject;
 
 import javax.annotation.Nullable;
@@ -45,12 +54,45 @@ public class ColorLaserGunItem extends Item {
     private boolean isRandom = true;
     private Integer nbTicksChangeRandomColor = 20;
     private Integer randomColorTimer = 0;
+    private int energyCapacity;
 
     public ColorLaserGunItem() {
         super(new Item.Properties()
                 .tab(ColorfulJourney.MOD_ITEM_GROUP)
                 .stacksTo(1)
                 .setNoRepair());
+        this.energyCapacity = ModConfigs.COMMON_CONFIG.LASER_GUN_BUFFER_CAPACITY.get();
+    }
+
+    @Override
+    public int getMaxDamage(ItemStack stack) {
+        return this.energyCapacity;
+    }
+
+    @Override
+    public boolean showDurabilityBar(ItemStack stack) {
+        IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+        return (energy.getEnergyStored() < energy.getMaxEnergyStored());
+    }
+
+    @Override
+    public double getDurabilityForDisplay(ItemStack stack) {
+        return stack.getCapability(CapabilityEnergy.ENERGY, null)
+                .map(e -> 1D - (e.getEnergyStored() / (double) e.getMaxEnergyStored()))
+                .orElse(0D);
+    }
+
+    @Override
+    public int getRGBDurabilityForDisplay(ItemStack stack) {
+        return stack.getCapability(CapabilityEnergy.ENERGY)
+                .map(e -> MathHelper.hsvToRgb(Math.max(0.0F, (float) e.getEnergyStored() / (float) e.getMaxEnergyStored()) / 3.0F, 1.0F, 1.0F))
+                .orElse(super.getRGBDurabilityForDisplay(stack));
+    }
+
+    @Nullable
+    @Override
+    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+        return new ItemEnergyStorageCapability(stack, ModConfigs.COMMON_CONFIG.LASER_GUN_BUFFER_CAPACITY.get());
     }
 
     @Override
@@ -72,7 +114,13 @@ public class ColorLaserGunItem extends Item {
             return ActionResult.pass(stack);
         }
 
-        player.playSound(ModSounds.LASER_START.get(), 1, 1);
+        player.playSound(ModSounds.LASER_START.get(), 0.5f, 1);
+
+        IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+        if (energy.getEnergyStored() == 0 && !player.isCreative()) {
+            player.stopUsingItem();
+            return ActionResult.fail(stack);
+        }
 
         player.startUsingItem(hand);
         return ActionResult.pass(stack);
@@ -80,7 +128,7 @@ public class ColorLaserGunItem extends Item {
 
     @OnlyIn(Dist.CLIENT)
     public void playLoopSound(LivingEntity player, ItemStack stack) {
-        float volume = 1;
+        float volume = 0.5f;
         PlayerEntity myplayer = Minecraft.getInstance().player;
         if (myplayer.equals(player)) {
             if (volume != 0.0f) {
@@ -105,6 +153,13 @@ public class ColorLaserGunItem extends Item {
 
         if (!player.level.isClientSide && player instanceof PlayerEntity) {
 
+            IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+            energy.extractEnergy(ModConfigs.COMMON_CONFIG.LASER_GUN_ENERGY_COST_PER_TICK.get(), false);
+            if (energy.getEnergyStored() == 0 && !((PlayerEntity) player).isCreative()) {
+                player.stopUsingItem();
+                return;
+            }
+
             Vector3d laserHitLocation = player.pick(LASER_RANGE, 0.0F, false).getLocation();
             Optional<Entity> entityOptional = LaserUtils.getFirstEntityOnLine(player.level, getLaserGunCannonPosition((PlayerEntity) player), laserHitLocation, e -> true);
             BlockState hitBlock = player.level.getBlockState(new BlockPos(laserHitLocation));
@@ -118,6 +173,7 @@ public class ColorLaserGunItem extends Item {
                 if (newEntity != null) {
                     entity.remove();
                     player.level.addFreshEntity(newEntity);
+                    energy.extractEnergy(ModConfigs.COMMON_CONFIG.LASER_GUN_ENERGY_COST_PER_TRANSFORMATION.get(), false);
                 }
             } else {
                 Map<DyeColor, RegistryObject<? extends Block>> targets = ColorfulJourney.REPLACEMENT_BLOCKS.getOrDefault(hitBlock.getBlock(), null);
@@ -125,6 +181,7 @@ public class ColorLaserGunItem extends Item {
                     try {
                         Block newBlock = targets.get(ColorUtils.getColor(stack)).get();
                         player.level.setBlock(new BlockPos(laserHitLocation), newBlock.defaultBlockState(), 3);
+                        energy.extractEnergy(ModConfigs.COMMON_CONFIG.LASER_GUN_ENERGY_COST_PER_TRANSFORMATION.get(), false);
                     } catch (Exception e) {
                         ColorfulJourney.LOGGER.info("Could not create replacement block for " + hitBlock.getBlock().getName());
                     }
@@ -137,7 +194,7 @@ public class ColorLaserGunItem extends Item {
     public void releaseUsing(ItemStack itemStack, World world, LivingEntity player, int ticks) {
         if (world.isClientSide) {
             if (laserLoopSound != null) {
-                float volume = 1;
+                float volume = 0.5f;
                 if (volume != 0.0f && !laserLoopSound.isStopped()) {
                     player.playSound(ModSounds.LASER_END.get(), volume * 0.5f, 1f);
                 }
@@ -237,6 +294,8 @@ public class ColorLaserGunItem extends Item {
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag flag) {
         DyeColor color = ColorUtils.getColor(itemStack);
+        IEnergyStorage energy = itemStack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
+        tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(energy.getEnergyStored()), StringUtils.numberWithSuffix(ModConfigs.COMMON_CONFIG.LASER_GUN_BUFFER_CAPACITY.get())).withStyle(TextFormatting.GREEN));
         if (isRandom) {
             tooltips.add(new StringTextComponent("Laser color: random"));
         } else {

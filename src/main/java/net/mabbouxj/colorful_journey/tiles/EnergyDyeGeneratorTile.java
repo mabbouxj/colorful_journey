@@ -1,10 +1,11 @@
 package net.mabbouxj.colorful_journey.tiles;
 
 import net.mabbouxj.colorful_journey.ModConfigs;
-import net.mabbouxj.colorful_journey.capabilities.EnergyDyeItemHandler;
-import net.mabbouxj.colorful_journey.capabilities.EnergyDyeStorage;
+import net.mabbouxj.colorful_journey.capabilities.EnergyDyeGeneratorItemHandler;
+import net.mabbouxj.colorful_journey.capabilities.TileEnergyStorageCapability;
 import net.mabbouxj.colorful_journey.containers.EnergyDyeGeneratorContainer;
 import net.mabbouxj.colorful_journey.init.ModTiles;
+import net.mabbouxj.colorful_journey.utils.EnergyUtils;
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -57,8 +58,8 @@ public class EnergyDyeGeneratorTile extends TileEntity implements ITickableTileE
     private int remainingFuel = 0;
     private int maxFuel = 0;
 
-    public EnergyDyeStorage energyStorage;
-    private LazyOptional<EnergyDyeStorage> energy;
+    public TileEnergyStorageCapability energyStorage;
+    private LazyOptional<TileEnergyStorageCapability> energy;
     private LazyOptional<ItemStackHandler> inventory;
 
     public final IIntArray data = new IIntArray() {
@@ -93,9 +94,9 @@ public class EnergyDyeGeneratorTile extends TileEntity implements ITickableTileE
 
     public EnergyDyeGeneratorTile() {
         super(ModTiles.ENERGY_DYE_GENERATOR.get());
-        this.energyStorage = new EnergyDyeStorage(this, 0, ModConfigs.COMMON_CONFIG.ENERGY_DYE_GENERATOR_BUFFER_CAPACITY.get());
+        this.energyStorage = new TileEnergyStorageCapability(this, 0, ModConfigs.COMMON_CONFIG.ENERGY_DYE_GENERATOR_BUFFER_CAPACITY.get(), ModConfigs.COMMON_CONFIG.ENERGY_DYE_GENERATOR_MAX_IN_OUT.get(), true, false);
         this.energy = LazyOptional.of(() -> this.energyStorage);
-        this.inventory = LazyOptional.of(() -> new EnergyDyeItemHandler(this));
+        this.inventory = LazyOptional.of(() -> new EnergyDyeGeneratorItemHandler(this));
     }
 
     @Nullable
@@ -107,13 +108,13 @@ public class EnergyDyeGeneratorTile extends TileEntity implements ITickableTileE
 
     @Override
     public void tick() {
-        if (getLevel() == null)
+        if (this.level == null)
             return;
         inventory.ifPresent(handler -> {
-            if(level == null)
-                return;
-
             this.getCapability(CapabilityEnergy.ENERGY).ifPresent(energyStorage -> {
+
+                EnergyUtils.extractToAdjacentBlocks(this.level, (TileEnergyStorageCapability) energyStorage, getBlockPos());
+
                 boolean canInsertEnergy = energyStorage.receiveEnergy(ModConfigs.COMMON_CONFIG.ENERGY_DYE_GENERATOR_PRODUCTION_PER_TICK.get(), true) > 0;
                 if (!canInsertEnergy)
                     return;

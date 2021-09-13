@@ -29,6 +29,7 @@ public class ModBlocks {
     public static RegistryObject<Block> RUBIKS_CUBE_UNFINISHED = BLOCKS.register("rubiks_cube_unfinished", RubiksCubeUnfinishedBlock::new);
 
     public static RegistryObject<Block> ENERGY_DYE_GENERATOR = BLOCKS.register("energy_dye_generator", EnergyDyeGeneratorBlock::new);
+    public static RegistryObject<Block> ENERGY_CAPACITOR = BLOCKS.register("energy_capacitor", EnergyCapacitorBlock::new);
 
     public static final List<RegistryObject<Block>> ALL_COLORED_VARIANTS_BLOCKS = new ArrayList<>();
     public static Map<DyeColor, RegistryObject<? extends Block>> COLORED_SKULLS = registerColoredVariantsBlock("colored_skull", ColoredSkullBlock::new);
