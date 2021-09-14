@@ -23,7 +23,7 @@ public class InkBallItem extends Item {
 
     @Override
     public ITextComponent getName(ItemStack itemStack) {
-        DyeColor color = ColorUtils.getRandomEnableColor();
+        DyeColor color = ColorUtils.getRandomEnabledColor();
         String itemName = new TranslationTextComponent("item.colorful_journey.ink_ball").getString();
         return new StringTextComponent(ColorUtils.DYE_COLOR_TO_TEXT_FORMAT.get(color.getId()) + itemName);
     }

@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.List;
 
 @Mod.EventBusSubscriber
-public class WorldEvents {
+public class WorldEventListeners {
 
     @SubscribeEvent
     public void onRenderWorldLastEvent(RenderWorldLastEvent event) {
@@ -27,7 +27,6 @@ public class WorldEvents {
                 LaserBeamRenderer.renderLaser(event, player, Minecraft.getInstance().getFrameTime());
             }
         }
-
     }
 
 }

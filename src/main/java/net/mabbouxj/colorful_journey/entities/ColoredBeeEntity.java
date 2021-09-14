@@ -5,7 +5,6 @@ import net.mabbouxj.colorful_journey.enums.ColorAttributesModifier;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
-import net.minecraft.client.renderer.entity.model.BeeModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -22,12 +21,11 @@ import net.minecraft.world.World;
 public class ColoredBeeEntity extends BeeEntity implements IColoredMobEntity {
 
     private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredBeeEntity.class, DataSerializers.INT);
-    private final BeeModel<ColoredBeeEntity> ENTITY_MODEL = new BeeModel<>();
     private final ResourceLocation LAYER_LOCATION = new ResourceLocation(ColorfulJourney.MOD_ID, "textures/entity/bee/colored_bee_layer.png");
 
     public ColoredBeeEntity(EntityType<? extends BeeEntity> entityType, World world) {
         super(entityType, world);
-        this.setColor(ColorUtils.getRandomEnableColor());
+        this.setColor(ColorUtils.getRandomEnabledColor());
     }
 
     public ColoredBeeEntity(World world, BeeEntity oldEntity, DyeColor color) {
@@ -78,11 +76,6 @@ public class ColoredBeeEntity extends BeeEntity implements IColoredMobEntity {
     @Override
     public void setColor(DyeColor color) {
         this.entityData.set(DATA_COLOR_ID, color.getId());
-    }
-
-    @Override
-    public BeeModel<ColoredBeeEntity> getEntityModel() {
-        return ENTITY_MODEL;
     }
 
     @Override

@@ -5,7 +5,6 @@ import net.mabbouxj.colorful_journey.enums.ColorAttributesModifier;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
-import net.minecraft.client.renderer.entity.model.EndermanModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -22,7 +21,6 @@ import net.minecraft.world.World;
 public class ColoredEndermanEntity extends EndermanEntity implements IColoredMobEntity {
 
     private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredEndermanEntity.class, DataSerializers.INT);
-    private final EndermanModel<ColoredEndermanEntity> ENTITY_MODEL = new EndermanModel<>(0.0F);
     private final ResourceLocation LAYER_LOCATION = new ResourceLocation(ColorfulJourney.MOD_ID, "textures/entity/enderman/colored_enderman_layer.png");
 
     public ColoredEndermanEntity(EntityType<? extends EndermanEntity> entityType, World world) {
@@ -78,11 +76,6 @@ public class ColoredEndermanEntity extends EndermanEntity implements IColoredMob
     @Override
     public ResourceLocation getDefaultLootTable() {
         return new ResourceLocation("minecraft", "entities/enderman");
-    }
-
-    @Override
-    public EndermanModel<ColoredEndermanEntity> getEntityModel() {
-        return ENTITY_MODEL;
     }
 
     @Override

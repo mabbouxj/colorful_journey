@@ -5,7 +5,6 @@ import net.mabbouxj.colorful_journey.enums.ColorAttributesModifier;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
-import net.minecraft.client.renderer.entity.model.SpiderModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -22,7 +21,6 @@ import net.minecraft.world.World;
 public class ColoredSpiderEntity extends SpiderEntity implements IColoredMobEntity {
 
     private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredSpiderEntity.class, DataSerializers.INT);
-    private final SpiderModel<ColoredSpiderEntity> ENTITY_MODEL = new SpiderModel<>();
     private final ResourceLocation LAYER_LOCATION = new ResourceLocation(ColorfulJourney.MOD_ID, "textures/entity/spider/colored_spider_layer.png");
 
     public ColoredSpiderEntity(EntityType<? extends SpiderEntity> entityType, World world) {
@@ -75,11 +73,6 @@ public class ColoredSpiderEntity extends SpiderEntity implements IColoredMobEnti
     @Override
     public ResourceLocation getDefaultLootTable() {
         return new ResourceLocation("minecraft", "entities/spider");
-    }
-
-    @Override
-    public SpiderModel<ColoredSpiderEntity> getEntityModel() {
-        return ENTITY_MODEL;
     }
 
     @Override

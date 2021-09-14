@@ -9,6 +9,7 @@ import net.minecraft.data.*;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
@@ -27,6 +28,25 @@ public class ModRecipesProvider extends RecipeProvider {
 
         woodRecipes(consumer);
         metalRecipes(consumer);
+
+        ShapedRecipeBuilder.shaped(ModItems.PAINTBRUSH.get(), 1)
+                .pattern("  h")
+                .pattern(" o ")
+                .pattern("i  ")
+                .define('h', ModItems.HORSEHAIR.get())
+                .define('o', Tags.Items.INGOTS_IRON)
+                .define('i', Tags.Items.RODS_WOODEN)
+                .unlockedBy("has_" + ModItems.PAINTBRUSH.getId().getPath(), has(ModItems.PAINTBRUSH.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(ModItems.COLOR_PALETTE.get(), 1)
+                .pattern("#o#")
+                .pattern("o#o")
+                .pattern("#o#")
+                .define('#', ItemTags.PLANKS)
+                .define('o', Tags.Items.DYES)
+                .unlockedBy("has_" + ModItems.COLOR_PALETTE.getId().getPath(), has(ModItems.COLOR_PALETTE.get()))
+                .save(consumer);
 
         ShapedRecipeBuilder.shaped(ModItems.INK_BALL.get(), 4)
                 .pattern(" # ")

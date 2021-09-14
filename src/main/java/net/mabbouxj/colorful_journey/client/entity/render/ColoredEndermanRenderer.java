@@ -38,12 +38,12 @@ public class ColoredEndermanRenderer extends MobRenderer<ColoredEndermanEntity, 
         super.render(entity, p_225623_2_, p_225623_3_, p_225623_4_, p_225623_5_, p_225623_6_);
     }
 
-    public Vector3d getRenderOffset(ColoredEndermanEntity entity, float p_225627_2_) {
+    public Vector3d getRenderOffset(ColoredEndermanEntity entity, float offset) {
         if (entity.isCreepy()) {
             double d0 = 0.02D;
             return new Vector3d(this.random.nextGaussian() * 0.02D, 0.0D, this.random.nextGaussian() * 0.02D);
         } else {
-            return super.getRenderOffset(entity, p_225627_2_);
+            return super.getRenderOffset(entity, offset);
         }
     }
 

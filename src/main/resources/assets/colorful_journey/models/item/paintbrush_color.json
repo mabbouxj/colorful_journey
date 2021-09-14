@@ -1,0 +1,8 @@
+{
+  "parent": "item/generated",
+  "texture_size": [64, 64],
+  "textures": {
+    "layer0": "colorful_journey:item/paintbrush_color_layer",
+    "layer1": "colorful_journey:item/paintbrush_color"
+  }
+}

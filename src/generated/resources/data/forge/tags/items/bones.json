@@ -1,21 +1,21 @@
 {
   "replace": false,
   "values": [
-    "colorful_journey:colored_bone_black",
-    "colorful_journey:colored_bone_yellow",
-    "colorful_journey:colored_bone_orange",
-    "colorful_journey:colored_bone_white",
-    "colorful_journey:colored_bone_light_blue",
-    "colorful_journey:colored_bone_light_gray",
-    "colorful_journey:colored_bone_pink",
-    "colorful_journey:colored_bone_blue",
-    "colorful_journey:colored_bone_red",
-    "colorful_journey:colored_bone_cyan",
-    "colorful_journey:colored_bone_magenta",
-    "colorful_journey:colored_bone_gray",
     "colorful_journey:colored_bone_brown",
     "colorful_journey:colored_bone_purple",
     "colorful_journey:colored_bone_lime",
-    "colorful_journey:colored_bone_green"
+    "colorful_journey:colored_bone_green",
+    "colorful_journey:colored_bone_pink",
+    "colorful_journey:colored_bone_light_blue",
+    "colorful_journey:colored_bone_blue",
+    "colorful_journey:colored_bone_gray",
+    "colorful_journey:colored_bone_magenta",
+    "colorful_journey:colored_bone_light_gray",
+    "colorful_journey:colored_bone_orange",
+    "colorful_journey:colored_bone_black",
+    "colorful_journey:colored_bone_cyan",
+    "colorful_journey:colored_bone_white",
+    "colorful_journey:colored_bone_yellow",
+    "colorful_journey:colored_bone_red"
   ]
 }

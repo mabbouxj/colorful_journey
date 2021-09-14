@@ -1,0 +1,13 @@
+{
+  "parent": "item/generated",
+  "texture_size": [64, 64],
+  "textures": {
+    "layer0": "colorful_journey:item/paintbrush_no_color"
+  },
+  "overrides": [
+    {
+      "predicate": { "colorful_journey:colored": 1 },
+      "model": "colorful_journey:item/paintbrush_color"
+    }
+  ]
+}

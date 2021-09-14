@@ -1,29 +1,33 @@
 package net.mabbouxj.colorful_journey.events;
 
+import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.blocks.ColoredGrassBlock;
 import net.mabbouxj.colorful_journey.init.ModBlocks;
+import net.mabbouxj.colorful_journey.items.PaintbrushItem;
+import net.mabbouxj.colorful_journey.utils.ColorUtils;
+import net.mabbouxj.colorful_journey.utils.ParticleUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.HoeItem;
-import net.minecraft.item.ShovelItem;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.*;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Mod.EventBusSubscriber
-public class BlockEvents {
+public class BlockEventListeners {
 
     private final Map<Block, Block> BLOCK_STRIPPING_MAP = new HashMap<Block, Block>() {{
         for (DyeColor color: DyeColor.values()) {
@@ -85,8 +89,34 @@ public class BlockEvents {
                 }
             }
         }
+    }
+
+    @SubscribeEvent
+    public void onBlockLeftClicked(PlayerInteractEvent.LeftClickBlock event) {
+
+        World world = event.getWorld();
+        PlayerEntity player = event.getPlayer();
+        ItemStack stack = event.getItemStack();
+        BlockPos blockpos = event.getPos();
+        BlockState blockstate = world.getBlockState(blockpos);
+
+        if (stack.getItem() instanceof PaintbrushItem) {
+            Map<DyeColor, RegistryObject<? extends Block>> targets = ColorfulJourney.REPLACEMENT_BLOCKS.getOrDefault(blockstate.getBlock(), null);
+            if (targets != null) {
+                try {
+                    Block newBlock = targets.get(ColorUtils.getColor(stack)).get();
+                    world.setBlock(blockpos, newBlock.defaultBlockState(), 3);
+                    ParticleUtils.makeParticles(player.level, ColorUtils.getColor(stack), 8, 20, new Vector3d(blockpos.getX(), blockpos.getY(), blockpos.getZ()));
+                    stack.hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
+                    ColorUtils.removeColor(stack);
+                } catch (Exception e) {
+                    ColorfulJourney.LOGGER.info("Could not create replacement block for " + blockstate.getBlock().getName());
+                }
+            }
+        }
 
     }
+
 
 
 }

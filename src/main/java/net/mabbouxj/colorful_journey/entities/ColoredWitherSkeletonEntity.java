@@ -5,7 +5,6 @@ import net.mabbouxj.colorful_journey.enums.ColorAttributesModifier;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
-import net.minecraft.client.renderer.entity.model.SkeletonModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -22,7 +21,6 @@ import net.minecraft.world.World;
 public class ColoredWitherSkeletonEntity extends WitherSkeletonEntity implements IColoredMobEntity {
 
     private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredWitherSkeletonEntity.class, DataSerializers.INT);
-    private final SkeletonModel<ColoredWitherSkeletonEntity> ENTITY_MODEL = new SkeletonModel<>(0.0F, false);
     private final ResourceLocation LAYER_LOCATION = new ResourceLocation(ColorfulJourney.MOD_ID, "textures/entity/skeleton/colored_skeleton_layer.png");
 
     public ColoredWitherSkeletonEntity(EntityType<? extends WitherSkeletonEntity> entityType, World world) {
@@ -74,11 +72,6 @@ public class ColoredWitherSkeletonEntity extends WitherSkeletonEntity implements
     @Override
     public ResourceLocation getDefaultLootTable() {
         return new ResourceLocation("minecraft", "entities/wither_skeleton");
-    }
-
-    @Override
-    public SkeletonModel<ColoredWitherSkeletonEntity> getEntityModel() {
-        return ENTITY_MODEL;
     }
 
     @Override

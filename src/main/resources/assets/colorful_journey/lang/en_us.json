@@ -17,6 +17,9 @@
   "item.colorful_journey.colored_gunpowder": "Gunpowder",
   "item.colorful_journey.colored_nugget": "Nugget",
   "item.colorful_journey.colored_ingot": "Ingot",
+  "item.colorful_journey.paintbrush": "§aPaintbrush",
+  "item.colorful_journey.color_palette": "Color Palette",
+  "item.colorful_journey.horsehair": "Horsehair",
 
   "block.colorful_journey.rubiks_cube": "Rubik's Cube",
   "block.colorful_journey.rubiks_cube_unfinished": "Unfinished Rubik's Cube",
@@ -40,7 +43,7 @@
 
   "tooltip.colorful_journey.hold_shift_for_info": "Hold §bSHIFT§r for more Information",
   "tooltip.colorful_journey.color_gun": "Craft with §eInk Ball§r to repair",
-  "tooltip.colorful_journey.color_laser_gun": "§eSneak + Right-click§r to change color mode",
+  "tooltip.colorful_journey.color_laser_gun": "§bSneak + Right-click§r to change color mode",
   "tooltip.colorful_journey.ink_ball": "Eeny, meeny, miny, moe...",
   "tooltip.colorful_journey.colored_skull": "To spawn a §eWither§r with this beautiful skull, place it §elast§r",
   "tooltip.colorful_journey.rubiks_cube": "You got lucky this time! §eSneak + Right-click§r to start over",
@@ -48,8 +51,13 @@
   "tooltip.colorful_journey.colored_ore": "Can be found in the §eOverworld§r at §eY=",
   "tooltip.colorful_journey.colored_nether_ore": "Can be found in the §eNether§r",
   "tooltip.colorful_journey.colored_end_ore": "Can be found in the §eEnd§r",
+  "tooltip.colorful_journey.paintbrush": "§bRight-click§r with a §eColor palette§r in your off-hand to change color",
+  "tooltip.colorful_journey.color_palette": "\"There are no mistakes, only happy accidents\"",
 
+  "message.colorful_journey.color_set_to": "Color set to: %s",
   "message.colorful_journey.color_gun_out_of_ink": "Your gun is out of ink!",
+  "message.colorful_journey.color_palette_out_of_ink": "Your palette is out of ink!",
+  "message.colorful_journey.paintbrush_usage": "You must be holding a §eColor palette§r in your off-hand to get some color",
 
   "container.colorful_journey.energy_dye_generator": "Energy Dye Generator",
   "container.colorful_journey.energy_capacitor": "Energy Capacitor",

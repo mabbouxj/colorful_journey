@@ -5,9 +5,10 @@ import net.mabbouxj.colorful_journey.ModConfigs;
 import net.mabbouxj.colorful_journey.client.gui.EnergyCapacitorScreen;
 import net.mabbouxj.colorful_journey.client.gui.EnergyDyeGeneratorScreen;
 import net.mabbouxj.colorful_journey.entities.*;
-import net.mabbouxj.colorful_journey.events.BlockEvents;
-import net.mabbouxj.colorful_journey.events.MobEvents;
-import net.mabbouxj.colorful_journey.events.WorldEvents;
+import net.mabbouxj.colorful_journey.events.BlockEventListeners;
+import net.mabbouxj.colorful_journey.events.EntityEventListeners;
+import net.mabbouxj.colorful_journey.events.PlayerEventListeners;
+import net.mabbouxj.colorful_journey.events.WorldEventListeners;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.DyeColor;
 import net.minecraftforge.api.distmarker.Dist;
@@ -25,9 +26,10 @@ public class CommonEventBusSubscriber {
     @SubscribeEvent
     public static void onCommonSetup(FMLCommonSetupEvent event) {
         ModConfigs.build();
-        MinecraftForge.EVENT_BUS.register(new MobEvents());
-        MinecraftForge.EVENT_BUS.register(new BlockEvents());
-        MinecraftForge.EVENT_BUS.register(new WorldEvents());
+        MinecraftForge.EVENT_BUS.register(new EntityEventListeners());
+        MinecraftForge.EVENT_BUS.register(new BlockEventListeners());
+        MinecraftForge.EVENT_BUS.register(new WorldEventListeners());
+        MinecraftForge.EVENT_BUS.register(new PlayerEventListeners());
     }
 
     @SubscribeEvent

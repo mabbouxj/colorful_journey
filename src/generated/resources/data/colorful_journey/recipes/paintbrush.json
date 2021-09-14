@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  h",
+    " o ",
+    "i  "
+  ],
+  "key": {
+    "h": {
+      "item": "colorful_journey:horsehair"
+    },
+    "o": {
+      "tag": "forge:ingots/iron"
+    },
+    "i": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "colorful_journey:paintbrush"
+  }
+}

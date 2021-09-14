@@ -24,6 +24,9 @@ public class ModItems {
     public static final List<RegistryObject<Item>> ALL_COLORED_VARIANTS_ITEMS = new ArrayList<>();
     public static final List<RegistryObject<BlockItem>> ALL_COLORED_VARIANTS_BLOCK_ITEMS = new ArrayList<>();
 
+    public static final RegistryObject<Item> HORSEHAIR = ITEMS.register("horsehair", () -> new Item(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP)));
+    public static final RegistryObject<Item> PAINTBRUSH = ITEMS.register("paintbrush", PaintbrushItem::new);
+    public static final RegistryObject<Item> COLOR_PALETTE = ITEMS.register("color_palette", ColorPaletteItem::new);
     public static final RegistryObject<Item> COLOR_GUN = ITEMS.register("color_gun", ColorGunItem::new);
     public static final RegistryObject<Item> COLOR_LASER_GUN = ITEMS.register("color_laser_gun", ColorLaserGunItem::new);
     public static final RegistryObject<Item> INK_BALL = ITEMS.register("ink_ball", InkBallItem::new);

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#o#",
+    "o#o",
+    "#o#"
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:planks"
+    },
+    "o": {
+      "tag": "forge:dyes"
+    }
+  },
+  "result": {
+    "item": "colorful_journey:color_palette"
+  }
+}

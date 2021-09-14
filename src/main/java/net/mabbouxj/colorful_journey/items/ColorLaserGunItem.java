@@ -3,13 +3,9 @@ package net.mabbouxj.colorful_journey.items;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.ModConfigs;
 import net.mabbouxj.colorful_journey.capabilities.ItemEnergyStorageCapability;
-import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
 import net.mabbouxj.colorful_journey.client.sounds.LaserLoopSound;
 import net.mabbouxj.colorful_journey.init.ModSounds;
-import net.mabbouxj.colorful_journey.utils.ColorUtils;
-import net.mabbouxj.colorful_journey.utils.LaserUtils;
-import net.mabbouxj.colorful_journey.utils.MobUtils;
-import net.mabbouxj.colorful_journey.utils.StringUtils;
+import net.mabbouxj.colorful_journey.utils.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
@@ -25,7 +21,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -40,10 +35,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.RegistryObject;
 
 import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 
 public class ColorLaserGunItem extends Item {
@@ -84,9 +76,7 @@ public class ColorLaserGunItem extends Item {
 
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
-        return stack.getCapability(CapabilityEnergy.ENERGY)
-                .map(e -> MathHelper.hsvToRgb(Math.max(0.0F, (float) e.getEnergyStored() / (float) e.getMaxEnergyStored()) / 3.0F, 1.0F, 1.0F))
-                .orElse(super.getRGBDurabilityForDisplay(stack));
+        return Objects.requireNonNull(TextFormatting.GOLD.getColor());
     }
 
     @Nullable
@@ -103,14 +93,14 @@ public class ColorLaserGunItem extends Item {
         if (player.isCrouching()) {
             if (new Random().nextInt(100) > 80) {
                 isRandom = true;
-                ColorUtils.setColor(stack, ColorUtils.getRandomEnableColor());
-                player.displayClientMessage(new StringTextComponent("Color set to: random"), true);
+                ColorUtils.setColor(stack, ColorUtils.getRandomEnabledColor());
+                player.displayClientMessage(new TranslationTextComponent("message.colorful_journey.color_set_to", "random"), true);
                 return ActionResult.pass(stack);
             }
             isRandom = false;
-            DyeColor color = ColorUtils.getRandomEnableColor();
+            DyeColor color = ColorUtils.getRandomEnabledColor();
             ColorUtils.setColor(stack, color);
-            player.displayClientMessage(new StringTextComponent("Color set to: " + ColorUtils.DYE_COLOR_TO_TEXT_FORMAT.get(color.getId()) + color.getName()), true);
+            player.displayClientMessage(new TranslationTextComponent("message.colorful_journey.color_set_to", ColorUtils.coloredColorName(color)), true);
             return ActionResult.pass(stack);
         }
 
@@ -147,7 +137,7 @@ public class ColorLaserGunItem extends Item {
         }
 
         if(isRandom && randomColorTimer++ >= nbTicksChangeRandomColor) {
-            ColorUtils.setColor(stack, ColorUtils.getRandomEnableColor());
+            ColorUtils.setColor(stack, ColorUtils.getRandomEnabledColor());
             randomColorTimer = 0;
         }
 
@@ -164,8 +154,8 @@ public class ColorLaserGunItem extends Item {
             Optional<Entity> entityOptional = LaserUtils.getFirstEntityOnLine(player.level, getLaserGunCannonPosition((PlayerEntity) player), laserHitLocation, e -> true);
             BlockState hitBlock = player.level.getBlockState(new BlockPos(laserHitLocation));
 
-            makeParticle(player.level, (PlayerEntity) player, 2, 1, ColorUtils.getColor(stack));
-            makeParticle(player.level, 3, 20, ColorUtils.getColor(stack), laserHitLocation);
+            ParticleUtils.makeParticles(player.level, ColorUtils.getColor(stack), 2, 1, getLaserGunCannonPosition((PlayerEntity) player));
+            ParticleUtils.makeParticles(player.level, ColorUtils.getColor(stack), 4, 20, laserHitLocation);
 
             if (entityOptional.isPresent()) {
                 Entity entity = entityOptional.get();
@@ -204,7 +194,7 @@ public class ColorLaserGunItem extends Item {
 
         randomColorTimer = 0;
         if (isRandom) {
-            ColorUtils.setColor(itemStack, ColorUtils.getRandomEnableColor());
+            ColorUtils.setColor(itemStack, ColorUtils.getRandomEnabledColor());
         }
 
         if (player instanceof PlayerEntity)
@@ -234,32 +224,6 @@ public class ColorLaserGunItem extends Item {
     @Override
     public int getUseDuration(ItemStack itemStack) {
         return 72000;
-    }
-
-    private void makeParticle(World world, PlayerEntity player, double speed, int amount, DyeColor color) {
-        Vector3d laserPos = getLaserGunCannonPosition(player);
-        makeParticle(world, speed, amount, color, laserPos);
-    }
-
-    private void makeParticle(World world, double speed, int amount, DyeColor color, Vector3d position) {
-        final double TICKS_PER_SECOND = 20;
-        final double SPEED_IN_BLOCKS_PER_TICK = speed / TICKS_PER_SECOND;
-        for (int i = 0; i < amount; i++) {
-            Vector3d direction = new Vector3d(
-                    2 * new Random().nextDouble() - 1,
-                    2 * new Random().nextDouble() - 1,
-                    2 * new Random().nextDouble() - 1
-            );
-            double velocityX = SPEED_IN_BLOCKS_PER_TICK * direction.x;
-            double velocityY = SPEED_IN_BLOCKS_PER_TICK * direction.y;
-            double velocityZ = SPEED_IN_BLOCKS_PER_TICK * direction.z;
-
-            world.addParticle(
-                    new InkSplashParticle.Data(color),
-                    position.x, position.y, position.z,
-                    velocityX, velocityY, velocityZ
-            );
-        }
     }
 
     // Try to get the position of the gun cannon
@@ -299,7 +263,7 @@ public class ColorLaserGunItem extends Item {
         if (isRandom) {
             tooltips.add(new StringTextComponent("Laser color: random"));
         } else {
-            tooltips.add(new StringTextComponent("Laser color: " + ColorUtils.DYE_COLOR_TO_TEXT_FORMAT.get(color.getId()) + color.getName()));
+            tooltips.add(new StringTextComponent("Laser color: " + ColorUtils.coloredColorName(color)));
         }
         tooltips.add(new TranslationTextComponent("tooltip.colorful_journey.color_laser_gun"));
         super.appendHoverText(itemStack, world, tooltips, flag);

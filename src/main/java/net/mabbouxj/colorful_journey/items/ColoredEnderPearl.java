@@ -22,7 +22,7 @@ public class ColoredEnderPearl extends EnderPearlItem implements ColorUtils.ICol
 
     @Override
     public ITextComponent getName(ItemStack itemStack) {
-        return ColorUtils.getDisplayColorName(itemStack, new TranslationTextComponent("item.colorful_journey.colored_ender_pearl").getString());
+        return ColorUtils.getDisplayItemColorName(itemStack, new TranslationTextComponent("item.colorful_journey.colored_ender_pearl").getString());
     }
 
     @Override

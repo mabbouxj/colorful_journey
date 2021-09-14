@@ -27,16 +27,18 @@ public class ModItemModelProvider extends ItemModelProvider {
             ResourceLocation registry = registryObject.get().getRegistryName();
             String textureLoc = registry.getNamespace() + ":item/" + registry.getPath();
             textureLoc = ColorUtils.removeColorSuffix(textureLoc);
-            getBuilder(registry.toString())
-                    .parent(itemGenerated)
-                    .texture("layer0", textureLoc);
+            getBuilder(registry.toString()).parent(itemGenerated).texture("layer0", textureLoc);
         }
 
         for (RegistryObject<BlockItem> registryObject: ModItems.ALL_COLORED_VARIANTS_BLOCK_ITEMS) {
             ResourceLocation registry = registryObject.get().getRegistryName();
             String blockModelName = ColorUtils.removeColorSuffix(registry.getPath());
-            ModelFile blockModel = getExistingFile(modLoc("block/" + blockModelName));
-            getBuilder(registry.getPath()).parent(blockModel);
+            if (blockModelName.equals("colored_grass") || blockModelName.equals("colored_sapling")) {
+                getBuilder(registry.toString()).parent(itemGenerated).texture("layer0", registry.getNamespace() + ":block/" + blockModelName);
+            } else {
+                ModelFile blockModel = getExistingFile(modLoc("block/" + blockModelName));
+                getBuilder(registry.getPath()).parent(blockModel);
+            }
         }
 
     }

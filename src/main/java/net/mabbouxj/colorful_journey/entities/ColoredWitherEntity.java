@@ -5,7 +5,6 @@ import net.mabbouxj.colorful_journey.enums.ColorAttributesModifier;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
-import net.minecraft.client.renderer.entity.model.WitherModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -26,7 +25,6 @@ import org.apache.commons.lang3.StringUtils;
 public class ColoredWitherEntity extends WitherEntity implements IColoredMobEntity {
 
     private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredWitherEntity.class, DataSerializers.INT);
-    private final WitherModel<ColoredWitherEntity> ENTITY_MODEL = new WitherModel<>(0.0F);
     private final ResourceLocation LAYER_LOCATION = new ResourceLocation(ColorfulJourney.MOD_ID, "textures/entity/wither/colored_wither_layer.png");
 
     public ColoredWitherEntity(EntityType<? extends WitherEntity> entityType, World world) {
@@ -84,11 +82,6 @@ public class ColoredWitherEntity extends WitherEntity implements IColoredMobEnti
     @Override
     public ResourceLocation getDefaultLootTable() {
         return new ResourceLocation("minecraft", "entities/wither");
-    }
-
-    @Override
-    public WitherModel<ColoredWitherEntity> getEntityModel() {
-        return ENTITY_MODEL;
     }
 
     @Override

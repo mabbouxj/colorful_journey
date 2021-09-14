@@ -3,7 +3,9 @@ package net.mabbouxj.colorful_journey.init;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.client.entity.render.*;
 import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
+import net.mabbouxj.colorful_journey.items.PaintbrushItem;
 import net.mabbouxj.colorful_journey.items.RubiksCubeUnfinishedItem;
+import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.Multicolor;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -66,6 +68,11 @@ public class ClientEventBusSubscriber {
                 new ResourceLocation(ColorfulJourney.MOD_ID, "mix"),
                 (stack, world, player) -> stack.getItem() instanceof RubiksCubeUnfinishedItem ? RubiksCubeUnfinishedItem.getMixVariant(stack): 0
         ));
+        event.enqueueWork(() -> ItemModelsProperties.register(
+                ModItems.PAINTBRUSH.get(),
+                new ResourceLocation(ColorfulJourney.MOD_ID, "colored"),
+                (stack, world, player) -> stack.getItem() instanceof PaintbrushItem  && ColorUtils.hasColor(stack) ? 1: 0
+        ));
 
     }
 
@@ -80,6 +87,7 @@ public class ClientEventBusSubscriber {
         for (RegistryObject<Block> registryBlock: ModBlocks.ALL_COLORED_VARIANTS_BLOCKS) {
             event.getBlockColors().register(new Multicolor.Block(), registryBlock.get());
         }
+        event.getItemColors().register(new Multicolor.Item(), ModItems.PAINTBRUSH.get());
     }
 
     @SubscribeEvent

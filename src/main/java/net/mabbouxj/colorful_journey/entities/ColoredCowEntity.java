@@ -5,7 +5,6 @@ import net.mabbouxj.colorful_journey.enums.ColorAttributesModifier;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
-import net.minecraft.client.renderer.entity.model.CowModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -22,12 +21,11 @@ import net.minecraft.world.World;
 public class ColoredCowEntity extends CowEntity implements IColoredMobEntity {
 
     private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredCowEntity.class, DataSerializers.INT);
-    private final CowModel<ColoredCowEntity> ENTITY_MODEL = new CowModel<>();
     private final ResourceLocation LAYER_LOCATION = new ResourceLocation(ColorfulJourney.MOD_ID, "textures/entity/cow/colored_cow_layer.png");
 
     public ColoredCowEntity(EntityType<? extends CowEntity> type, World world) {
         super(type, world);
-        this.setColor(ColorUtils.getRandomEnableColor());
+        this.setColor(ColorUtils.getRandomEnabledColor());
     }
 
     public ColoredCowEntity(World world, CowEntity oldEntity, DyeColor color) {
@@ -76,11 +74,6 @@ public class ColoredCowEntity extends CowEntity implements IColoredMobEntity {
     @Override
     public ResourceLocation getDefaultLootTable() {
         return new ResourceLocation("minecraft", "entities/cow");
-    }
-
-    @Override
-    public CowModel<ColoredCowEntity> getEntityModel() {
-        return ENTITY_MODEL;
     }
 
     @Override

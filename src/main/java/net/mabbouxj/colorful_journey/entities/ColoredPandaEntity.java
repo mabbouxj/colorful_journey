@@ -6,7 +6,6 @@ import net.mabbouxj.colorful_journey.enums.ColorAttributesModifier;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
-import net.minecraft.client.renderer.entity.model.PandaModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -26,7 +25,6 @@ import java.util.Map;
 public class ColoredPandaEntity extends PandaEntity implements IColoredMobEntity {
 
     private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredPandaEntity.class, DataSerializers.INT);
-    private final PandaModel<ColoredPandaEntity> ENTITY_MODEL = new PandaModel<>(9, 0.0F);
     private static final Map<Gene, ResourceLocation> LAYERS_LOCATION = Util.make(Maps.newEnumMap(PandaEntity.Gene.class), (variants) -> {
         variants.put(PandaEntity.Gene.NORMAL, new ResourceLocation(ColorfulJourney.MOD_ID, "textures/entity/panda/colored_panda_layer.png"));
         variants.put(PandaEntity.Gene.LAZY, new ResourceLocation(ColorfulJourney.MOD_ID, "textures/entity/panda/colored_lazy_panda_layer.png"));
@@ -40,7 +38,7 @@ public class ColoredPandaEntity extends PandaEntity implements IColoredMobEntity
 
     public ColoredPandaEntity(EntityType<? extends PandaEntity> type, World world) {
         super(type, world);
-        this.setColor(ColorUtils.getRandomEnableColor());
+        this.setColor(ColorUtils.getRandomEnabledColor());
     }
 
     public ColoredPandaEntity(World world, PandaEntity oldEntity, DyeColor color) {
@@ -90,11 +88,6 @@ public class ColoredPandaEntity extends PandaEntity implements IColoredMobEntity
     @Override
     public ResourceLocation getDefaultLootTable() {
         return new ResourceLocation("minecraft", "entities/panda");
-    }
-
-    @Override
-    public PandaModel<ColoredPandaEntity> getEntityModel() {
-        return ENTITY_MODEL;
     }
 
     @Override

@@ -21,7 +21,7 @@ public class ColoredMobLayer<T extends MobEntity & IColoredMobEntity, M extends 
     public void render(MatrixStack matrixStack, IRenderTypeBuffer buffer, int p_225628_3_, T entity, float p_225628_5_, float p_225628_6_, float p_225628_7_, float p_225628_8_, float p_225628_9_, float p_225628_10_) {
         if (!entity.isInvisible()) {
             float[] rgb = entity.getColor().getTextureDiffuseColors();
-            coloredCutoutModelCopyLayerRender(this.getParentModel(), entity.getEntityModel(), entity.getLayerLocation(), matrixStack, buffer, p_225628_3_, entity, p_225628_5_, p_225628_6_, p_225628_8_, p_225628_9_, p_225628_10_, p_225628_7_, rgb[0], rgb[1], rgb[2]);
+            coloredCutoutModelCopyLayerRender(this.getParentModel(), this.getParentModel(), entity.getLayerLocation(), matrixStack, buffer, p_225628_3_, entity, p_225628_5_, p_225628_6_, p_225628_8_, p_225628_9_, p_225628_10_, p_225628_7_, rgb[0], rgb[1], rgb[2]);
         }
     }
 

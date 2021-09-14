@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "colorful_journey:energy_capacitor"
+    }
+  ],
+  "result": {
+    "item": "colorful_journey:energy_capacitor"
+  }
+}

@@ -5,7 +5,6 @@ import net.mabbouxj.colorful_journey.enums.ColorAttributesModifier;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
-import net.minecraft.client.renderer.entity.model.CreeperModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -22,7 +21,6 @@ import net.minecraft.world.World;
 public class ColoredCreeperEntity extends CreeperEntity implements IColoredMobEntity {
 
     private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredCreeperEntity.class, DataSerializers.INT);
-    private final CreeperModel<ColoredCreeperEntity> ENTITY_MODEL = new CreeperModel<>(0.0F);
     private final ResourceLocation LAYER_LOCATION = new ResourceLocation(ColorfulJourney.MOD_ID, "textures/entity/creeper/colored_creeper_layer.png");
 
     public ColoredCreeperEntity(EntityType<? extends CreeperEntity> entityType, World world) {
@@ -75,11 +73,6 @@ public class ColoredCreeperEntity extends CreeperEntity implements IColoredMobEn
     @Override
     public ResourceLocation getDefaultLootTable() {
         return new ResourceLocation("minecraft", "entities/creeper");
-    }
-
-    @Override
-    public CreeperModel<ColoredCreeperEntity> getEntityModel() {
-        return ENTITY_MODEL;
     }
 
     @Override

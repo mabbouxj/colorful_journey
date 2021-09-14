@@ -6,7 +6,6 @@ import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
-import net.minecraft.client.renderer.entity.model.ChickenModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -27,12 +26,11 @@ import net.minecraftforge.fml.RegistryObject;
 public class ColoredChickenEntity extends ChickenEntity implements IColoredMobEntity {
 
     private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredChickenEntity.class, DataSerializers.INT);
-    private final ChickenModel<ColoredChickenEntity> ENTITY_MODEL = new ChickenModel<>();
     private final ResourceLocation LAYER_LOCATION = new ResourceLocation(ColorfulJourney.MOD_ID, "textures/entity/chicken/colored_chicken_layer.png");
 
     public ColoredChickenEntity(EntityType<? extends ChickenEntity> type, World world) {
         super(type, world);
-        this.setColor(ColorUtils.getRandomEnableColor());
+        this.setColor(ColorUtils.getRandomEnabledColor());
     }
 
     public ColoredChickenEntity(World world, ChickenEntity oldEntity, DyeColor color) {
@@ -97,11 +95,6 @@ public class ColoredChickenEntity extends ChickenEntity implements IColoredMobEn
             }
         }
         super.aiStep();
-    }
-
-    @Override
-    public ChickenModel<ColoredChickenEntity> getEntityModel() {
-        return ENTITY_MODEL;
     }
 
     @Override

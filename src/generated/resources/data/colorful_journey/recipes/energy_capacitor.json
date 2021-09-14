@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#x#",
+    "xox",
+    "#x#"
+  ],
+  "key": {
+    "x": {
+      "tag": "colorful_journey:colored_ingots"
+    },
+    "#": {
+      "item": "colorful_journey:rubiks_cube"
+    },
+    "o": {
+      "item": "minecraft:netherite_ingot"
+    }
+  },
+  "result": {
+    "item": "colorful_journey:energy_capacitor"
+  }
+}

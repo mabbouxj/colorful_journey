@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Mod.EventBusSubscriber
-public class MobEvents {
+public class EntityEventListeners {
 
     @SubscribeEvent
     public void onMobItemDrop(LivingDropsEvent e) {

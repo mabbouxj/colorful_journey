@@ -5,7 +5,6 @@ import net.mabbouxj.colorful_journey.enums.ColorAttributesModifier;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
-import net.minecraft.client.renderer.entity.model.ZombieModel;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -22,7 +21,6 @@ import net.minecraft.world.World;
 public class ColoredZombieEntity extends ZombieEntity implements IColoredMobEntity {
 
     private static final DataParameter<Integer> DATA_COLOR_ID = EntityDataManager.defineId(ColoredZombieEntity.class, DataSerializers.INT);
-    private final ZombieModel<ColoredZombieEntity> ENTITY_MODEL = new ZombieModel<>(0.0F, false);
     private final ResourceLocation LAYER_LOCATION = new ResourceLocation(ColorfulJourney.MOD_ID, "textures/entity/zombie/colored_zombie_layer.png");
 
     public ColoredZombieEntity(EntityType<? extends ZombieEntity> entityType, World world) {
@@ -79,11 +77,6 @@ public class ColoredZombieEntity extends ZombieEntity implements IColoredMobEnti
     @Override
     public ResourceLocation getDefaultLootTable() {
         return new ResourceLocation("minecraft", "entities/zombie");
-    }
-
-    @Override
-    public ZombieModel<ColoredZombieEntity> getEntityModel() {
-        return ENTITY_MODEL;
     }
 
     @Override

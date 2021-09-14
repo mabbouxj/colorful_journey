@@ -37,7 +37,7 @@ public class ColorUtils {
         put(DyeColor.BROWN.getId(), "§4");
     }};
 
-    public static DyeColor getRandomEnableColor() {
+    public static DyeColor getRandomEnabledColor() {
         return (DyeColor) ColorfulJourney.ENABLED_COLORS.toArray()[new Random().nextInt(ColorfulJourney.ENABLED_COLORS.size())];
     }
 
@@ -62,6 +62,16 @@ public class ColorUtils {
         nbt.putInt(NBT_TAG_COLOR, color.getId());
     }
 
+    public static boolean hasColor(ItemStack itemStack) {
+        CompoundNBT nbt = itemStack.getOrCreateTag();
+        return nbt.contains(NBT_TAG_COLOR);
+    }
+
+    public static void removeColor(ItemStack itemStack) {
+        CompoundNBT nbt = itemStack.getOrCreateTag();
+        nbt.remove(NBT_TAG_COLOR);
+    }
+
     public static String removeColorSuffix(String str) {
         for (DyeColor color: DyeColor.values()) {
             str = str.replaceAll("(_light)?_" + color.getName(), "");
@@ -69,14 +79,20 @@ public class ColorUtils {
         return str;
     }
 
-    public static ITextComponent getDisplayColorName(ItemStack itemStack, String itemName) {
+    public static String coloredColorName(DyeColor color) {
+        String colorName = color.getName().replace("_", " ");
+        colorName = Arrays.stream(colorName.split(" ")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
+        return DYE_COLOR_TO_TEXT_FORMAT.get(color.getId()) + colorName;
+    }
+
+    public static ITextComponent getDisplayItemColorName(ItemStack itemStack, String itemName) {
         DyeColor color = ColorUtils.getColor(itemStack);
         String colorName = color.getName().replace("_", " ");
         colorName = Arrays.stream(colorName.split(" ")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
         return new StringTextComponent(ColorUtils.DYE_COLOR_TO_TEXT_FORMAT.get(color.getId()) + colorName + " " + itemName);
     }
 
-    public static interface IColored {
+    public interface IColored {
 
         DyeColor getColor();
 

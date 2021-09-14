@@ -1,12 +1,12 @@
 package net.mabbouxj.colorful_journey.entities;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
-import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
 import net.mabbouxj.colorful_journey.init.ModEntityTypes;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.init.ModSounds;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
+import net.mabbouxj.colorful_journey.utils.ParticleUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -28,12 +28,10 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.Map;
-import java.util.Random;
 
 public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditionalSpawnData {
 
-    private static final byte VANILLA_IMPACT_STATUS_ID = 3;
-    private DyeColor color = ColorUtils.getRandomEnableColor();
+    private DyeColor color = ColorUtils.getRandomEnabledColor();
     private LivingEntity shooter;
 
     public InkBallEntity(EntityType<? extends InkBallEntity> entityType, World world) {
@@ -66,7 +64,7 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
 
             Vector3d hitLocation = rayTraceResult.getLocation();
             this.level.playSound(null, hitLocation.x, hitLocation.y, hitLocation.z, ModSounds.INK_SPLASH.get(), SoundCategory.PLAYERS, 1.0F, 1.0F);
-            this.level.broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
+            ParticleUtils.makeParticles(this.level, this.getColor(), 8, 40, new Vector3d(this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D)));
 
             if (rayTraceResult.getType() == RayTraceResult.Type.ENTITY) {
                 EntityRayTraceResult entityRayTraceResult = (EntityRayTraceResult) rayTraceResult;
@@ -96,34 +94,7 @@ public class InkBallEntity extends ProjectileItemEntity implements IEntityAdditi
     @Override
     public void tick() {
         super.tick();
-        makeParticle(2, 3);
-    }
-
-    @Override
-    public void handleEntityEvent(byte statusID) {
-        if (statusID == VANILLA_IMPACT_STATUS_ID) {
-            makeParticle(8, 40);
-        }
-    }
-
-    private void makeParticle(double speed, int amount) {
-        final double TICKS_PER_SECOND = 20;
-        final double SPEED_IN_BLOCKS_PER_TICK = speed / TICKS_PER_SECOND;
-        for (int i = 0; i < amount; i++) {
-            Vector3d direction = new Vector3d(
-                    2 * new Random().nextDouble() - 1,
-                    2 * new Random().nextDouble() - 1,
-                    2 * new Random().nextDouble() - 1
-            );
-            double velocityX = SPEED_IN_BLOCKS_PER_TICK * direction.x;
-            double velocityY = SPEED_IN_BLOCKS_PER_TICK * direction.y;
-            double velocityZ = SPEED_IN_BLOCKS_PER_TICK * direction.z;
-            this.level.addParticle(
-                    new InkSplashParticle.Data(this.getColor()),
-                    this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D),
-                    velocityX, velocityY, velocityZ
-            );
-        }
+        ParticleUtils.makeParticles(this.level, this.getColor(), 2, 3, new Vector3d(this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D)));
     }
 
     @Override
