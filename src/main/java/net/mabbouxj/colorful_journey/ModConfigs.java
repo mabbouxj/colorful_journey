@@ -37,7 +37,7 @@ public class ModConfigs {
 
             LASER_GUN_BUFFER_CAPACITY = builder
                     .comment("Buffer capacity (in FE) of the Laser gun")
-                    .defineInRange("laser_gun_buffer_capacity", 50000, 100, 1000000000);
+                    .defineInRange("laser_gun_buffer_capacity", 100000, 1000, 1000000000);
 
             LASER_GUN_ENERGY_COST_PER_TICK = builder
                     .comment("Energy cost (in FE/tick) while using the Laser gun")

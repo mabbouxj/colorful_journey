@@ -1,21 +1,21 @@
 {
   "replace": false,
   "values": [
+    "colorful_journey:colored_grass_block_black",
+    "colorful_journey:colored_grass_block_yellow",
+    "colorful_journey:colored_grass_block_orange",
+    "colorful_journey:colored_grass_block_white",
+    "colorful_journey:colored_grass_block_light_blue",
+    "colorful_journey:colored_grass_block_light_gray",
+    "colorful_journey:colored_grass_block_pink",
+    "colorful_journey:colored_grass_block_blue",
+    "colorful_journey:colored_grass_block_red",
+    "colorful_journey:colored_grass_block_cyan",
+    "colorful_journey:colored_grass_block_magenta",
+    "colorful_journey:colored_grass_block_gray",
     "colorful_journey:colored_grass_block_brown",
     "colorful_journey:colored_grass_block_purple",
     "colorful_journey:colored_grass_block_lime",
-    "colorful_journey:colored_grass_block_green",
-    "colorful_journey:colored_grass_block_pink",
-    "colorful_journey:colored_grass_block_light_blue",
-    "colorful_journey:colored_grass_block_blue",
-    "colorful_journey:colored_grass_block_gray",
-    "colorful_journey:colored_grass_block_magenta",
-    "colorful_journey:colored_grass_block_light_gray",
-    "colorful_journey:colored_grass_block_orange",
-    "colorful_journey:colored_grass_block_black",
-    "colorful_journey:colored_grass_block_cyan",
-    "colorful_journey:colored_grass_block_white",
-    "colorful_journey:colored_grass_block_yellow",
-    "colorful_journey:colored_grass_block_red"
+    "colorful_journey:colored_grass_block_green"
   ]
 }

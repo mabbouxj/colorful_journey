@@ -46,6 +46,9 @@ public class ModItems {
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_ENDER_PEARLS = registerColoredVariantsItem("colored_ender_pearl", ColoredEnderPearl::new);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_NETHER_STARS = registerColoredVariantsItem("colored_nether_star");
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_GUNPOWDERS = registerColoredVariantsItem("colored_gunpowder");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_PHANTOM_MEMBRANE = registerColoredVariantsItem("colored_phantom_membrane");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_GHAST_TEARS = registerColoredVariantsItem("colored_ghast_tear");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_BLAZE_RODS = registerColoredVariantsItem("colored_blaze_rod");
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_INGOTS = registerColoredVariantsItem("colored_ingot");
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_NUGGETS = registerColoredVariantsItem("colored_nugget");
 

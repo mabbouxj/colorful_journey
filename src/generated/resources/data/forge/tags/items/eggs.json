@@ -1,21 +1,21 @@
 {
   "replace": false,
   "values": [
+    "colorful_journey:colored_egg_black",
+    "colorful_journey:colored_egg_yellow",
+    "colorful_journey:colored_egg_orange",
+    "colorful_journey:colored_egg_white",
+    "colorful_journey:colored_egg_light_blue",
+    "colorful_journey:colored_egg_light_gray",
+    "colorful_journey:colored_egg_pink",
+    "colorful_journey:colored_egg_blue",
+    "colorful_journey:colored_egg_red",
+    "colorful_journey:colored_egg_cyan",
+    "colorful_journey:colored_egg_magenta",
+    "colorful_journey:colored_egg_gray",
     "colorful_journey:colored_egg_brown",
     "colorful_journey:colored_egg_purple",
     "colorful_journey:colored_egg_lime",
-    "colorful_journey:colored_egg_green",
-    "colorful_journey:colored_egg_pink",
-    "colorful_journey:colored_egg_light_blue",
-    "colorful_journey:colored_egg_blue",
-    "colorful_journey:colored_egg_gray",
-    "colorful_journey:colored_egg_magenta",
-    "colorful_journey:colored_egg_light_gray",
-    "colorful_journey:colored_egg_orange",
-    "colorful_journey:colored_egg_black",
-    "colorful_journey:colored_egg_cyan",
-    "colorful_journey:colored_egg_white",
-    "colorful_journey:colored_egg_yellow",
-    "colorful_journey:colored_egg_red"
+    "colorful_journey:colored_egg_green"
   ]
 }

@@ -47,6 +47,9 @@ public class CommonEventBusSubscriber {
                 event.put(ModEntityTypes.COLORED_WITHER_SKELETON.get(color).get(), ColoredWitherSkeletonEntity.createAttributes(color).build());
                 event.put(ModEntityTypes.COLORED_WITHER.get(color).get(), ColoredWitherEntity.createAttributes(color).build());
                 event.put(ModEntityTypes.COLORED_CREEPER.get(color).get(), ColoredCreeperEntity.createAttributes(color).build());
+                event.put(ModEntityTypes.COLORED_PHANTOM.get(color).get(), ColoredPhantomEntity.createAttributes(color).build());
+                event.put(ModEntityTypes.COLORED_GHAST.get(color).get(), ColoredGhastEntity.createAttributes(color).build());
+                event.put(ModEntityTypes.COLORED_BLAZE.get(color).get(), ColoredBlazeEntity.createAttributes(color).build());
             }
         });
     }

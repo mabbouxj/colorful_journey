@@ -46,6 +46,9 @@ public class ClientEventBusSubscriber {
             RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_WITHER_SKELETON.get(color).get(), ColoredWitherSkeletonRenderer::new);
             RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_WITHER.get(color).get(), ColoredWitherRenderer::new);
             RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_CREEPER.get(color).get(), ColoredCreeperRenderer::new);
+            RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_PHANTOM.get(color).get(), ColoredPhantomRenderer::new);
+            RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_GHAST.get(color).get(), ColoredGhastRenderer::new);
+            RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_BLAZE.get(color).get(), ColoredBlazeRenderer::new);
 
             RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_SKULLS.get(color).get(), RenderType.solid());
             RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_WALL_SKULLS.get(color).get(), RenderType.solid());

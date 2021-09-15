@@ -34,6 +34,9 @@ public class ModEntityTypes {
     public static final Map<DyeColor, RegistryObject<EntityType<ColoredWitherSkeletonEntity>>> COLORED_WITHER_SKELETON = registerColoredMob("colored_wither_skeleton", ColoredWitherSkeletonEntity::new, EntityType.WITHER_SKELETON);
     public static final Map<DyeColor, RegistryObject<EntityType<ColoredWitherEntity>>> COLORED_WITHER = registerColoredMob("colored_wither", ColoredWitherEntity::new, EntityType.WITHER);
     public static final Map<DyeColor, RegistryObject<EntityType<ColoredCreeperEntity>>> COLORED_CREEPER = registerColoredMob("colored_creeper", ColoredCreeperEntity::new, EntityType.CREEPER);
+    public static final Map<DyeColor, RegistryObject<EntityType<ColoredPhantomEntity>>> COLORED_PHANTOM = registerColoredMob("colored_phantom", ColoredPhantomEntity::new, EntityType.PHANTOM);
+    public static final Map<DyeColor, RegistryObject<EntityType<ColoredGhastEntity>>> COLORED_GHAST = registerColoredMob("colored_ghast", ColoredGhastEntity::new, EntityType.GHAST);
+    public static final Map<DyeColor, RegistryObject<EntityType<ColoredBlazeEntity>>> COLORED_BLAZE = registerColoredMob("colored_blaze", ColoredBlazeEntity::new, EntityType.BLAZE);
 
     private static <T extends Entity> Map<DyeColor, RegistryObject<EntityType<T>>> registerColoredMob(String name, EntityType.IFactory<T> factory, EntityType<?> fromEntity) {
         Map<DyeColor, RegistryObject<EntityType<T>>> map = new HashMap<>();

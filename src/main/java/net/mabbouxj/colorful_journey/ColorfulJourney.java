@@ -110,6 +110,9 @@ public class ColorfulJourney {
         REPLACEMENT_ITEMS.put(Items.ZOMBIE_HEAD, ModItems.COLORED_SKULLS);
         REPLACEMENT_ITEMS.put(Items.NETHER_STAR, ModItems.COLORED_NETHER_STARS);
         REPLACEMENT_ITEMS.put(Items.GUNPOWDER, ModItems.COLORED_GUNPOWDERS);
+        REPLACEMENT_ITEMS.put(Items.PHANTOM_MEMBRANE, ModItems.COLORED_PHANTOM_MEMBRANE);
+        REPLACEMENT_ITEMS.put(Items.GHAST_TEAR, ModItems.COLORED_GHAST_TEARS);
+        REPLACEMENT_ITEMS.put(Items.BLAZE_ROD, ModItems.COLORED_BLAZE_RODS);
     }
 
     private void populateReplacementBlocks() {
@@ -129,6 +132,9 @@ public class ColorfulJourney {
         REPLACEMENT_MOBS.put(ZombieEntity.class, ColoredZombieEntity.class);
         REPLACEMENT_MOBS.put(WitherEntity.class, ColoredWitherEntity.class);
         REPLACEMENT_MOBS.put(CreeperEntity.class, ColoredCreeperEntity.class);
+        REPLACEMENT_MOBS.put(PhantomEntity.class, ColoredPhantomEntity.class);
+        REPLACEMENT_MOBS.put(GhastEntity.class, ColoredGhastEntity.class);
+        REPLACEMENT_MOBS.put(BlazeEntity.class, ColoredBlazeEntity.class);
     }
 
     private static class ColorfulJourneyItemGroup extends ItemGroup {
