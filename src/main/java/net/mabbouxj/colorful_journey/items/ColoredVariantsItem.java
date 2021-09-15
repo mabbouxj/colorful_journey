@@ -1,9 +1,11 @@
 package net.mabbouxj.colorful_journey.items;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
+import net.mabbouxj.colorful_journey.entities.ColoredVariantsItemEntity;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,18 +19,35 @@ import java.util.List;
 public class ColoredVariantsItem extends Item implements ColorUtils.IColored {
 
     private final String registryName;
-    private DyeColor color;
+    private final DyeColor color;
+    private final Item initialItem;
 
-    public ColoredVariantsItem(String registryName, DyeColor color) {
+    public ColoredVariantsItem(String registryName, DyeColor color, Item initialItem) {
         super(new Item.Properties()
                 .tab(ColorfulJourney.ENABLED_COLORS.contains(color) ? ColorfulJourney.MOD_ITEM_GROUP: null)
                 .stacksTo(64));
         this.registryName = registryName;
         this.color = color;
+        this.initialItem = initialItem;
     }
 
     public DyeColor getColor() {
         return this.color;
+    }
+
+    public Item getInitialItem() {
+        return initialItem;
+    }
+
+    @Override
+    public boolean hasCustomEntity(ItemStack stack) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public Entity createEntity(World world, Entity location, ItemStack itemstack) {
+        return new ColoredVariantsItemEntity(world, location, itemstack);
     }
 
     @Override
