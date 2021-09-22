@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "colorful_journey:block/washing_machine"
+    },
+    "lit=true": {
+      "model": "colorful_journey:block/washing_machine_lit"
+    }
+  }
+}

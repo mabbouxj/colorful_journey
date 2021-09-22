@@ -1,0 +1,7 @@
+{
+  "parent": "colorful_journey:block/cube_column",
+  "textures": {
+    "side": "colorful_journey:block/washing_machine_lit",
+    "end": "colorful_journey:block/washing_machine_top"
+  }
+}

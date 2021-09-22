@@ -1,12 +1,11 @@
 package net.mabbouxj.colorful_journey.tiles;
 
 import net.mabbouxj.colorful_journey.ModConfigs;
-import net.mabbouxj.colorful_journey.capabilities.EnergyDyeGeneratorItemHandler;
+import net.mabbouxj.colorful_journey.blocks.EnergyDyeGeneratorBlock;
 import net.mabbouxj.colorful_journey.capabilities.TileEnergyStorageCapability;
 import net.mabbouxj.colorful_journey.containers.EnergyDyeGeneratorContainer;
 import net.mabbouxj.colorful_journey.init.ModTiles;
 import net.mabbouxj.colorful_journey.utils.EnergyUtils;
-import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -59,22 +58,18 @@ public class EnergyDyeGeneratorTile extends TileEntity implements ITickableTileE
     private int maxFuel = 0;
 
     public TileEnergyStorageCapability energyStorage;
-    private LazyOptional<TileEnergyStorageCapability> energy;
-    private LazyOptional<ItemStackHandler> inventory;
+    private final LazyOptional<TileEnergyStorageCapability> energy;
+    private final LazyOptional<ItemStackHandler> inventory;
 
     public final IIntArray data = new IIntArray() {
         @Override
         public int get(int index) {
             switch (index) {
                 case 0:
-                    return EnergyDyeGeneratorTile.this.energyStorage.getEnergyStored() / 32;
-                case 1:
-                    return EnergyDyeGeneratorTile.this.energyStorage.getMaxEnergyStored() / 32;
-                case 2:
                     return EnergyDyeGeneratorTile.this.remainingFuel;
-                case 3:
+                case 1:
                     return EnergyDyeGeneratorTile.this.maxFuel;
-                case 4:
+                case 2:
                     return EnergyDyeGeneratorTile.this.remainingMaterial;
                 default:
                     throw new IllegalArgumentException("Invalid index: " + index);
@@ -88,15 +83,15 @@ public class EnergyDyeGeneratorTile extends TileEntity implements ITickableTileE
 
         @Override
         public int getCount() {
-            return 5;
+            return 3;
         }
     };
 
     public EnergyDyeGeneratorTile() {
         super(ModTiles.ENERGY_DYE_GENERATOR.get());
-        this.energyStorage = new TileEnergyStorageCapability(this, 0, ModConfigs.COMMON_CONFIG.ENERGY_DYE_GENERATOR_BUFFER_CAPACITY.get(), ModConfigs.COMMON_CONFIG.ENERGY_DYE_GENERATOR_MAX_IN_OUT.get(), true, false);
+        this.energyStorage = new TileEnergyStorageCapability(this, ModConfigs.COMMON_CONFIG.ENERGY_DYE_GENERATOR_BUFFER_CAPACITY.get(), ModConfigs.COMMON_CONFIG.ENERGY_DYE_GENERATOR_MAX_IN_OUT.get(), true, false);
         this.energy = LazyOptional.of(() -> this.energyStorage);
-        this.inventory = LazyOptional.of(() -> new EnergyDyeGeneratorItemHandler(this));
+        this.inventory = LazyOptional.of(() -> new EnergyDyeGeneratorTile.ItemHandler(this));
     }
 
     @Nullable
@@ -123,10 +118,10 @@ public class EnergyDyeGeneratorTile extends TileEntity implements ITickableTileE
                 if (remainingMaterial <= 0)
                     burn();
                 if (remainingFuel > 0 && remainingMaterial > 0) {
-                    this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(AbstractFurnaceBlock.LIT, true), 3);
+                    this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(EnergyDyeGeneratorBlock.LIT, true), 3);
                     generateEnergy(energyStorage);
                 } else {
-                    this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(AbstractFurnaceBlock.LIT, false), 3);
+                    this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(EnergyDyeGeneratorBlock.LIT, false), 3);
                 }
             });
         });
@@ -197,10 +192,8 @@ public class EnergyDyeGeneratorTile extends TileEntity implements ITickableTileE
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, final @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
             return inventory.cast();
-
         if (cap == CapabilityEnergy.ENERGY)
             return energy.cast();
-
         return super.getCapability(cap, side);
     }
 
@@ -235,5 +228,33 @@ public class EnergyDyeGeneratorTile extends TileEntity implements ITickableTileE
     @Override
     public ITextComponent getDisplayName() {
         return new TranslationTextComponent("container.colorful_journey.energy_dye_generator");
+    }
+
+    public static class ItemHandler extends ItemStackHandler {
+
+        private final EnergyDyeGeneratorTile tile;
+
+        public ItemHandler(EnergyDyeGeneratorTile t) {
+            super(2);
+            this.tile = t;
+        }
+
+        @Override
+        protected void onContentsChanged(int slot) {
+            tile.setChanged();
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+            if (slot == EnergyDyeGeneratorTile.Slots.FUEL.getId() && stack.getItem() == Items.BUCKET)
+                return super.insertItem(slot, stack, simulate);
+            if (slot == EnergyDyeGeneratorTile.Slots.FUEL.getId() && ForgeHooks.getBurnTime(stack) <= 0)
+                return stack;
+            if (slot == EnergyDyeGeneratorTile.Slots.MATERIAL.getId() && (! stack.getCapability(CapabilityEnergy.ENERGY).isPresent() || getStackInSlot(slot).getCount() > 0))
+                return stack;
+            return super.insertItem(slot, stack, simulate);
+        }
+
     }
 }

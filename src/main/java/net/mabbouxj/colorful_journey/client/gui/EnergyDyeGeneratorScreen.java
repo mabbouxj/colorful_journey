@@ -35,9 +35,9 @@ public class EnergyDyeGeneratorScreen extends ContainerScreen<EnergyDyeGenerator
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(matrixStack, mouseX, mouseY);
-        if (mouseX > (leftPos + 98) && mouseX < (leftPos + 98) + 18 && mouseY > (topPos + 20) && mouseY < (topPos + 20) + 53)
+        if (mouseX > (leftPos + 97) && mouseX < (leftPos + 97) + 18 && mouseY > (topPos + 16) && mouseY < (topPos + 16) + 54)
             this.renderTooltip(matrixStack, LanguageMap.getInstance().getVisualOrder(Arrays.asList(
-                    new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(this.container.getEnergy()), StringUtils.numberWithSuffix(this.container.getMaxPower())),
+                    new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(this.container.getEnergy()), StringUtils.numberWithSuffix(this.container.getMaxEnergy())),
                     this.container.getRemainingFuel() <= 0 ?
                             new TranslationTextComponent("screen.colorful_journey.no_fuel") :
                             new TranslationTextComponent("screen.colorful_journey.fuel_time", StringUtils.ticksInSeconds(this.container.getRemainingFuel())),
@@ -56,15 +56,15 @@ public class EnergyDyeGeneratorScreen extends ContainerScreen<EnergyDyeGenerator
         int flameHeight = 13;
         if (this.container.getMaxFuel() > 0) {
             int remaining = (this.container.getRemainingFuel() * flameHeight) / this.container.getMaxFuel();
-            this.blit(matrixStack, leftPos + 63, topPos + 40 + flameHeight - remaining, 176, flameHeight - remaining, 14, remaining + 1);
+            this.blit(matrixStack, leftPos + 63, topPos + 36 + flameHeight - remaining, 176, flameHeight - remaining, flameHeight + 1, remaining + 1);
         }
 
-        int maxEnergy = this.container.getMaxPower();
-        int energyHeight = 51;
+        int maxEnergy = this.container.getMaxEnergy();
+        int energyHeight = 52;
         int energyWidth = 16;
         if (maxEnergy > 0) {
             int remaining = (this.container.getEnergy() * energyHeight) / maxEnergy;
-            this.blit(matrixStack, leftPos + 99, topPos + 21 + energyHeight - remaining, 176, 65 - remaining, energyWidth, remaining + 1);
+            this.blit(matrixStack, leftPos + 98, topPos + 17 + energyHeight - remaining, 176, 66 - remaining, energyWidth, remaining + 1);
         }
     }
 

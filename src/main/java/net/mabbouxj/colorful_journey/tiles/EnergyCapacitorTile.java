@@ -1,7 +1,7 @@
 package net.mabbouxj.colorful_journey.tiles;
 
 import net.mabbouxj.colorful_journey.ModConfigs;
-import net.mabbouxj.colorful_journey.capabilities.EnergyCapacitorItemHandler;
+import net.mabbouxj.colorful_journey.blocks.EnergyCapacitorBlock;
 import net.mabbouxj.colorful_journey.capabilities.TileEnergyStorageCapability;
 import net.mabbouxj.colorful_journey.containers.EnergyCapacitorContainer;
 import net.mabbouxj.colorful_journey.init.ModTiles;
@@ -18,7 +18,6 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -49,54 +48,41 @@ public class EnergyCapacitorTile extends TileEntity implements ITickableTileEnti
     }
 
     public TileEnergyStorageCapability energyStorage;
-    private LazyOptional<TileEnergyStorageCapability> energy;
-    private LazyOptional<ItemStackHandler> inventory;
-
-    public final IIntArray data = new IIntArray() {
-        @Override
-        public int get(int index) {
-            switch (index) {
-                case 0:
-                    return EnergyCapacitorTile.this.energyStorage.getEnergyStored() / 32;
-                case 1:
-                    return EnergyCapacitorTile.this.energyStorage.getMaxEnergyStored() / 32;
-                default:
-                    throw new IllegalArgumentException("Invalid index: " + index);
-            }
-        }
-
-        @Override
-        public void set(int index, int value) {
-            throw new IllegalStateException("Cannot set values through IIntArray");
-        }
-
-        @Override
-        public int getCount() {
-            return 2;
-        }
-    };
+    private final LazyOptional<TileEnergyStorageCapability> energy;
+    private final LazyOptional<ItemStackHandler> inventory;
 
     public EnergyCapacitorTile() {
         super(ModTiles.ENERGY_CAPACITOR.get());
-        this.energyStorage = new TileEnergyStorageCapability(this, 0, ModConfigs.COMMON_CONFIG.ENERGY_CAPACITOR_BUFFER_CAPACITY.get(), ModConfigs.COMMON_CONFIG.ENERGY_CAPACITOR_MAX_IN_OUT.get());
+        this.energyStorage = new TileEnergyStorageCapability(this, ModConfigs.COMMON_CONFIG.ENERGY_CAPACITOR_BUFFER_CAPACITY.get(), ModConfigs.COMMON_CONFIG.ENERGY_CAPACITOR_MAX_IN_OUT.get());
         this.energy = LazyOptional.of(() -> this.energyStorage);
-        this.inventory = LazyOptional.of(() -> new EnergyCapacitorItemHandler(this));
+        this.inventory = LazyOptional.of(() -> new EnergyCapacitorTile.ItemHandler(this));
     }
 
     @Nullable
     @Override
     public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         assert level != null;
-        return new EnergyCapacitorContainer(this, this.data, i, playerInventory, this.inventory.orElse(new ItemStackHandler(1)));
+        return new EnergyCapacitorContainer(this, i, playerInventory, this.inventory.orElse(new ItemStackHandler(1)));
     }
 
     @Override
     public void tick() {
-        if (getLevel() == null)
+        if (this.level == null)
             return;
         this.getCapability(CapabilityEnergy.ENERGY).ifPresent(energyStorage -> {
             EnergyUtils.extractFromAdjacentBlocks(this.level, (TileEnergyStorageCapability) energyStorage, this.getBlockPos());
             EnergyUtils.extractToAdjacentBlocks(this.level, (TileEnergyStorageCapability) energyStorage, this.getBlockPos());
+            if (energyStorage.getEnergyStored() < 0.1 * energyStorage.getMaxEnergyStored()) {
+                this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(EnergyCapacitorBlock.FILL, 0), 3);
+            } else if (energyStorage.getEnergyStored() < 0.35 * energyStorage.getMaxEnergyStored()) {
+                this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(EnergyCapacitorBlock.FILL, 1), 3);
+            } else if (energyStorage.getEnergyStored() < 0.65 * energyStorage.getMaxEnergyStored()) {
+                this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(EnergyCapacitorBlock.FILL, 2), 3);
+            } else if (energyStorage.getEnergyStored() < 0.95 * energyStorage.getMaxEnergyStored()) {
+                this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(EnergyCapacitorBlock.FILL, 3), 3);
+            } else {
+                this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(EnergyCapacitorBlock.FILL, 4), 3);
+            }
         });
         inventory.ifPresent(handler -> {
             ItemStack stack = handler.getStackInSlot(Slots.CHARGE.id);
@@ -137,10 +123,8 @@ public class EnergyCapacitorTile extends TileEntity implements ITickableTileEnti
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, final @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
             return inventory.cast();
-
         if (cap == CapabilityEnergy.ENERGY)
             return energy.cast();
-
         return super.getCapability(cap, side);
     }
 
@@ -175,5 +159,29 @@ public class EnergyCapacitorTile extends TileEntity implements ITickableTileEnti
     @Override
     public ITextComponent getDisplayName() {
         return new TranslationTextComponent("container.colorful_journey.energy_capacitor");
+    }
+
+    public static class ItemHandler extends ItemStackHandler {
+
+        private final EnergyCapacitorTile tile;
+
+        public ItemHandler(EnergyCapacitorTile t) {
+            super(Slots.values().length);
+            this.tile = t;
+        }
+
+        @Override
+        protected void onContentsChanged(int slot) {
+            tile.setChanged();
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+            if (slot == EnergyCapacitorTile.Slots.CHARGE.getId() && (! stack.getCapability(CapabilityEnergy.ENERGY).isPresent() || getStackInSlot(slot).getCount() > 0))
+                return stack;
+            return super.insertItem(slot, stack, simulate);
+        }
+
     }
 }

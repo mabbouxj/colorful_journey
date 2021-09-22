@@ -11,6 +11,8 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
+import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -28,11 +30,20 @@ import java.util.List;
 
 public class EnergyCapacitorBlock extends ContainerBlock {
 
+    public static final IntegerProperty FILL = IntegerProperty.create("fill", 0, 4);
+
     public EnergyCapacitorBlock() {
         super(AbstractBlock.Properties
                 .of(Material.METAL)
                 .sound(SoundType.NETHERITE_BLOCK)
                 .strength(2.5f));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FILL, 0));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(FILL);
     }
 
     @Override

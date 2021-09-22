@@ -28,11 +28,10 @@ import java.util.List;
 
 public class EnergyCapacitorBlockItem extends BlockItem {
 
-    private int energyCapacity;
+    private final int energyCapacity = ModConfigs.COMMON_CONFIG.ENERGY_CAPACITOR_BUFFER_CAPACITY.get();
 
     public EnergyCapacitorBlockItem() {
         super(ModBlocks.ENERGY_CAPACITOR.get(), new Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64));
-        this.energyCapacity = ModConfigs.COMMON_CONFIG.ENERGY_CAPACITOR_BUFFER_CAPACITY.get();
     }
 
     @Override
@@ -63,7 +62,7 @@ public class EnergyCapacitorBlockItem extends BlockItem {
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
-        return new ItemEnergyStorageCapability(stack, ModConfigs.COMMON_CONFIG.ENERGY_CAPACITOR_BUFFER_CAPACITY.get());
+        return new ItemEnergyStorageCapability(stack, energyCapacity);
     }
 
     @Override

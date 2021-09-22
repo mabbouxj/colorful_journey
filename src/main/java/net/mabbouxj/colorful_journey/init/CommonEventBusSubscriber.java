@@ -4,6 +4,7 @@ import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.ModConfigs;
 import net.mabbouxj.colorful_journey.client.gui.EnergyCapacitorScreen;
 import net.mabbouxj.colorful_journey.client.gui.EnergyDyeGeneratorScreen;
+import net.mabbouxj.colorful_journey.client.gui.WashingMachineScreen;
 import net.mabbouxj.colorful_journey.entities.*;
 import net.mabbouxj.colorful_journey.events.BlockEventListeners;
 import net.mabbouxj.colorful_journey.events.EntityEventListeners;
@@ -58,6 +59,7 @@ public class CommonEventBusSubscriber {
     public static void onClientSetup(final FMLClientSetupEvent event) {
         ScreenManager.register(ModContainers.ENERGY_DYE_GENERATOR.get(), EnergyDyeGeneratorScreen::new);
         ScreenManager.register(ModContainers.ENERGY_CAPACITOR.get(), EnergyCapacitorScreen::new);
+        ScreenManager.register(ModContainers.WASHING_MACHINE.get(), WashingMachineScreen::new);
     }
 
 }

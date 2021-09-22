@@ -4,15 +4,20 @@ import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.data.tag.ModItemTagProvider;
 import net.mabbouxj.colorful_journey.init.ModBlocks;
 import net.mabbouxj.colorful_journey.init.ModItems;
+import net.mabbouxj.colorful_journey.items.ColoredVariantsItem;
+import net.mabbouxj.colorful_journey.recipes.WashingMachineRecipe;
+import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.block.Block;
 import net.minecraft.data.*;
 import net.minecraft.item.DyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.fml.RegistryObject;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -28,6 +33,7 @@ public class ModRecipesProvider extends RecipeProvider {
 
         woodRecipes(consumer);
         metalRecipes(consumer);
+        washingMachineRecipes(consumer);
 
         ShapedRecipeBuilder.shaped(ModItems.PAINTBRUSH.get(), 1)
                 .pattern("  h")
@@ -112,6 +118,17 @@ public class ModRecipesProvider extends RecipeProvider {
                 .unlockedBy("has_" + ModItems.ENERGY_CAPACITOR.getId().getPath(), has(ModItems.ENERGY_CAPACITOR.get()))
                 .save(consumer);
 
+        resetNBTRecipe(consumer, ModItems.WASHING_MACHINE.get());
+        ShapedRecipeBuilder.shaped(ModItems.WASHING_MACHINE.get(), 1)
+                .pattern("#x#")
+                .pattern("xox")
+                .pattern("#x#")
+                .define('x', ModItemTagProvider.COLORED_INGOTS)
+                .define('#', ModItems.RUBIKS_CUBE.get())
+                .define('o', Items.WATER_BUCKET)
+                .unlockedBy("has_" + ModItems.WASHING_MACHINE.getId().getPath(), has(ModItems.WASHING_MACHINE.get()))
+                .save(consumer);
+
     }
 
     private void resetNBTRecipe(Consumer<IFinishedRecipe> consumer, IItemProvider itemProvider) {
@@ -119,6 +136,20 @@ public class ModRecipesProvider extends RecipeProvider {
                 .requires(itemProvider)
                 .unlockedBy("has_item", has(itemProvider))
                 .save(consumer, itemProvider.asItem().getRegistryName().getPath() + "_reset");
+    }
+
+    private void washingMachineRecipes(Consumer<IFinishedRecipe> consumer) {
+        for (RegistryObject<Item> registryItem: ModItems.ALL_COLORED_VARIANTS_ITEMS) {
+            if (registryItem.get() instanceof ColoredVariantsItem) {
+                ColoredVariantsItem coloredVariantsItem = (ColoredVariantsItem) registryItem.get();
+                if (coloredVariantsItem.getInitialItem() != null) {
+                    new WashingMachineRecipe.Builder(registryItem.get(), 1)
+                            .withOutput(coloredVariantsItem.getInitialItem(), 1)
+                            .withOutputAlt(ColorUtils.getDyeItemByColor(coloredVariantsItem.getColor()), 1)
+                            .save(consumer);
+                }
+            }
+        }
     }
 
     private void metalRecipes(Consumer<IFinishedRecipe> consumer) {

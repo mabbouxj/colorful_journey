@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
-      "model": "colorful_journey:block/energy_capacitor"
+    "fill=0": {
+      "model": "colorful_journey:block/energy_capacitor_fill_0"
+    },
+    "fill=1": {
+      "model": "colorful_journey:block/energy_capacitor_fill_25"
+    },
+    "fill=2": {
+      "model": "colorful_journey:block/energy_capacitor_fill_50"
+    },
+    "fill=3": {
+      "model": "colorful_journey:block/energy_capacitor_fill_75"
+    },
+    "fill=4": {
+      "model": "colorful_journey:block/energy_capacitor_fill_100"
     }
   }
 }

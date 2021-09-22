@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#x#",
+    "xox",
+    "#x#"
+  ],
+  "key": {
+    "x": {
+      "tag": "colorful_journey:colored_ingots"
+    },
+    "#": {
+      "item": "colorful_journey:rubiks_cube"
+    },
+    "o": {
+      "item": "minecraft:water_bucket"
+    }
+  },
+  "result": {
+    "item": "colorful_journey:washing_machine"
+  }
+}

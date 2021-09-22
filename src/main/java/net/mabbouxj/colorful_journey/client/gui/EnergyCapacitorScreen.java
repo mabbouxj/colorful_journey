@@ -35,9 +35,9 @@ public class EnergyCapacitorScreen extends ContainerScreen<EnergyCapacitorContai
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(matrixStack, mouseX, mouseY);
-        if (mouseX > (leftPos + 61) && mouseX < (leftPos + 61) + 18 && mouseY > (topPos + 20) && mouseY < (topPos + 20) + 53)
+        if (mouseX > (leftPos + 61) && mouseX < (leftPos + 61) + 18 && mouseY > (topPos + 16) && mouseY < (topPos + 16) + 54)
             this.renderTooltip(matrixStack, LanguageMap.getInstance().getVisualOrder(Arrays.asList(
-                    new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(this.container.getEnergy()), StringUtils.numberWithSuffix(this.container.getMaxPower()))
+                    new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(this.container.getEnergy()), StringUtils.numberWithSuffix(this.container.getMaxEnergy()))
             )), mouseX, mouseY);
     }
 
@@ -47,12 +47,12 @@ public class EnergyCapacitorScreen extends ContainerScreen<EnergyCapacitorContai
         this.minecraft.getTextureManager().bind(TEXTURE);
         this.blit(matrixStack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
 
-        int maxEnergy = this.container.getMaxPower();
-        int energyHeight = 51;
+        int maxEnergy = this.container.getMaxEnergy();
+        int energyHeight = 52;
         int energyWidth = 16;
         if (maxEnergy > 0) {
             int remaining = (this.container.getEnergy() * energyHeight) / maxEnergy;
-            this.blit(matrixStack, leftPos + 62, topPos + 21 + energyHeight - remaining, 176, 51 - remaining, energyWidth, remaining + 1);
+            this.blit(matrixStack, leftPos + 62, topPos + 17 + energyHeight - remaining, 176, 52 - remaining, energyWidth, remaining + 1);
         }
     }
 

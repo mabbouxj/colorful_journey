@@ -8,22 +8,21 @@ import net.minecraftforge.energy.IEnergyStorage;
 public class TileEnergyStorageCapability implements IEnergyStorage, INBTSerializable<CompoundNBT> {
 
     private static final String KEY = "energy";
-    private int energy;
-    private int capacity;
-    private int maxInOut;
-    private TileEntity tile;
+    private int energy = 0;
+    private final int capacity;
+    private final int maxInOut;
+    private final TileEntity tile;
     private boolean canExtract = true;
     private boolean canReceive = true;
 
-    public TileEnergyStorageCapability(TileEntity tile, int energy, int capacity, int maxInOut) {
-        this.energy = energy;
+    public TileEnergyStorageCapability(TileEntity tile, int capacity, int maxInOut) {
         this.capacity = capacity;
         this.tile = tile;
         this.maxInOut = maxInOut;
     }
 
-    public TileEnergyStorageCapability(TileEntity tile, int energy, int capacity, int maxInOut, boolean canExtract, boolean canReceive) {
-        this(tile, energy, capacity, maxInOut);
+    public TileEnergyStorageCapability(TileEntity tile, int capacity, int maxInOut, boolean canExtract, boolean canReceive) {
+        this(tile, capacity, maxInOut);
         this.canExtract = canExtract;
         this.canReceive = canReceive;
     }

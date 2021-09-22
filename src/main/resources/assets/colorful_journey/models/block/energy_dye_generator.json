@@ -1,6 +1,7 @@
 {
-  "parent": "colorful_journey:block/cube_all",
+  "parent": "colorful_journey:block/cube_column",
   "textures": {
-    "all": "colorful_journey:block/energy_dye_generator"
+    "side": "colorful_journey:block/energy_dye_generator",
+    "end": "colorful_journey:block/energy_dye_generator_top"
   }
 }

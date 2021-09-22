@@ -35,6 +35,7 @@ public class ModItems {
     public static final RegistryObject<BlockItem> RUBIKS_CUBE_UNFINISHED = ITEMS.register("rubiks_cube_unfinished", RubiksCubeUnfinishedItem::new);
     public static final RegistryObject<BlockItem> ENERGY_DYE_GENERATOR = ITEMS.register("energy_dye_generator", EnergyDyeGeneratorBlockItem::new);
     public static final RegistryObject<BlockItem> ENERGY_CAPACITOR = ITEMS.register("energy_capacitor", EnergyCapacitorBlockItem::new);
+    public static final RegistryObject<BlockItem> WASHING_MACHINE = ITEMS.register("washing_machine", WashingMachineBlockItem::new);
 
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_FEATHERS = registerColoredVariantsItem("colored_feather", Items.FEATHER);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_EGGS = registerColoredVariantsItem("colored_egg", Items.EGG);
@@ -50,8 +51,8 @@ public class ModItems {
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_PHANTOM_MEMBRANE = registerColoredVariantsItem("colored_phantom_membrane", Items.PHANTOM_MEMBRANE);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_GHAST_TEARS = registerColoredVariantsItem("colored_ghast_tear", Items.GHAST_TEAR);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_BLAZE_RODS = registerColoredVariantsItem("colored_blaze_rod", Items.BLAZE_ROD);
-    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_INGOTS = registerColoredVariantsItem("colored_ingot", (Item) null);
-    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_NUGGETS = registerColoredVariantsItem("colored_nugget", (Item) null);
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_INGOTS = registerColoredVariantsItem("colored_ingot");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_NUGGETS = registerColoredVariantsItem("colored_nugget");
 
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_SKULLS = registerColoredVariantsWallOrFloorItem("colored_skull", ModBlocks.COLORED_SKULLS, ModBlocks.COLORED_WALL_SKULLS);
 
@@ -69,6 +70,10 @@ public class ModItems {
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_GRASS_BLOCKS = registerColoredVariantsBlockItem("colored_grass_block", ModBlocks.COLORED_GRASS_BLOCKS);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_GRASS_PATH = registerColoredVariantsBlockItem("colored_grass_path", ModBlocks.COLORED_GRASS_PATH);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_GRASS = registerColoredVariantsBlockItem("colored_grass", ModBlocks.COLORED_GRASS);
+
+    private static Map<DyeColor, RegistryObject<? extends Item>> registerColoredVariantsItem(String name) {
+        return registerColoredVariantsItem(name, (Item) null);
+    }
 
     private static Map<DyeColor, RegistryObject<? extends Item>> registerColoredVariantsItem(String name, Item initialItem) {
         Map<DyeColor, RegistryObject<? extends Item>> map = new HashMap<>();

@@ -1,8 +1,8 @@
 {
   "itemGroup.colorful_journey": "Colorful Journey",
 
-  "item.colorful_journey.color_gun": "§bColor Gun",
-  "item.colorful_journey.color_laser_gun": "§6Color Laser Gun",
+  "item.colorful_journey.color_gun": "§6Color Gun",
+  "item.colorful_journey.color_laser_gun": "§dColor Laser Gun",
   "item.colorful_journey.ink_ball": "Ink Ball",
   "item.colorful_journey.colored_feather": "Feather",
   "item.colorful_journey.colored_egg": "Egg",
@@ -43,6 +43,7 @@
   "block.colorful_journey.colored_ingot_block": "Ingots Block",
   "block.colorful_journey.energy_dye_generator": "Energy Dye Generator",
   "block.colorful_journey.energy_capacitor": "Energy Capacitor",
+  "block.colorful_journey.washing_machine": "Washing Machine",
 
   "tooltip.colorful_journey.hold_shift_for_info": "Hold §bSHIFT§r for more Information",
   "tooltip.colorful_journey.color_gun": "Craft with §eInk Ball§r to repair",
@@ -64,8 +65,10 @@
 
   "container.colorful_journey.energy_dye_generator": "Energy Dye Generator",
   "container.colorful_journey.energy_capacitor": "Energy Capacitor",
+  "container.colorful_journey.washing_machine": "Washing Machine",
 
   "screen.colorful_journey.energy": "Energy: %s/%s FE",
+  "screen.colorful_journey.fluid": "Fluid (%s): %s/%s mB",
   "screen.colorful_journey.no_fuel": "Fuel is empty",
   "screen.colorful_journey.no_material": "Nothing to burn",
   "screen.colorful_journey.fuel_time": "Fuel time left: %ss",

@@ -3,7 +3,9 @@ package net.mabbouxj.colorful_journey.utils;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.DyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -18,27 +20,15 @@ import java.util.stream.Collectors;
 public class ColorUtils {
 
     public static final String NBT_TAG_COLOR = "color";
-    public static final Map<Integer, String> DYE_COLOR_TO_TEXT_FORMAT = new HashMap<Integer, String>(){{
-        put(DyeColor.BLACK.getId(), "§f");
-        put(DyeColor.GRAY.getId(), "§8");
-        put(DyeColor.LIGHT_GRAY.getId(), "§7");
-        put(DyeColor.WHITE.getId(), "§f");
-        put(DyeColor.YELLOW.getId(), "§e");
-        put(DyeColor.ORANGE.getId(), "§6");
-        put(DyeColor.RED.getId(), "§c");
-        put(DyeColor.PURPLE.getId(), "§5");
-        put(DyeColor.CYAN.getId(), "§b");
-        put(DyeColor.MAGENTA.getId(), "§d");
-        put(DyeColor.LIME.getId(), "§a");
-        put(DyeColor.GREEN.getId(), "§2");
-        put(DyeColor.BLUE.getId(), "§1");
-        put(DyeColor.LIGHT_BLUE.getId(), "§9");
-        put(DyeColor.PINK.getId(), "§d");
-        put(DyeColor.BROWN.getId(), "§4");
-    }};
+    public static final Map<Integer, String> DYE_COLOR_TO_TEXT_FORMAT = new HashMap<Integer, String>(){{put(DyeColor.BLACK.getId(), "§f");put(DyeColor.GRAY.getId(), "§8");put(DyeColor.LIGHT_GRAY.getId(), "§7");put(DyeColor.WHITE.getId(), "§f");put(DyeColor.YELLOW.getId(), "§e");put(DyeColor.ORANGE.getId(), "§6");put(DyeColor.RED.getId(), "§c");put(DyeColor.PURPLE.getId(), "§5");put(DyeColor.CYAN.getId(), "§b");put(DyeColor.MAGENTA.getId(), "§d");put(DyeColor.LIME.getId(), "§a");put(DyeColor.GREEN.getId(), "§2");put(DyeColor.BLUE.getId(), "§1");put(DyeColor.LIGHT_BLUE.getId(), "§9");put(DyeColor.PINK.getId(), "§d");put(DyeColor.BROWN.getId(), "§4");}};
+    public static final Map<Integer, Item> DYE_COLOR_TO_ITEM = new HashMap<Integer, Item>(){{put(DyeColor.BLACK.getId(), Items.BLACK_DYE);put(DyeColor.GRAY.getId(), Items.GRAY_DYE);put(DyeColor.LIGHT_GRAY.getId(), Items.LIGHT_GRAY_DYE);put(DyeColor.WHITE.getId(), Items.WHITE_DYE);put(DyeColor.YELLOW.getId(), Items.YELLOW_DYE);put(DyeColor.ORANGE.getId(), Items.ORANGE_DYE);put(DyeColor.RED.getId(), Items.RED_DYE);put(DyeColor.PURPLE.getId(), Items.PURPLE_DYE);put(DyeColor.CYAN.getId(), Items.CYAN_DYE);put(DyeColor.MAGENTA.getId(), Items.MAGENTA_DYE);put(DyeColor.LIME.getId(), Items.LIME_DYE);put(DyeColor.GREEN.getId(), Items.GREEN_DYE);put(DyeColor.BLUE.getId(), Items.BLUE_DYE);put(DyeColor.LIGHT_BLUE.getId(), Items.LIGHT_BLUE_DYE);put(DyeColor.PINK.getId(), Items.PINK_DYE);put(DyeColor.BROWN.getId(), Items.BROWN_DYE); }};
 
     public static DyeColor getRandomEnabledColor() {
         return (DyeColor) ColorfulJourney.ENABLED_COLORS.toArray()[new Random().nextInt(ColorfulJourney.ENABLED_COLORS.size())];
+    }
+
+    public static Item getDyeItemByColor(DyeColor color) {
+        return DYE_COLOR_TO_ITEM.get(color.getId());
     }
 
     public static DyeColor getColor(ItemStack itemStack) {
