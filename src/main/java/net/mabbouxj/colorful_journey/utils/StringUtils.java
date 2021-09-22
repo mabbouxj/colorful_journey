@@ -1,8 +1,5 @@
 package net.mabbouxj.colorful_journey.utils;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 public class StringUtils {
 
     public static String numberWithSuffix(int count) {
@@ -13,11 +10,12 @@ public class StringUtils {
                 "kMGTPE".charAt(exp - 1));
     }
 
-    public static String ticksInSeconds(int ticks) {
-        BigDecimal TWENTY = new BigDecimal(20);
-        BigDecimal value = new BigDecimal(ticks);
-        value = value.divide(TWENTY, 1, RoundingMode.HALF_UP);
-        return value.toString();
+    public static String ticksInHumanReadable(int ticks) {
+        float seconds = ticks / 20f;
+        if (seconds < 60)
+            return String.format("%.2f", seconds) + "s";
+        float minutes = seconds / 60f;
+        return String.format("%.2f", minutes) + "min";
     }
 
 }

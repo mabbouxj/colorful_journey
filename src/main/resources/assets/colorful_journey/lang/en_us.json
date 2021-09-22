@@ -68,10 +68,12 @@
   "container.colorful_journey.washing_machine": "Washing Machine",
 
   "screen.colorful_journey.energy": "Energy: %s/%s FE",
+  "screen.colorful_journey.energy_consume_per_tick": "Consuming: %s FE/t",
+  "screen.colorful_journey.energy_consume_total": "Total: %s FE",
   "screen.colorful_journey.fluid": "Fluid (%s): %s/%s mB",
   "screen.colorful_journey.no_fuel": "Fuel is empty",
-  "screen.colorful_journey.no_material": "Nothing to burn",
-  "screen.colorful_journey.fuel_time": "Fuel time left: %ss",
-  "screen.colorful_journey.material_time": "Material left: %s FE"
+  "screen.colorful_journey.fuel_time": "Fuel time left: %s",
+  "screen.colorful_journey.generating": "Generating: %s FE/t",
+  "screen.colorful_journey.processing_time": "Processing time: %s"
 
 }

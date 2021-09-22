@@ -117,9 +117,9 @@ public class WashingMachineRecipe implements IRecipe<IInventory> {
 
     @Override
     public ResourceLocation getId() {
-        String recipeName = inputStack.getItem().getRegistryName().getPath();
-        recipeName += "_" + inputFluid.getFluid().getRegistryName().getPath();
-        return new ResourceLocation(ColorfulJourney.MOD_ID, "washing_machine/" + recipeName);
+        String recipeId = inputStack.getItem().getRegistryName().getPath();
+        recipeId += "_" + inputFluid.getFluid().getRegistryName().getPath();
+        return new ResourceLocation(ColorfulJourney.MOD_ID, "washing_machine/" + recipeId);
     }
 
     @Override
@@ -130,6 +130,11 @@ public class WashingMachineRecipe implements IRecipe<IInventory> {
     @Override
     public IRecipeType<?> getType() {
         return ModRecipeTypes.WASHING_MACHINE;
+    }
+
+    @Override
+    public boolean isSpecial() {
+        return true;
     }
 
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<WashingMachineRecipe> {

@@ -77,9 +77,7 @@ public class ColorUtils {
 
     public static ITextComponent getDisplayItemColorName(ItemStack itemStack, String itemName) {
         DyeColor color = ColorUtils.getColor(itemStack);
-        String colorName = color.getName().replace("_", " ");
-        colorName = Arrays.stream(colorName.split(" ")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
-        return new StringTextComponent(ColorUtils.DYE_COLOR_TO_TEXT_FORMAT.get(color.getId()) + colorName + " " + itemName);
+        return new StringTextComponent(coloredColorName(color) + " " + itemName);
     }
 
     public interface IColored {

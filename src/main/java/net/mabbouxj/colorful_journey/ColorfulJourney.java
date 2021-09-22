@@ -3,6 +3,7 @@ package net.mabbouxj.colorful_journey;
 import net.mabbouxj.colorful_journey.entities.*;
 import net.mabbouxj.colorful_journey.init.*;
 import net.mabbouxj.colorful_journey.world.gen.OreGeneration;
+import net.mabbouxj.colorful_journey.world.gen.TreeGeneration;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -80,6 +81,7 @@ public class ColorfulJourney {
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, OreGeneration::generateOres);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, TreeGeneration::generateTrees);
 
         populateReplacementItems();
         populateReplacementBlocks();
