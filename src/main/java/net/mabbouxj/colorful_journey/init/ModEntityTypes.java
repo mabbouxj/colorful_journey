@@ -25,6 +25,7 @@ public class ModEntityTypes {
 
     public static final Map<DyeColor, RegistryObject<EntityType<ColoredChickenEntity>>> COLORED_CHICKEN = registerColoredMob("colored_chicken", ColoredChickenEntity::new, EntityType.CHICKEN);
     public static final Map<DyeColor, RegistryObject<EntityType<ColoredBeeEntity>>> COLORED_BEE = registerColoredMob("colored_bee", ColoredBeeEntity::new, EntityType.BEE);
+    public static final Map<DyeColor, RegistryObject<EntityType<ColoredBatEntity>>> COLORED_BAT = registerColoredMob("colored_bat", ColoredBatEntity::new, EntityType.BAT);
     public static final Map<DyeColor, RegistryObject<EntityType<ColoredCowEntity>>> COLORED_COW = registerColoredMob("colored_cow", ColoredCowEntity::new, EntityType.COW);
     public static final Map<DyeColor, RegistryObject<EntityType<ColoredPandaEntity>>> COLORED_PANDA = registerColoredMob("colored_panda", ColoredPandaEntity::new, EntityType.PANDA);
     public static final Map<DyeColor, RegistryObject<EntityType<ColoredSkeletonEntity>>> COLORED_SKELETON = registerColoredMob("colored_skeleton", ColoredSkeletonEntity::new, EntityType.SKELETON);
@@ -37,6 +38,7 @@ public class ModEntityTypes {
     public static final Map<DyeColor, RegistryObject<EntityType<ColoredPhantomEntity>>> COLORED_PHANTOM = registerColoredMob("colored_phantom", ColoredPhantomEntity::new, EntityType.PHANTOM);
     public static final Map<DyeColor, RegistryObject<EntityType<ColoredGhastEntity>>> COLORED_GHAST = registerColoredMob("colored_ghast", ColoredGhastEntity::new, EntityType.GHAST);
     public static final Map<DyeColor, RegistryObject<EntityType<ColoredBlazeEntity>>> COLORED_BLAZE = registerColoredMob("colored_blaze", ColoredBlazeEntity::new, EntityType.BLAZE);
+    public static final Map<DyeColor, RegistryObject<EntityType<ColoredSquidEntity>>> COLORED_SQUID = registerColoredMob("colored_squid", ColoredSquidEntity::new, EntityType.SQUID);
 
     private static <T extends Entity> Map<DyeColor, RegistryObject<EntityType<T>>> registerColoredMob(String name, EntityType.IFactory<T> factory, EntityType<?> fromEntity) {
         Map<DyeColor, RegistryObject<EntityType<T>>> map = new HashMap<>();

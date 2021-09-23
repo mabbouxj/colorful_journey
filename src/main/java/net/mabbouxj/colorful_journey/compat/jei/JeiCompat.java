@@ -3,10 +3,12 @@ package net.mabbouxj.colorful_journey.compat.jei;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.runtime.IIngredientManager;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.client.gui.WashingMachineScreen;
 import net.mabbouxj.colorful_journey.init.ModItems;
@@ -15,6 +17,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import javax.annotation.Nonnull;
 
@@ -36,8 +39,13 @@ public class JeiCompat implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         assert Minecraft.getInstance().level != null;
-        RecipeManager manager = Minecraft.getInstance().level.getRecipeManager();
-        registration.addRecipes(manager.getAllRecipesFor(ModRecipeTypes.WASHING_MACHINE), new ResourceLocation(ColorfulJourney.MOD_ID, "washing_machine"));
+        RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
+        IIngredientManager ingredientManager = registration.getIngredientManager();
+        IIngredientType<ItemStack> itemType = ingredientManager.getIngredientType(ItemStack.class);
+
+        registration.addRecipes(recipeManager.getAllRecipesFor(ModRecipeTypes.WASHING_MACHINE), new ResourceLocation(ColorfulJourney.MOD_ID, "washing_machine"));
+        registration.addIngredientInfo(new ItemStack(ModItems.RUBIKS_CUBE.get()), itemType, new TranslationTextComponent("jei.colorful_journey.rubiks_cube"));
+        registration.addIngredientInfo(new ItemStack(ModItems.HORSEHAIR.get()), itemType, new TranslationTextComponent("jei.colorful_journey.horsehair"));
     }
 
     @Override

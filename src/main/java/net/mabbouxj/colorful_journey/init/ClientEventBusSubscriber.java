@@ -49,6 +49,8 @@ public class ClientEventBusSubscriber {
             RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_PHANTOM.get(color).get(), ColoredPhantomRenderer::new);
             RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_GHAST.get(color).get(), ColoredGhastRenderer::new);
             RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_BLAZE.get(color).get(), ColoredBlazeRenderer::new);
+            RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_BAT.get(color).get(), ColoredBatRenderer::new);
+            RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_SQUID.get(color).get(), ColoredSquidRenderer::new);
 
             RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_SKULLS.get(color).get(), RenderType.solid());
             RenderTypeLookup.setRenderLayer(ModBlocks.COLORED_WALL_SKULLS.get(color).get(), RenderType.solid());

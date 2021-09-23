@@ -87,12 +87,12 @@ public class ModRecipesProvider extends RecipeProvider {
                 .pattern("g#b")
                 .pattern("#oy")
                 .define('#', Tags.Items.NUGGETS_IRON)
-                .define('w', Tags.Items.DYES_WHITE)
-                .define('r', Tags.Items.DYES_RED)
-                .define('g', Tags.Items.DYES_GREEN)
-                .define('b', Tags.Items.DYES_BLUE)
-                .define('o', Tags.Items.DYES_ORANGE)
-                .define('y', Tags.Items.DYES_YELLOW)
+                .define('w', ModItems.DENSE_DYES.get(DyeColor.WHITE).get())
+                .define('r', ModItems.DENSE_DYES.get(DyeColor.RED).get())
+                .define('g', ModItems.DENSE_DYES.get(DyeColor.GREEN).get())
+                .define('b', ModItems.DENSE_DYES.get(DyeColor.BLUE).get())
+                .define('o', ModItems.DENSE_DYES.get(DyeColor.ORANGE).get())
+                .define('y', ModItems.DENSE_DYES.get(DyeColor.YELLOW).get())
                 .unlockedBy("has_" + ModItems.RUBIKS_CUBE_UNFINISHED.getId().getPath(), has(ModItems.RUBIKS_CUBE_UNFINISHED.get()))
                 .save(consumer);
 
@@ -128,6 +128,49 @@ public class ModRecipesProvider extends RecipeProvider {
                 .define('o', Items.WATER_BUCKET)
                 .unlockedBy("has_" + ModItems.WASHING_MACHINE.getId().getPath(), has(ModItems.WASHING_MACHINE.get()))
                 .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(ModItems.COLORED_PASSIVE_AGGLOMERA.get(), 1)
+                .requires(ModItemTagProvider.COLORED_FEATHERS)
+                .requires(ModItemTagProvider.COLORED_BAMBOOS)
+                .requires(ModItemTagProvider.COLORED_LEATHERS)
+                .requires(ModItemTagProvider.COLORED_EGGS)
+                .requires(ModItemTagProvider.COLORED_HONEYCOMBS)
+                .requires(ModItemTagProvider.COLORED_BAT_WINGS)
+                .requires(ModItemTagProvider.COLORED_TENTACLES)
+                .unlockedBy("has_item", has(ModItems.COLORED_PASSIVE_AGGLOMERA.get()))
+                .save(consumer);
+
+        ShapelessRecipeBuilder.shapeless(ModItems.COLORED_AGGRESSIVE_AGGLOMERA.get(), 1)
+                .requires(ModItemTagProvider.COLORED_BONES)
+                .requires(ModItemTagProvider.COLORED_ENDER_PEARLS)
+                .requires(ModItemTagProvider.COLORED_BLAZE_RODS)
+                .requires(ModItemTagProvider.COLORED_ROTTEN_FLESHES)
+                .requires(ModItemTagProvider.COLORED_GHAST_TEARS)
+                .requires(ModItemTagProvider.COLORED_PHANTOM_MEMBRANES)
+                .requires(ModItemTagProvider.COLORED_STRINGS)
+                .requires(ModItemTagProvider.COLORED_SKULLS)
+                .requires(ModItemTagProvider.COLORED_GUNPOWDERS)
+                .unlockedBy("has_item", has(ModItems.COLORED_AGGRESSIVE_AGGLOMERA.get()))
+                .save(consumer);
+
+        for (DyeColor color: DyeColor.values()) {
+            ShapedRecipeBuilder.shaped(ModItems.DENSE_DYES.get(color).get(), 1)
+                    .pattern("###")
+                    .pattern("###")
+                    .pattern("###")
+                    .define('#', ColorUtils.getDyeItemByColor(color))
+                    .unlockedBy("has_item", has(ModItems.DENSE_DYES.get(color).get()))
+                    .save(consumer);
+            ShapedRecipeBuilder.shaped(ModItems.COLORED_PORTAL_FRAMES.get(color).get(), 1)
+                    .pattern("#o#")
+                    .pattern("oxo")
+                    .pattern("#o#")
+                    .define('#', Items.NETHERITE_INGOT)
+                    .define('o', ModItems.DENSE_DYES.get(color).get())
+                    .define('x', ModItems.COLORED_NETHER_STARS.get(color).get())
+                    .unlockedBy("has_item", has(ModItems.COLORED_PORTAL_FRAMES.get(color).get()))
+                    .save(consumer);
+        }
 
     }
 

@@ -13,6 +13,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,8 @@ public class EntityEventListeners {
         // Replace "vanilla" items by their "colorful" equivalent
         for (ItemEntity itemEntity : e.getDrops()) {
 
-            Map<DyeColor, RegistryObject<? extends Item>> replacementItems = ColorfulJourney.REPLACEMENT_ITEMS.getOrDefault(itemEntity.getItem().getItem(), null);
+            RegistryObject<Item> registryObject = RegistryObject.of(itemEntity.getItem().getItem().getRegistryName(), ForgeRegistries.ITEMS);
+            Map<DyeColor, RegistryObject<? extends Item>> replacementItems = ColorfulJourney.REPLACEMENT_ITEMS.getOrDefault(registryObject, null);
 
             if (replacementItems != null) {
                 ItemStack newItemStack = new ItemStack(replacementItems.get(entityColor).get(), itemEntity.getItem().getCount());

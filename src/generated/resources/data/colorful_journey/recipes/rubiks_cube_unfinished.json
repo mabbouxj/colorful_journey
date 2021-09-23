@@ -10,22 +10,22 @@
       "tag": "forge:nuggets/iron"
     },
     "w": {
-      "tag": "forge:dyes/white"
+      "item": "colorful_journey:dense_dye_white"
     },
     "r": {
-      "tag": "forge:dyes/red"
+      "item": "colorful_journey:dense_dye_red"
     },
     "g": {
-      "tag": "forge:dyes/green"
+      "item": "colorful_journey:dense_dye_green"
     },
     "b": {
-      "tag": "forge:dyes/blue"
+      "item": "colorful_journey:dense_dye_blue"
     },
     "o": {
-      "tag": "forge:dyes/orange"
+      "item": "colorful_journey:dense_dye_orange"
     },
     "y": {
-      "tag": "forge:dyes/yellow"
+      "item": "colorful_journey:dense_dye_yellow"
     }
   },
   "result": {

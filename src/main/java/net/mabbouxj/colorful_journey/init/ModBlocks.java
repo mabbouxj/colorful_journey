@@ -49,6 +49,7 @@ public class ModBlocks {
     public static Map<DyeColor, RegistryObject<? extends Block>> COLORED_GRASS_BLOCKS = registerColoredVariantsBlock("colored_grass_block", ColoredGrassBlock::new);
     public static Map<DyeColor, RegistryObject<? extends Block>> COLORED_GRASS_PATH = registerColoredVariantsBlock("colored_grass_path", ColoredGrassPathBlock::new);
     public static Map<DyeColor, RegistryObject<? extends Block>> COLORED_GRASS = registerColoredVariantsBlock("colored_grass", ColoredGrass::new);
+    public static Map<DyeColor, RegistryObject<? extends Block>> COLORED_PORTAL_FRAME = registerColoredVariantsBlock("colored_portal_frame", ColoredBlock::new, AbstractBlock.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F));
 
     private static Map<DyeColor, RegistryObject<? extends Block>> registerColoredVariantsBlock(String name, Function<DyeColor, ? extends Block> supplier) {
         Map<DyeColor, RegistryObject<? extends Block>> map = new HashMap<>();

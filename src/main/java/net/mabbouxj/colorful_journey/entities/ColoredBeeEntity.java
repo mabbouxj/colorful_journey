@@ -69,6 +69,11 @@ public class ColoredBeeEntity extends BeeEntity implements IColoredMobEntity {
     }
 
     @Override
+    public ResourceLocation getDefaultLootTable() {
+        return new ResourceLocation(ColorfulJourney.MOD_ID, "entities/colored_bee");
+    }
+
+    @Override
     public DyeColor getColor() {
         return DyeColor.byId(this.entityData.get(DATA_COLOR_ID));
     }

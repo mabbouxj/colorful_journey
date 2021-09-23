@@ -10,6 +10,8 @@ Bored with your Minecraft Vanilla experience? Craft a **color gun**, fill it wit
 - Fight unique bosses (WIP)
 - Generate energy and craft wonderful items
 
+https://youtu.be/gGZbip8SdJQ
+
 ![](gun.png)
 
 ![](rubiks_cube.png)

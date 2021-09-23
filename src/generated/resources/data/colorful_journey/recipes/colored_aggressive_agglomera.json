@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "colorful_journey:colored_bones"
+    },
+    {
+      "tag": "colorful_journey:colored_ender_pearls"
+    },
+    {
+      "tag": "colorful_journey:colored_blaze_rods"
+    },
+    {
+      "tag": "colorful_journey:colored_rotten_fleshes"
+    },
+    {
+      "tag": "colorful_journey:colored_ghast_tears"
+    },
+    {
+      "tag": "colorful_journey:colored_phantom_membranes"
+    },
+    {
+      "tag": "colorful_journey:colored_strings"
+    },
+    {
+      "tag": "colorful_journey:colored_skulls"
+    },
+    {
+      "tag": "colorful_journey:colored_gunpowders"
+    }
+  ],
+  "result": {
+    "item": "colorful_journey:colored_aggressive_agglomera"
+  }
+}

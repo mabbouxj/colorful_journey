@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.RegistryObject;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -20,9 +21,9 @@ public class ColoredVariantsItem extends Item implements ColorUtils.IColored {
 
     private final String registryName;
     private final DyeColor color;
-    private final Item initialItem;
+    private final RegistryObject<Item> initialItem;
 
-    public ColoredVariantsItem(String registryName, DyeColor color, Item initialItem) {
+    public ColoredVariantsItem(String registryName, DyeColor color, RegistryObject<Item> initialItem) {
         super(new Item.Properties()
                 .tab(ColorfulJourney.ENABLED_COLORS.contains(color) ? ColorfulJourney.MOD_ITEM_GROUP: null)
                 .stacksTo(64));
@@ -36,7 +37,9 @@ public class ColoredVariantsItem extends Item implements ColorUtils.IColored {
     }
 
     public Item getInitialItem() {
-        return initialItem;
+        if (initialItem != null)
+            return initialItem.get();
+        return null;
     }
 
     @Override

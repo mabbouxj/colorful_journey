@@ -4,6 +4,7 @@
   "item.colorful_journey.color_gun": "§6Color Gun",
   "item.colorful_journey.color_laser_gun": "§dColor Laser Gun",
   "item.colorful_journey.ink_ball": "Ink Ball",
+  "item.colorful_journey.dense_dye": "Dense Dye",
   "item.colorful_journey.colored_feather": "Feather",
   "item.colorful_journey.colored_egg": "Egg",
   "item.colorful_journey.colored_honeycomb": "Honeycomb",
@@ -23,6 +24,12 @@
   "item.colorful_journey.paintbrush": "§aPaintbrush",
   "item.colorful_journey.color_palette": "Color Palette",
   "item.colorful_journey.horsehair": "Horsehair",
+  "item.colorful_journey.bat_wing": "Bat Wing",
+  "item.colorful_journey.colored_bat_wing": "Bat Wing",
+  "item.colorful_journey.tentacle": "Tentacle",
+  "item.colorful_journey.colored_tentacle": "Tentacle",
+  "item.colorful_journey.colored_passive_agglomera": "Passive Agglomera",
+  "item.colorful_journey.colored_aggressive_agglomera": "Aggressive Agglomera",
 
   "block.colorful_journey.rubiks_cube": "Rubik's Cube",
   "block.colorful_journey.rubiks_cube_unfinished": "Unfinished Rubik's Cube",
@@ -41,6 +48,7 @@
   "block.colorful_journey.colored_grass_path": "Grass Path",
   "block.colorful_journey.colored_grass": "Grass",
   "block.colorful_journey.colored_ingot_block": "Ingots Block",
+  "block.colorful_journey.colored_portal_frame": "Portal Frame",
   "block.colorful_journey.energy_dye_generator": "Energy Dye Generator",
   "block.colorful_journey.energy_capacitor": "Energy Capacitor",
   "block.colorful_journey.washing_machine": "Washing Machine",
@@ -74,6 +82,9 @@
   "screen.colorful_journey.no_fuel": "Fuel is empty",
   "screen.colorful_journey.fuel_time": "Fuel time left: %s",
   "screen.colorful_journey.generating": "Generating: %s FE/t",
-  "screen.colorful_journey.processing_time": "Processing time: %s"
+  "screen.colorful_journey.processing_time": "Processing time: %s",
+
+  "jei.colorful_journey.rubiks_cube": "Obtainable by shaking an §1Unfinished Rubik's Cube§r multiple times in your hand",
+  "jei.colorful_journey.horsehair": "Obtainable by shearing §1horses§r or §1donkeys§r"
 
 }

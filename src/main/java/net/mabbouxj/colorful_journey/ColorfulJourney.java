@@ -9,10 +9,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.monster.*;
-import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.passive.ChickenEntity;
-import net.minecraft.entity.passive.CowEntity;
-import net.minecraft.entity.passive.PandaEntity;
+import net.minecraft.entity.passive.*;
 import net.minecraft.item.*;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
@@ -23,6 +20,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
@@ -43,7 +41,7 @@ public class ColorfulJourney {
     public static final String MOD_VERSION = "0.0.1";
     public static final ItemGroup MOD_ITEM_GROUP = new ColorfulJourneyItemGroup();
 
-    public static final Map<Item, Map<DyeColor, RegistryObject<? extends Item>>> REPLACEMENT_ITEMS = new HashMap<>();
+    public static final Map<RegistryObject<? extends Item>, Map<DyeColor, RegistryObject<? extends Item>>> REPLACEMENT_ITEMS = new HashMap<>();
     public static final Map<Block, Map<DyeColor, RegistryObject<? extends Block>>> REPLACEMENT_BLOCKS = new HashMap<>();
     public static final Map<Class<? extends Entity>, Class<? extends Entity>> REPLACEMENT_MOBS = new HashMap<>();
     public static final Set<DyeColor> ENABLED_COLORS = new HashSet<>();
@@ -99,22 +97,22 @@ public class ColorfulJourney {
     }
 
     private void populateReplacementItems() {
-        REPLACEMENT_ITEMS.put(Items.HONEYCOMB, ModItems.COLORED_HONEYCOMBS);
-        REPLACEMENT_ITEMS.put(Items.FEATHER, ModItems.COLORED_FEATHERS);
-        REPLACEMENT_ITEMS.put(Items.LEATHER, ModItems.COLORED_LEATHERS);
-        REPLACEMENT_ITEMS.put(Items.ENDER_PEARL, ModItems.COLORED_ENDER_PEARLS);
-        REPLACEMENT_ITEMS.put(Items.BAMBOO, ModItems.COLORED_BAMBOOS);
-        REPLACEMENT_ITEMS.put(Items.BONE, ModItems.COLORED_BONES);
-        REPLACEMENT_ITEMS.put(Items.SKELETON_SKULL, ModItems.COLORED_SKULLS);
-        REPLACEMENT_ITEMS.put(Items.STRING, ModItems.COLORED_STRINGS);
-        REPLACEMENT_ITEMS.put(Items.WITHER_SKELETON_SKULL, ModItems.COLORED_SKULLS);
-        REPLACEMENT_ITEMS.put(Items.ROTTEN_FLESH, ModItems.COLORED_ROTTEN_FLESHES);
-        REPLACEMENT_ITEMS.put(Items.ZOMBIE_HEAD, ModItems.COLORED_SKULLS);
-        REPLACEMENT_ITEMS.put(Items.NETHER_STAR, ModItems.COLORED_NETHER_STARS);
-        REPLACEMENT_ITEMS.put(Items.GUNPOWDER, ModItems.COLORED_GUNPOWDERS);
-        REPLACEMENT_ITEMS.put(Items.PHANTOM_MEMBRANE, ModItems.COLORED_PHANTOM_MEMBRANE);
-        REPLACEMENT_ITEMS.put(Items.GHAST_TEAR, ModItems.COLORED_GHAST_TEARS);
-        REPLACEMENT_ITEMS.put(Items.BLAZE_ROD, ModItems.COLORED_BLAZE_RODS);
+        REPLACEMENT_ITEMS.put(RegistryObject.of(Items.HONEYCOMB.getRegistryName(), ForgeRegistries.ITEMS), ModItems.COLORED_HONEYCOMBS);
+        REPLACEMENT_ITEMS.put(RegistryObject.of(Items.FEATHER.getRegistryName(), ForgeRegistries.ITEMS), ModItems.COLORED_FEATHERS);
+        REPLACEMENT_ITEMS.put(RegistryObject.of(Items.LEATHER.getRegistryName(), ForgeRegistries.ITEMS), ModItems.COLORED_LEATHERS);
+        REPLACEMENT_ITEMS.put(RegistryObject.of(Items.ENDER_PEARL.getRegistryName(), ForgeRegistries.ITEMS), ModItems.COLORED_ENDER_PEARLS);
+        REPLACEMENT_ITEMS.put(RegistryObject.of(Items.BAMBOO.getRegistryName(), ForgeRegistries.ITEMS), ModItems.COLORED_BAMBOOS);
+        REPLACEMENT_ITEMS.put(RegistryObject.of(Items.BONE.getRegistryName(), ForgeRegistries.ITEMS), ModItems.COLORED_BONES);
+        REPLACEMENT_ITEMS.put(RegistryObject.of(Items.STRING.getRegistryName(), ForgeRegistries.ITEMS), ModItems.COLORED_STRINGS);
+        REPLACEMENT_ITEMS.put(RegistryObject.of(Items.WITHER_SKELETON_SKULL.getRegistryName(), ForgeRegistries.ITEMS), ModItems.COLORED_SKULLS);
+        REPLACEMENT_ITEMS.put(RegistryObject.of(Items.ROTTEN_FLESH.getRegistryName(), ForgeRegistries.ITEMS), ModItems.COLORED_ROTTEN_FLESHES);
+        REPLACEMENT_ITEMS.put(RegistryObject.of(Items.NETHER_STAR.getRegistryName(), ForgeRegistries.ITEMS), ModItems.COLORED_NETHER_STARS);
+        REPLACEMENT_ITEMS.put(RegistryObject.of(Items.GUNPOWDER.getRegistryName(), ForgeRegistries.ITEMS), ModItems.COLORED_GUNPOWDERS);
+        REPLACEMENT_ITEMS.put(RegistryObject.of(Items.PHANTOM_MEMBRANE.getRegistryName(), ForgeRegistries.ITEMS), ModItems.COLORED_PHANTOM_MEMBRANE);
+        REPLACEMENT_ITEMS.put(RegistryObject.of(Items.GHAST_TEAR.getRegistryName(), ForgeRegistries.ITEMS), ModItems.COLORED_GHAST_TEARS);
+        REPLACEMENT_ITEMS.put(RegistryObject.of(Items.BLAZE_ROD.getRegistryName(), ForgeRegistries.ITEMS), ModItems.COLORED_BLAZE_RODS);
+        REPLACEMENT_ITEMS.put(ModItems.BAT_WING, ModItems.COLORED_BAT_WINGS);
+        REPLACEMENT_ITEMS.put(ModItems.TENTACLE, ModItems.COLORED_TENTACLES);
     }
 
     private void populateReplacementBlocks() {
@@ -137,6 +135,8 @@ public class ColorfulJourney {
         REPLACEMENT_MOBS.put(PhantomEntity.class, ColoredPhantomEntity.class);
         REPLACEMENT_MOBS.put(GhastEntity.class, ColoredGhastEntity.class);
         REPLACEMENT_MOBS.put(BlazeEntity.class, ColoredBlazeEntity.class);
+        REPLACEMENT_MOBS.put(BatEntity.class, ColoredBatEntity.class);
+        REPLACEMENT_MOBS.put(SquidEntity.class, ColoredSquidEntity.class);
     }
 
     private static class ColorfulJourneyItemGroup extends ItemGroup {
