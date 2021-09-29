@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#o#",
+    "oxo",
+    "#o#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:iron_ingot"
+    },
+    "o": {
+      "tag": "colorful_journey:colored_ingots"
+    },
+    "x": {
+      "item": "minecraft:blackstone"
+    }
+  },
+  "result": {
+    "item": "colorful_journey:colorful_portal_frame"
+  }
+}

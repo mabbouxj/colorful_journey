@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "colorful_journey:block/colorful_portal_ns"
+    },
+    "axis=z": {
+      "model": "colorful_journey:block/colorful_portal_ew"
+    }
+  }
+}

@@ -1,9 +1,9 @@
 package net.mabbouxj.colorful_journey.recipes;
 
 import com.google.gson.JsonObject;
-import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.init.ModRecipeSerializers;
 import net.mabbouxj.colorful_journey.init.ModRecipeTypes;
+import net.mabbouxj.colorful_journey.tiles.WashingMachineTile;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
@@ -32,8 +32,9 @@ public class WashingMachineRecipe implements IRecipe<IInventory> {
 
     public static int DEFAULT_PROCESSING_TIME = 40;
     public static int DEFAULT_ENERGY_PER_TICK = 100;
-    public static FluidStack DEFAULT_INPUT_FLUID = new FluidStack(Fluids.WATER, 500);
+    public static FluidStack DEFAULT_INPUT_FLUID = new FluidStack(Fluids.WATER, 250);
 
+    protected ResourceLocation id;
     protected ItemStack inputStack;
     protected FluidStack inputFluid;
     protected int processingTime;
@@ -41,11 +42,12 @@ public class WashingMachineRecipe implements IRecipe<IInventory> {
     protected ItemStack output;
     protected ItemStack outputAlt;
 
-    public WashingMachineRecipe() {
-        this(ItemStack.EMPTY, DEFAULT_INPUT_FLUID, DEFAULT_PROCESSING_TIME, DEFAULT_ENERGY_PER_TICK, ItemStack.EMPTY, ItemStack.EMPTY);
+    public WashingMachineRecipe(ResourceLocation id) {
+        this(id, ItemStack.EMPTY, DEFAULT_INPUT_FLUID, DEFAULT_PROCESSING_TIME, DEFAULT_ENERGY_PER_TICK, ItemStack.EMPTY, ItemStack.EMPTY);
     }
 
-    public WashingMachineRecipe(ItemStack inputStack, FluidStack inputFluid, int processingTime, int energyPerTick, ItemStack output, ItemStack outputAlt) {
+    public WashingMachineRecipe(ResourceLocation id, ItemStack inputStack, FluidStack inputFluid, int processingTime, int energyPerTick, ItemStack output, ItemStack outputAlt) {
+        this.id = id;
         this.inputStack = inputStack;
         this.inputFluid = inputFluid;
         this.processingTime = processingTime;
@@ -62,10 +64,11 @@ public class WashingMachineRecipe implements IRecipe<IInventory> {
     public boolean matches(IItemHandler inventory, IFluidHandler tank, IEnergyStorage energy) {
         if (inputStack == null || tank == null || inputFluid == null) return false;
 
+        ItemStack ingredientStack = inventory.getStackInSlot(WashingMachineTile.Slots.INPUT.getId());
         boolean itemOk = false;
         boolean fluidOk = false;
         boolean energyOk = false;
-        if (inventory.getStackInSlot(0).getItem().equals(inputStack.getItem()) && inventory.getStackInSlot(0).getCount() >= inputStack.getCount()) {
+        if (ingredientStack.getItem().equals(inputStack.getItem()) && ingredientStack.getCount() >= inputStack.getCount()) {
             itemOk = true;
         }
         if (tank.drain(inputFluid, IFluidHandler.FluidAction.SIMULATE).getAmount() == inputFluid.getAmount()) {
@@ -74,7 +77,6 @@ public class WashingMachineRecipe implements IRecipe<IInventory> {
         if (energy.extractEnergy(energyPerTick, true) == energyPerTick) {
             energyOk = true;
         }
-
         return itemOk && fluidOk && energyOk;
     }
 
@@ -117,9 +119,7 @@ public class WashingMachineRecipe implements IRecipe<IInventory> {
 
     @Override
     public ResourceLocation getId() {
-        String recipeId = inputStack.getItem().getRegistryName().getPath();
-        recipeId += "_" + inputFluid.getFluid().getRegistryName().getPath();
-        return new ResourceLocation(ColorfulJourney.MOD_ID, "washing_machine/" + recipeId);
+        return this.id;
     }
 
     @Override
@@ -167,7 +167,7 @@ public class WashingMachineRecipe implements IRecipe<IInventory> {
                 outputAltStack = new ItemStack(outputAlt, outputAltCount);
             }
 
-            return new WashingMachineRecipe(inputStack, inputFluid, processingTime, energyPerTick, outputStack, outputAltStack);
+            return new WashingMachineRecipe(location, inputStack, inputFluid, processingTime, energyPerTick, outputStack, outputAltStack);
         }
 
         @Nullable
@@ -179,7 +179,7 @@ public class WashingMachineRecipe implements IRecipe<IInventory> {
             int energyPerTick = packetBuffer.readInt();
             ItemStack output = ItemStack.of(packetBuffer.readNbt());
             ItemStack outputAlt = ItemStack.of(packetBuffer.readNbt());
-            return new WashingMachineRecipe(input, fluid, processingTime, energyPerTick, output, outputAlt);
+            return new WashingMachineRecipe(location, input, fluid, processingTime, energyPerTick, output, outputAlt);
         }
 
         @Override
@@ -196,11 +196,16 @@ public class WashingMachineRecipe implements IRecipe<IInventory> {
 
     public static class Builder {
 
-        private WashingMachineRecipe recipe;
+        private final WashingMachineRecipe recipe;
 
-        public Builder(IItemProvider input, int count) {
-            recipe = new WashingMachineRecipe();
+        public Builder(ResourceLocation id) {
+            recipe = new WashingMachineRecipe(id);
+
+        }
+
+        public Builder withInput(IItemProvider input, int count) {
             recipe.inputStack = new ItemStack(input.asItem(), count);
+            return this;
         }
 
         public Builder withInputFluid(FluidStack fluidStack) {

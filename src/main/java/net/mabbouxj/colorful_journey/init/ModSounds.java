@@ -18,6 +18,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> LASER_START = registerSound("laser_start");
     public static final RegistryObject<SoundEvent> LASER_END = registerSound("laser_end");
     public static final RegistryObject<SoundEvent> LASER_LOOP = registerSound("laser_loop");
+    public static final RegistryObject<SoundEvent> COLORFUL_PORTAL_AMBIENT = registerSound("colorful_portal_ambient");
 
     private static RegistryObject<SoundEvent> registerSound(String name) {
         ResourceLocation location = new ResourceLocation(ColorfulJourney.MOD_ID, name);

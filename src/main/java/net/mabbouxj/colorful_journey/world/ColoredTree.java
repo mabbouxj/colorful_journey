@@ -18,9 +18,9 @@ import java.util.Random;
 
 public class ColoredTree extends BigTree {
 
-    public static float WILD_BASE_TREE_SPAWN_CHANCE = 0.07f;
-    public static float WILD_FANCY_TREE_SPAWN_CHANCE = 0.05f;
-    public static float WILD_MEGA_TREE_SPAWN_CHANCE = 0.03f;
+    public static float WILD_BASE_TREE_SPAWN_CHANCE = 0.08f;
+    public static float WILD_FANCY_TREE_SPAWN_CHANCE = 0.08f;
+    public static float WILD_MEGA_TREE_SPAWN_CHANCE = 0.05f;
     private final DyeColor color;
 
     public ColoredTree(DyeColor color) {

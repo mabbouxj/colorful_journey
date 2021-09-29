@@ -1,21 +1,21 @@
 {
   "replace": false,
   "values": [
+    "colorful_journey:colored_bamboo_black",
+    "colorful_journey:colored_bamboo_yellow",
+    "colorful_journey:colored_bamboo_orange",
+    "colorful_journey:colored_bamboo_white",
+    "colorful_journey:colored_bamboo_light_blue",
+    "colorful_journey:colored_bamboo_light_gray",
+    "colorful_journey:colored_bamboo_pink",
+    "colorful_journey:colored_bamboo_blue",
+    "colorful_journey:colored_bamboo_red",
+    "colorful_journey:colored_bamboo_cyan",
+    "colorful_journey:colored_bamboo_magenta",
+    "colorful_journey:colored_bamboo_gray",
     "colorful_journey:colored_bamboo_brown",
     "colorful_journey:colored_bamboo_purple",
     "colorful_journey:colored_bamboo_lime",
-    "colorful_journey:colored_bamboo_orange",
-    "colorful_journey:colored_bamboo_white",
-    "colorful_journey:colored_bamboo_green",
-    "colorful_journey:colored_bamboo_pink",
-    "colorful_journey:colored_bamboo_light_blue",
-    "colorful_journey:colored_bamboo_blue",
-    "colorful_journey:colored_bamboo_magenta",
-    "colorful_journey:colored_bamboo_gray",
-    "colorful_journey:colored_bamboo_light_gray",
-    "colorful_journey:colored_bamboo_black",
-    "colorful_journey:colored_bamboo_cyan",
-    "colorful_journey:colored_bamboo_yellow",
-    "colorful_journey:colored_bamboo_red"
+    "colorful_journey:colored_bamboo_green"
   ]
 }

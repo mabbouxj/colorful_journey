@@ -1,0 +1,21 @@
+{
+  "type": "colorful_journey:washing_machine",
+  "input_item": {
+    "item": "colorful_journey:colored_blaze_rod_magenta",
+    "count": 1
+  },
+  "input_fluid": {
+    "fluid": "minecraft:water",
+    "amount": 250
+  },
+  "processing_time": 40,
+  "energy_per_tick": 100,
+  "output": {
+    "item": "minecraft:blaze_rod",
+    "count": 1
+  },
+  "output_alt": {
+    "item": "minecraft:magenta_dye",
+    "count": 1
+  }
+}

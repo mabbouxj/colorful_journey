@@ -86,7 +86,8 @@ public class WashingMachineBlock extends ContainerBlock {
         if (item == Items.WATER_BUCKET) {
             int usedFluid = ((WashingMachineTile) te).fluidStorage.fill(new FluidStack(Fluids.WATER, 1000), IFluidHandler.FluidAction.EXECUTE);
             if (usedFluid > 0) {
-                player.setItemInHand(hand, new ItemStack(Items.BUCKET));
+                if (!player.isCreative())
+                    player.setItemInHand(hand, new ItemStack(Items.BUCKET));
                 world.playSound(null, blockPos, SoundEvents.BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 return ActionResultType.SUCCESS;
             }

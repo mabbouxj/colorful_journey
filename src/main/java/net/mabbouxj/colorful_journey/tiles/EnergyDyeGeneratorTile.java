@@ -1,12 +1,16 @@
 package net.mabbouxj.colorful_journey.tiles;
 
 import net.mabbouxj.colorful_journey.ModConfigs;
+import net.mabbouxj.colorful_journey.annotations.Sync;
 import net.mabbouxj.colorful_journey.blocks.EnergyDyeGeneratorBlock;
 import net.mabbouxj.colorful_journey.capabilities.TileEnergyStorageCapability;
+import net.mabbouxj.colorful_journey.components.InventoryComponent;
 import net.mabbouxj.colorful_journey.containers.EnergyDyeGeneratorContainer;
+import net.mabbouxj.colorful_journey.init.ModRecipeTypes;
 import net.mabbouxj.colorful_journey.init.ModTiles;
+import net.mabbouxj.colorful_journey.recipes.EnergyDyeGeneratorRecipe;
 import net.mabbouxj.colorful_journey.utils.EnergyUtils;
-import net.minecraft.block.BlockState;
+import net.mabbouxj.colorful_journey.utils.RecipeUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -15,13 +19,8 @@ import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ForgeHooks;
@@ -34,157 +33,155 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.function.Predicate;
 
 
-public class EnergyDyeGeneratorTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class EnergyDyeGeneratorTile extends BasicTile implements ITickableTileEntity, INamedContainerProvider {
 
     public enum Slots {
-        FUEL(0),
-        MATERIAL(1);
+        FUEL(0, (stack) -> ForgeHooks.getBurnTime(stack, null) > 0),
+        INGREDIENT(1, (stack) -> true);
 
         int id;
+        Predicate<ItemStack> filter;
 
-        Slots(int number) {
-            id = number;
+        Slots(int number, Predicate<ItemStack> filter) {
+            this.id = number;
+            this.filter = filter;
         }
 
         public int getId() {
             return id;
         }
+        public Predicate<ItemStack> getFilter() {
+            return filter;
+        }
     }
 
-    private int remainingMaterial = 0;
-    private int remainingFuel = 0;
-    private int maxFuel = 0;
-
+    @Sync
     public TileEnergyStorageCapability energyStorage;
+    @Sync
+    public InventoryComponent inventoryStorage;
     private final LazyOptional<TileEnergyStorageCapability> energy;
     private final LazyOptional<ItemStackHandler> inventory;
 
-    public final IIntArray data = new IIntArray() {
-        @Override
-        public int get(int index) {
-            switch (index) {
-                case 0:
-                    return EnergyDyeGeneratorTile.this.remainingFuel;
-                case 1:
-                    return EnergyDyeGeneratorTile.this.maxFuel;
-                case 2:
-                    return EnergyDyeGeneratorTile.this.remainingMaterial;
-                default:
-                    throw new IllegalArgumentException("Invalid index: " + index);
-            }
-        }
-
-        @Override
-        public void set(int index, int value) {
-            throw new IllegalStateException("Cannot set values through IIntArray");
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-    };
+    public EnergyDyeGeneratorRecipe currentRecipe;
+    @Sync
+    public int remainingIngredient = 0;
+    @Sync
+    public int remainingFuel = 0;
+    @Sync
+    public int maxFuel = 0;
+    @Sync
+    public int generating = 0;
 
     public EnergyDyeGeneratorTile() {
         super(ModTiles.ENERGY_DYE_GENERATOR.get());
-        this.energyStorage = new TileEnergyStorageCapability(this, ModConfigs.COMMON_CONFIG.ENERGY_DYE_GENERATOR_BUFFER_CAPACITY.get(), ModConfigs.COMMON_CONFIG.ENERGY_DYE_GENERATOR_MAX_IN_OUT.get(), true, false);
+        this.energyStorage = new TileEnergyStorageCapability(this, ModConfigs.COMMON.ENERGY_DYE_GENERATOR_BUFFER_CAPACITY.get(), ModConfigs.COMMON.ENERGY_DYE_GENERATOR_MAX_IN_OUT.get(), true, false);
         this.energy = LazyOptional.of(() -> this.energyStorage);
-        this.inventory = LazyOptional.of(() -> new EnergyDyeGeneratorTile.ItemHandler(this));
+        this.inventoryStorage = new InventoryComponent(this, Slots.values().length);
+        this.inventory = LazyOptional.of(() -> inventoryStorage);
     }
 
     @Nullable
     @Override
-    public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    public Container createMenu(int i, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity playerEntity) {
         assert level != null;
-        return new EnergyDyeGeneratorContainer(this, this.data, i, playerInventory, this.inventory.orElse(new ItemStackHandler(2)));
+        return new EnergyDyeGeneratorContainer(this, i, playerInventory, this.inventory.orElse(new ItemStackHandler(Slots.values().length)));
     }
 
     @Override
     public void tick() {
-        if (this.level == null)
+        if (this.level == null || this.level.isClientSide)
             return;
-        inventory.ifPresent(handler -> {
-            this.getCapability(CapabilityEnergy.ENERGY).ifPresent(energyStorage -> {
 
-                EnergyUtils.extractToAdjacentBlocks(this.level, (TileEnergyStorageCapability) energyStorage, getBlockPos());
+        inventory.ifPresent(handler -> energy.ifPresent(buffer -> {
 
-                boolean canInsertEnergy = energyStorage.receiveEnergy(ModConfigs.COMMON_CONFIG.ENERGY_DYE_GENERATOR_PRODUCTION_PER_TICK.get(), true) > 0;
-                if (!canInsertEnergy)
-                    return;
-                if (remainingFuel <= 0)
-                    ignite();
-                if (remainingMaterial <= 0)
-                    burn();
-                if (remainingFuel > 0 && remainingMaterial > 0) {
-                    this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(EnergyDyeGeneratorBlock.LIT, true), 3);
-                    generateEnergy(energyStorage);
-                } else {
-                    this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(EnergyDyeGeneratorBlock.LIT, false), 3);
-                }
-            });
-        });
+            EnergyUtils.extractToAdjacentBlocks(this.level, buffer, getBlockPos());
+
+            if (remainingFuel <= 0)
+                ignite(handler);
+            consumeFuel();
+            if (remainingFuel <= 0) {
+                setChanged();
+                return;
+            }
+
+            if (currentRecipe == null) {
+                setChanged();
+                return;
+            }
+
+            boolean canInsertEnergy = buffer.receiveEnergy(currentRecipe.energyPerTick, true) > 0;
+            if (!canInsertEnergy)
+                return;
+            if (remainingIngredient <= 0)
+                initBurn(handler);
+            if (remainingIngredient > 0)
+                generateEnergy(buffer);
+            setChanged();
+        }));
+
+        if (isLit())
+            this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(EnergyDyeGeneratorBlock.LIT, true), 3);
+        else
+            this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(EnergyDyeGeneratorBlock.LIT, false), 3);
+
+    }
+
+    private boolean isLit() {
+        return remainingFuel > 0 && currentRecipe != null && remainingIngredient > 0;
     }
 
     private void generateEnergy(IEnergyStorage energyStorage) {
-        energyStorage.receiveEnergy(ModConfigs.COMMON_CONFIG.ENERGY_DYE_GENERATOR_PRODUCTION_PER_TICK.get(), false);
-        remainingFuel--;
-        remainingMaterial = remainingMaterial - ModConfigs.COMMON_CONFIG.ENERGY_DYE_GENERATOR_PRODUCTION_PER_TICK.get();
-        if (remainingFuel == 0) {
+        int received = energyStorage.receiveEnergy(currentRecipe.energyPerTick, false);
+        generating = received;
+        remainingIngredient -= received;
+        if (remainingIngredient <= 0) {
+            currentRecipe = null;
+            generating = 0;
+        }
+    }
+
+    private void initBurn(ItemStackHandler handler) {
+        if (remainingFuel > 0 && currentRecipe != null) {
+            remainingIngredient = currentRecipe.energyTotal;
+            handler.extractItem(Slots.INGREDIENT.id, 1, false);
+        }
+    }
+
+    private void consumeFuel() {
+        if (remainingFuel > 0)
+            remainingFuel--;
+        if (remainingFuel <= 0)
             maxFuel = 0;
-            ignite();
-        }
-        if (remainingMaterial == 0) {
-            burn();
-        }
     }
 
-    private void burn() {
-        ItemStackHandler handler = inventory.orElseThrow(RuntimeException::new);
-        ItemStack materialStack = handler.getStackInSlot(Slots.MATERIAL.id);
-
-        if (remainingFuel > 0 && !materialStack.isEmpty()) {
-            handler.extractItem(Slots.MATERIAL.id, 1, false);
-            setChanged();
-            remainingMaterial = ModConfigs.COMMON_CONFIG.ENERGY_DYE_GENERATOR_PRODUCTION_PER_MATERIAL.get();
-        }
-    }
-
-    private void ignite() {
-        ItemStackHandler handler = inventory.orElseThrow(RuntimeException::new);
+    private void ignite(ItemStackHandler handler) {
         ItemStack fuelStack = handler.getStackInSlot(Slots.FUEL.id);
-
-        int burnTime = ForgeHooks.getBurnTime(fuelStack);
+        int burnTime = ForgeHooks.getBurnTime(fuelStack, null);
         if (burnTime > 0) {
             Item fuel = handler.getStackInSlot(Slots.FUEL.id).getItem();
             handler.extractItem(Slots.FUEL.id, 1, false);
             if(fuel instanceof BucketItem && fuel != Items.BUCKET)
                 handler.insertItem(0, new ItemStack(Items.BUCKET, 1), false);
-            setChanged();
-            remainingFuel = (int) (Math.floor(burnTime) / ModConfigs.COMMON_CONFIG.ENERGY_DYE_GENERATOR_FUEL_CONSUMPTION_SPEED.get());
+            remainingFuel = (int) (Math.floor(burnTime) / ModConfigs.COMMON.ENERGY_DYE_GENERATOR_FUEL_CONSUMPTION_SPEED.get());
             maxFuel = remainingFuel;
         }
     }
 
-    @Override
-    public void load(BlockState stateIn, CompoundNBT compound) {
-        super.load(stateIn, compound);
-        inventory.ifPresent(h -> h.deserializeNBT(compound.getCompound("inv")));
-        energy.ifPresent(h -> h.deserializeNBT(compound.getCompound("energy")));
-        remainingFuel = compound.getInt("remainingFuel");
-        maxFuel = compound.getInt("maxFuel");
-        remainingMaterial = compound.getInt("remainingMaterial");
-    }
-
-    @Override
-    public CompoundNBT save(CompoundNBT compound) {
-        inventory.ifPresent(h ->  compound.put("inv", h.serializeNBT()));
-        energy.ifPresent(h -> compound.put("energy", h.serializeNBT()));
-        compound.putInt("remainingFuel", remainingFuel);
-        compound.putInt("maxFuel", maxFuel);
-        compound.putInt("remainingMaterial", remainingMaterial);
-        return super.save(compound);
+    private void checkForRecipe() {
+        if (this.level == null || this.level.isClientSide || currentRecipe != null)
+            return;
+        inventory.ifPresent(inventory -> energy.ifPresent(buffer -> {
+            if (remainingFuel > 0) {
+                currentRecipe = RecipeUtils.getRecipes(this.level, ModRecipeTypes.ENERGY_DYE_GENERATOR).stream()
+                        .filter(recipe -> recipe.matches(inventory, buffer)).findFirst().orElse(null);
+            }
+            if (currentRecipe == null) {
+                remainingIngredient = 0;
+            }
+        }));
     }
 
     @Nonnull
@@ -198,24 +195,9 @@ public class EnergyDyeGeneratorTile extends TileEntity implements ITickableTileE
     }
 
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        // Vanilla uses the type parameter to indicate which type of tile entity (command block, skull, or beacon?) is receiving the packet, but it seems like Forge has overridden this behavior
-        return new SUpdateTileEntityPacket(getBlockPos(), 0, getUpdateTag());
-    }
-
-    @Override
-    public CompoundNBT getUpdateTag() {
-        return save(new CompoundNBT());
-    }
-
-    @Override
-    public void handleUpdateTag(BlockState stateIn, CompoundNBT tag) {
-        load(stateIn, tag);
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        load(this.getBlockState(), pkt.getTag());
+    public void setChanged() {
+        super.setChanged();
+        checkForRecipe();
     }
 
     @Override
@@ -225,36 +207,10 @@ public class EnergyDyeGeneratorTile extends TileEntity implements ITickableTileE
         super.setRemoved();
     }
 
+    @Nonnull
     @Override
     public ITextComponent getDisplayName() {
         return new TranslationTextComponent("container.colorful_journey.energy_dye_generator");
     }
 
-    public static class ItemHandler extends ItemStackHandler {
-
-        private final EnergyDyeGeneratorTile tile;
-
-        public ItemHandler(EnergyDyeGeneratorTile t) {
-            super(2);
-            this.tile = t;
-        }
-
-        @Override
-        protected void onContentsChanged(int slot) {
-            tile.setChanged();
-        }
-
-        @Nonnull
-        @Override
-        public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-            if (slot == EnergyDyeGeneratorTile.Slots.FUEL.getId() && stack.getItem() == Items.BUCKET)
-                return super.insertItem(slot, stack, simulate);
-            if (slot == EnergyDyeGeneratorTile.Slots.FUEL.getId() && ForgeHooks.getBurnTime(stack) <= 0)
-                return stack;
-            if (slot == EnergyDyeGeneratorTile.Slots.MATERIAL.getId() && (! stack.getCapability(CapabilityEnergy.ENERGY).isPresent() || getStackInSlot(slot).getCount() > 0))
-                return stack;
-            return super.insertItem(slot, stack, simulate);
-        }
-
-    }
 }

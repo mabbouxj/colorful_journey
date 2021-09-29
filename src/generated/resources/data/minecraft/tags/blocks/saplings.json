@@ -1,21 +1,21 @@
 {
   "replace": false,
   "values": [
+    "colorful_journey:colored_sapling_black",
+    "colorful_journey:colored_sapling_yellow",
+    "colorful_journey:colored_sapling_orange",
+    "colorful_journey:colored_sapling_white",
+    "colorful_journey:colored_sapling_light_blue",
+    "colorful_journey:colored_sapling_light_gray",
+    "colorful_journey:colored_sapling_pink",
+    "colorful_journey:colored_sapling_blue",
+    "colorful_journey:colored_sapling_red",
+    "colorful_journey:colored_sapling_cyan",
+    "colorful_journey:colored_sapling_magenta",
+    "colorful_journey:colored_sapling_gray",
     "colorful_journey:colored_sapling_brown",
     "colorful_journey:colored_sapling_purple",
     "colorful_journey:colored_sapling_lime",
-    "colorful_journey:colored_sapling_orange",
-    "colorful_journey:colored_sapling_white",
-    "colorful_journey:colored_sapling_green",
-    "colorful_journey:colored_sapling_pink",
-    "colorful_journey:colored_sapling_light_blue",
-    "colorful_journey:colored_sapling_blue",
-    "colorful_journey:colored_sapling_magenta",
-    "colorful_journey:colored_sapling_gray",
-    "colorful_journey:colored_sapling_light_gray",
-    "colorful_journey:colored_sapling_black",
-    "colorful_journey:colored_sapling_cyan",
-    "colorful_journey:colored_sapling_yellow",
-    "colorful_journey:colored_sapling_red"
+    "colorful_journey:colored_sapling_green"
   ]
 }

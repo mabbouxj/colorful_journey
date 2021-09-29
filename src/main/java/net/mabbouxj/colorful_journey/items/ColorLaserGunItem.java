@@ -53,7 +53,7 @@ public class ColorLaserGunItem extends Item {
                 .tab(ColorfulJourney.MOD_ITEM_GROUP)
                 .stacksTo(1)
                 .setNoRepair());
-        this.energyCapacity = ModConfigs.COMMON_CONFIG.LASER_GUN_BUFFER_CAPACITY.get();
+        this.energyCapacity = ModConfigs.COMMON.LASER_GUN_BUFFER_CAPACITY.get();
     }
 
     @Override
@@ -76,13 +76,13 @@ public class ColorLaserGunItem extends Item {
 
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
-        return Objects.requireNonNull(TextFormatting.GOLD.getColor());
+        return Objects.requireNonNull(TextFormatting.AQUA.getColor());
     }
 
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
-        return new ItemEnergyStorageCapability(stack, ModConfigs.COMMON_CONFIG.LASER_GUN_BUFFER_CAPACITY.get());
+        return new ItemEnergyStorageCapability(stack, ModConfigs.COMMON.LASER_GUN_BUFFER_CAPACITY.get());
     }
 
     @Override
@@ -144,7 +144,7 @@ public class ColorLaserGunItem extends Item {
         if (!player.level.isClientSide && player instanceof PlayerEntity) {
 
             IEnergyStorage energy = stack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-            energy.extractEnergy(ModConfigs.COMMON_CONFIG.LASER_GUN_ENERGY_COST_PER_TICK.get(), false);
+            energy.extractEnergy(ModConfigs.COMMON.LASER_GUN_ENERGY_COST_PER_TICK.get(), false);
             if (energy.getEnergyStored() == 0 && !((PlayerEntity) player).isCreative()) {
                 player.stopUsingItem();
                 return;
@@ -163,7 +163,7 @@ public class ColorLaserGunItem extends Item {
                 if (newEntity != null) {
                     entity.remove();
                     player.level.addFreshEntity(newEntity);
-                    energy.extractEnergy(ModConfigs.COMMON_CONFIG.LASER_GUN_ENERGY_COST_PER_TRANSFORMATION.get(), false);
+                    energy.extractEnergy(ModConfigs.COMMON.LASER_GUN_ENERGY_COST_PER_TRANSFORMATION.get(), false);
                 }
             } else {
                 Map<DyeColor, RegistryObject<? extends Block>> targets = ColorfulJourney.REPLACEMENT_BLOCKS.getOrDefault(hitBlock.getBlock(), null);
@@ -171,7 +171,7 @@ public class ColorLaserGunItem extends Item {
                     try {
                         Block newBlock = targets.get(ColorUtils.getColor(stack)).get();
                         player.level.setBlock(new BlockPos(laserHitLocation), newBlock.defaultBlockState(), 3);
-                        energy.extractEnergy(ModConfigs.COMMON_CONFIG.LASER_GUN_ENERGY_COST_PER_TRANSFORMATION.get(), false);
+                        energy.extractEnergy(ModConfigs.COMMON.LASER_GUN_ENERGY_COST_PER_TRANSFORMATION.get(), false);
                     } catch (Exception e) {
                         ColorfulJourney.LOGGER.info("Could not create replacement block for " + hitBlock.getBlock().getName());
                     }
@@ -259,7 +259,7 @@ public class ColorLaserGunItem extends Item {
     public void appendHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag flag) {
         DyeColor color = ColorUtils.getColor(itemStack);
         IEnergyStorage energy = itemStack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-        tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(energy.getEnergyStored()), StringUtils.numberWithSuffix(ModConfigs.COMMON_CONFIG.LASER_GUN_BUFFER_CAPACITY.get())).withStyle(TextFormatting.GREEN));
+        tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(energy.getEnergyStored()), StringUtils.numberWithSuffix(ModConfigs.COMMON.LASER_GUN_BUFFER_CAPACITY.get())).withStyle(TextFormatting.GREEN));
         if (isRandom) {
             tooltips.add(new StringTextComponent("Laser color: random"));
         } else {

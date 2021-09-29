@@ -1,21 +1,21 @@
 {
   "replace": false,
   "values": [
+    "colorful_journey:colored_rotten_flesh_black",
+    "colorful_journey:colored_rotten_flesh_yellow",
+    "colorful_journey:colored_rotten_flesh_orange",
+    "colorful_journey:colored_rotten_flesh_white",
+    "colorful_journey:colored_rotten_flesh_light_blue",
+    "colorful_journey:colored_rotten_flesh_light_gray",
+    "colorful_journey:colored_rotten_flesh_pink",
+    "colorful_journey:colored_rotten_flesh_blue",
+    "colorful_journey:colored_rotten_flesh_red",
+    "colorful_journey:colored_rotten_flesh_cyan",
+    "colorful_journey:colored_rotten_flesh_magenta",
+    "colorful_journey:colored_rotten_flesh_gray",
     "colorful_journey:colored_rotten_flesh_brown",
     "colorful_journey:colored_rotten_flesh_purple",
     "colorful_journey:colored_rotten_flesh_lime",
-    "colorful_journey:colored_rotten_flesh_orange",
-    "colorful_journey:colored_rotten_flesh_white",
-    "colorful_journey:colored_rotten_flesh_green",
-    "colorful_journey:colored_rotten_flesh_pink",
-    "colorful_journey:colored_rotten_flesh_light_blue",
-    "colorful_journey:colored_rotten_flesh_blue",
-    "colorful_journey:colored_rotten_flesh_magenta",
-    "colorful_journey:colored_rotten_flesh_gray",
-    "colorful_journey:colored_rotten_flesh_light_gray",
-    "colorful_journey:colored_rotten_flesh_black",
-    "colorful_journey:colored_rotten_flesh_cyan",
-    "colorful_journey:colored_rotten_flesh_yellow",
-    "colorful_journey:colored_rotten_flesh_red"
+    "colorful_journey:colored_rotten_flesh_green"
   ]
 }

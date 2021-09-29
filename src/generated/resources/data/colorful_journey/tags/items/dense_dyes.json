@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "colorful_journey:dense_dye_black",
+    "colorful_journey:dense_dye_yellow",
+    "colorful_journey:dense_dye_orange",
+    "colorful_journey:dense_dye_white",
+    "colorful_journey:dense_dye_light_blue",
+    "colorful_journey:dense_dye_light_gray",
+    "colorful_journey:dense_dye_pink",
+    "colorful_journey:dense_dye_blue",
+    "colorful_journey:dense_dye_red",
+    "colorful_journey:dense_dye_cyan",
+    "colorful_journey:dense_dye_magenta",
+    "colorful_journey:dense_dye_gray",
+    "colorful_journey:dense_dye_brown",
+    "colorful_journey:dense_dye_purple",
+    "colorful_journey:dense_dye_lime",
+    "colorful_journey:dense_dye_green"
+  ]
+}

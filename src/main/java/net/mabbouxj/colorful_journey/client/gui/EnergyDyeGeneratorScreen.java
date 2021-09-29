@@ -3,7 +3,6 @@ package net.mabbouxj.colorful_journey.client.gui;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
-import net.mabbouxj.colorful_journey.ModConfigs;
 import net.mabbouxj.colorful_journey.containers.EnergyDyeGeneratorContainer;
 import net.mabbouxj.colorful_journey.utils.StringUtils;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -42,9 +41,9 @@ public class EnergyDyeGeneratorScreen extends ContainerScreen<EnergyDyeGenerator
                     this.container.getRemainingFuel() <= 0 ?
                             new TranslationTextComponent("screen.colorful_journey.no_fuel") :
                             new TranslationTextComponent("screen.colorful_journey.fuel_time", StringUtils.ticksInHumanReadable(this.container.getRemainingFuel())),
-                    this.container.getRemainingMaterial() <= 0 ?
+                    this.container.getRemainingIngredient() <= 0 ?
                             new TranslationTextComponent("screen.colorful_journey.generating", 0) :
-                            new TranslationTextComponent("screen.colorful_journey.generating", StringUtils.numberWithSuffix(ModConfigs.COMMON_CONFIG.ENERGY_DYE_GENERATOR_PRODUCTION_PER_TICK.get()))
+                            new TranslationTextComponent("screen.colorful_journey.generating", StringUtils.numberWithSuffix(this.container.getCurrentEnergyGeneration()))
             )), mouseX, mouseY);
     }
 

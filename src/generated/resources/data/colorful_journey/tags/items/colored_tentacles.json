@@ -1,21 +1,21 @@
 {
   "replace": false,
   "values": [
+    "colorful_journey:colored_tentacle_black",
+    "colorful_journey:colored_tentacle_yellow",
+    "colorful_journey:colored_tentacle_orange",
+    "colorful_journey:colored_tentacle_white",
+    "colorful_journey:colored_tentacle_light_blue",
+    "colorful_journey:colored_tentacle_light_gray",
+    "colorful_journey:colored_tentacle_pink",
+    "colorful_journey:colored_tentacle_blue",
+    "colorful_journey:colored_tentacle_red",
+    "colorful_journey:colored_tentacle_cyan",
+    "colorful_journey:colored_tentacle_magenta",
+    "colorful_journey:colored_tentacle_gray",
     "colorful_journey:colored_tentacle_brown",
     "colorful_journey:colored_tentacle_purple",
     "colorful_journey:colored_tentacle_lime",
-    "colorful_journey:colored_tentacle_orange",
-    "colorful_journey:colored_tentacle_white",
-    "colorful_journey:colored_tentacle_green",
-    "colorful_journey:colored_tentacle_pink",
-    "colorful_journey:colored_tentacle_light_blue",
-    "colorful_journey:colored_tentacle_blue",
-    "colorful_journey:colored_tentacle_magenta",
-    "colorful_journey:colored_tentacle_gray",
-    "colorful_journey:colored_tentacle_light_gray",
-    "colorful_journey:colored_tentacle_black",
-    "colorful_journey:colored_tentacle_cyan",
-    "colorful_journey:colored_tentacle_yellow",
-    "colorful_journey:colored_tentacle_red"
+    "colorful_journey:colored_tentacle_green"
   ]
 }

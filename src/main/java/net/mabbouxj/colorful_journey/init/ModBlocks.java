@@ -27,6 +27,8 @@ public class ModBlocks {
 
     public static RegistryObject<Block> RUBIKS_CUBE = BLOCKS.register("rubiks_cube", RubiksCubeBlock::new);
     public static RegistryObject<Block> RUBIKS_CUBE_UNFINISHED = BLOCKS.register("rubiks_cube_unfinished", RubiksCubeUnfinishedBlock::new);
+    public static RegistryObject<Block> COLORFUL_PORTAL_FRAME = BLOCKS.register("colorful_portal_frame", () -> new Block(AbstractBlock.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F).noOcclusion().isViewBlocking((x,y,z)-> false)));
+    public static RegistryObject<Block> COLORFUL_PORTAL = BLOCKS.register("colorful_portal", ColorfulPortalBlock::new);
 
     public static RegistryObject<Block> ENERGY_DYE_GENERATOR = BLOCKS.register("energy_dye_generator", EnergyDyeGeneratorBlock::new);
     public static RegistryObject<Block> ENERGY_CAPACITOR = BLOCKS.register("energy_capacitor", EnergyCapacitorBlock::new);
@@ -49,7 +51,7 @@ public class ModBlocks {
     public static Map<DyeColor, RegistryObject<? extends Block>> COLORED_GRASS_BLOCKS = registerColoredVariantsBlock("colored_grass_block", ColoredGrassBlock::new);
     public static Map<DyeColor, RegistryObject<? extends Block>> COLORED_GRASS_PATH = registerColoredVariantsBlock("colored_grass_path", ColoredGrassPathBlock::new);
     public static Map<DyeColor, RegistryObject<? extends Block>> COLORED_GRASS = registerColoredVariantsBlock("colored_grass", ColoredGrass::new);
-    public static Map<DyeColor, RegistryObject<? extends Block>> COLORED_PORTAL_FRAME = registerColoredVariantsBlock("colored_portal_frame", ColoredBlock::new, AbstractBlock.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F));
+    public static Map<DyeColor, RegistryObject<? extends Block>> COLORFUL_COLORED_PORTAL_FRAME = registerColoredVariantsBlock("colorful_colored_portal_frame", ColoredBlock::new, AbstractBlock.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F));
 
     private static Map<DyeColor, RegistryObject<? extends Block>> registerColoredVariantsBlock(String name, Function<DyeColor, ? extends Block> supplier) {
         Map<DyeColor, RegistryObject<? extends Block>> map = new HashMap<>();

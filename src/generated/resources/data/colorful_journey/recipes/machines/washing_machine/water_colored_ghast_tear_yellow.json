@@ -1,0 +1,21 @@
+{
+  "type": "colorful_journey:washing_machine",
+  "input_item": {
+    "item": "colorful_journey:colored_ghast_tear_yellow",
+    "count": 1
+  },
+  "input_fluid": {
+    "fluid": "minecraft:water",
+    "amount": 250
+  },
+  "processing_time": 40,
+  "energy_per_tick": 100,
+  "output": {
+    "item": "minecraft:ghast_tear",
+    "count": 1
+  },
+  "output_alt": {
+    "item": "minecraft:yellow_dye",
+    "count": 1
+  }
+}

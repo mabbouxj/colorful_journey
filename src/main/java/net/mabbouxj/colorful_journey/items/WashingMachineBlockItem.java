@@ -34,9 +34,9 @@ public class WashingMachineBlockItem extends BlockItem {
         int power = stack.getOrCreateTag().getInt("energy");
         FluidStack fluid = FluidStack.loadFluidStackFromNBT(stack.getOrCreateTag().getCompound("fluid"));
         if (power > 0)
-            tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(power), StringUtils.numberWithSuffix(ModConfigs.COMMON_CONFIG.WASHING_MACHINE_ENERGY_BUFFER.get())).withStyle(TextFormatting.GREEN));
+            tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(power), StringUtils.numberWithSuffix(ModConfigs.COMMON.WASHING_MACHINE_ENERGY_BUFFER.get())).withStyle(TextFormatting.GREEN));
         if (!fluid.isEmpty())
-            tooltips.add(new TranslationTextComponent("screen.colorful_journey.fluid", fluid.getDisplayName(), StringUtils.numberWithSuffix(fluid.getAmount()), StringUtils.numberWithSuffix(ModConfigs.COMMON_CONFIG.WASHING_MACHINE_FLUID_BUFFER.get())).withStyle(TextFormatting.AQUA));
+            tooltips.add(new TranslationTextComponent("screen.colorful_journey.fluid", fluid.getDisplayName(), StringUtils.numberWithSuffix(fluid.getAmount()), StringUtils.numberWithSuffix(ModConfigs.COMMON.WASHING_MACHINE_FLUID_BUFFER.get())).withStyle(TextFormatting.AQUA));
     }
 
     @Override

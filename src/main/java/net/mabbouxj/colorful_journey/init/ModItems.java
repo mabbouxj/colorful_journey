@@ -36,8 +36,10 @@ public class ModItems {
     public static final RegistryObject<Item> INK_BALL = ITEMS.register("ink_ball", InkBallItem::new);
     public static final RegistryObject<Item> COLORED_PASSIVE_AGGLOMERA = ITEMS.register("colored_passive_agglomera", () -> new Item(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP)));
     public static final RegistryObject<Item> COLORED_AGGRESSIVE_AGGLOMERA = ITEMS.register("colored_aggressive_agglomera", () -> new Item(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP)));
+
     public static final RegistryObject<BlockItem> RUBIKS_CUBE = ITEMS.register("rubiks_cube", RubiksCubeItem::new);
     public static final RegistryObject<BlockItem> RUBIKS_CUBE_UNFINISHED = ITEMS.register("rubiks_cube_unfinished", RubiksCubeUnfinishedItem::new);
+    public static final RegistryObject<BlockItem> COLORFUL_PORTAL_FRAME = ITEMS.register("colorful_portal_frame", () -> new BlockItem(ModBlocks.COLORFUL_PORTAL_FRAME.get(), new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP)));
     public static final RegistryObject<BlockItem> ENERGY_DYE_GENERATOR = ITEMS.register("energy_dye_generator", EnergyDyeGeneratorBlockItem::new);
     public static final RegistryObject<BlockItem> ENERGY_CAPACITOR = ITEMS.register("energy_capacitor", EnergyCapacitorBlockItem::new);
     public static final RegistryObject<BlockItem> WASHING_MACHINE = ITEMS.register("washing_machine", WashingMachineBlockItem::new);
@@ -78,7 +80,7 @@ public class ModItems {
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_GRASS_BLOCKS = registerColoredVariantsBlockItem("colored_grass_block", ModBlocks.COLORED_GRASS_BLOCKS);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_GRASS_PATH = registerColoredVariantsBlockItem("colored_grass_path", ModBlocks.COLORED_GRASS_PATH);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_GRASS = registerColoredVariantsBlockItem("colored_grass", ModBlocks.COLORED_GRASS);
-    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_PORTAL_FRAMES = registerColoredVariantsBlockItem("colored_portal_frame", ModBlocks.COLORED_PORTAL_FRAME);
+    public static final Map<DyeColor, RegistryObject<? extends Item>> COLORFUL_COLORED_PORTAL_FRAMES = registerColoredVariantsBlockItem("colorful_colored_portal_frame", ModBlocks.COLORFUL_COLORED_PORTAL_FRAME);
 
     private static Map<DyeColor, RegistryObject<? extends Item>> registerColoredVariantsItem(String name) {
         return registerColoredVariantsItem(name, (Item) null);

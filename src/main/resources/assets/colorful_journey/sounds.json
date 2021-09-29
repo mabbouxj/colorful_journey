@@ -28,5 +28,10 @@
     "sounds": [
       {"name": "colorful_journey:laser_loop", "stream": true}
     ]
+  },
+  "colorful_portal_ambient": {
+    "sounds": [
+      {"name": "colorful_journey:colorful_portal_ambient", "stream": true}
+    ]
   }
 }

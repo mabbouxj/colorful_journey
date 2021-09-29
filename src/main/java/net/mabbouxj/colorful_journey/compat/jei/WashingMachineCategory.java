@@ -113,7 +113,7 @@ public class WashingMachineCategory implements IRecipeCategory<WashingMachineRec
 
         IGuiFluidStackGroup fluidStacks = recipeLayout.getFluidStacks();
         fluidStacks.addTooltipCallback(this);
-        int capacity = ModConfigs.COMMON_CONFIG.WASHING_MACHINE_FLUID_BUFFER.get();
+        int capacity = ModConfigs.COMMON.WASHING_MACHINE_FLUID_BUFFER.get();
         fluidStacks.init(0, true, 21, 3, 16, 52, capacity, false, tankOverlay);
         fluidStacks.set(ingredients);
     }

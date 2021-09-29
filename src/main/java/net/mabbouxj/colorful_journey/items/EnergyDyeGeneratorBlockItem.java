@@ -29,7 +29,7 @@ import java.util.List;
 
 public class EnergyDyeGeneratorBlockItem extends BlockItem {
 
-    private final int energyCapacity = ModConfigs.COMMON_CONFIG.ENERGY_DYE_GENERATOR_BUFFER_CAPACITY.get();
+    private final int energyCapacity = ModConfigs.COMMON.ENERGY_DYE_GENERATOR_BUFFER_CAPACITY.get();
 
     public EnergyDyeGeneratorBlockItem() {
         super(ModBlocks.ENERGY_DYE_GENERATOR.get(), new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64));
@@ -72,7 +72,7 @@ public class EnergyDyeGeneratorBlockItem extends BlockItem {
         int power = stack.getOrCreateTag().getInt("energy");
         if( power == 0 )
             return;
-        tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(power), StringUtils.numberWithSuffix(ModConfigs.COMMON_CONFIG.ENERGY_DYE_GENERATOR_BUFFER_CAPACITY.get())).withStyle(TextFormatting.GREEN));
+        tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(power), StringUtils.numberWithSuffix(ModConfigs.COMMON.ENERGY_DYE_GENERATOR_BUFFER_CAPACITY.get())).withStyle(TextFormatting.GREEN));
     }
 
     @Override

@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 public class ModConfigs {
 
     private static final String config = "config." + ColorfulJourney.MOD_ID + ".";
-    public static Common COMMON_CONFIG;
-    public static Client CLIENT_CONFIG;
+    public static Common COMMON;
+    public static Client CLIENT;
 
     public static class Common {
 
@@ -22,8 +22,6 @@ public class ModConfigs {
         public ForgeConfigSpec.IntValue LASER_GUN_ENERGY_COST_PER_TICK;
         public ForgeConfigSpec.IntValue LASER_GUN_ENERGY_COST_PER_TRANSFORMATION;
         public ForgeConfigSpec.IntValue ENERGY_DYE_GENERATOR_BUFFER_CAPACITY;
-        public ForgeConfigSpec.IntValue ENERGY_DYE_GENERATOR_PRODUCTION_PER_TICK;
-        public ForgeConfigSpec.IntValue ENERGY_DYE_GENERATOR_PRODUCTION_PER_MATERIAL;
         public ForgeConfigSpec.DoubleValue ENERGY_DYE_GENERATOR_FUEL_CONSUMPTION_SPEED;
         public ForgeConfigSpec.IntValue ENERGY_DYE_GENERATOR_MAX_IN_OUT;
         public ForgeConfigSpec.IntValue ENERGY_CAPACITOR_BUFFER_CAPACITY;
@@ -51,17 +49,11 @@ public class ModConfigs {
             ENERGY_DYE_GENERATOR_BUFFER_CAPACITY = builder
                     .comment("Buffer capacity (in FE) of the Energy dye generator")
                     .defineInRange("energy_dye_generator_buffer_capacity", 100000, 1000, 1000000000);
-            ENERGY_DYE_GENERATOR_PRODUCTION_PER_TICK = builder
-                    .comment("Amount of energy generated per tick (while ignited) by the Energy dye generator")
-                    .defineInRange("energy_dye_generator_production_per_tick", 20, 1, 1000000000);
-            ENERGY_DYE_GENERATOR_PRODUCTION_PER_MATERIAL = builder
-                    .comment("Total amount of energy generated per material (dye being burnt)")
-                    .defineInRange("energy_dye_generator_production_per_material", 1000, 1, 1000000000);
             ENERGY_DYE_GENERATOR_FUEL_CONSUMPTION_SPEED = builder
                     .comment("How fast the fuel should be burn. Setting it to 10.0 will consume fuel 10x faster")
                     .defineInRange("energy_dye_generator_fuel_consumption_speed", 10, 0.001, 1000);
             ENERGY_DYE_GENERATOR_MAX_IN_OUT = builder
-                    .comment("Maximum IN/OUT energy flow (in FE) of the Eergy dye generator")
+                    .comment("Maximum IN/OUT energy flow (in FE) of the Energy dye generator")
                     .defineInRange("energy_dye_generator_max_in_out", 1000, 1, 1000000000);
 
             ENERGY_CAPACITOR_BUFFER_CAPACITY = builder

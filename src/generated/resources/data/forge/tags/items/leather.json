@@ -1,21 +1,21 @@
 {
   "replace": false,
   "values": [
+    "colorful_journey:colored_leather_black",
+    "colorful_journey:colored_leather_yellow",
+    "colorful_journey:colored_leather_orange",
+    "colorful_journey:colored_leather_white",
+    "colorful_journey:colored_leather_light_blue",
+    "colorful_journey:colored_leather_light_gray",
+    "colorful_journey:colored_leather_pink",
+    "colorful_journey:colored_leather_blue",
+    "colorful_journey:colored_leather_red",
+    "colorful_journey:colored_leather_cyan",
+    "colorful_journey:colored_leather_magenta",
+    "colorful_journey:colored_leather_gray",
     "colorful_journey:colored_leather_brown",
     "colorful_journey:colored_leather_purple",
     "colorful_journey:colored_leather_lime",
-    "colorful_journey:colored_leather_orange",
-    "colorful_journey:colored_leather_white",
-    "colorful_journey:colored_leather_green",
-    "colorful_journey:colored_leather_pink",
-    "colorful_journey:colored_leather_light_blue",
-    "colorful_journey:colored_leather_blue",
-    "colorful_journey:colored_leather_magenta",
-    "colorful_journey:colored_leather_gray",
-    "colorful_journey:colored_leather_light_gray",
-    "colorful_journey:colored_leather_black",
-    "colorful_journey:colored_leather_cyan",
-    "colorful_journey:colored_leather_yellow",
-    "colorful_journey:colored_leather_red"
+    "colorful_journey:colored_leather_green"
   ]
 }

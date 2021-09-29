@@ -67,7 +67,7 @@ public class ColorGunItem extends Item {
 
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
-        return Objects.requireNonNull(TextFormatting.AQUA.getColor());
+        return Objects.requireNonNull(TextFormatting.GOLD.getColor());
     }
 
     @Override

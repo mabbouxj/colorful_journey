@@ -1,12 +1,13 @@
 package net.mabbouxj.colorful_journey.containers;
 
+import net.mabbouxj.colorful_journey.tiles.BasicTile;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -17,13 +18,14 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.VoidFluidHandler;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public abstract class BaseTileContainer extends Container {
 
-    protected TileEntity tile;
+    protected BasicTile tile;
 
-    protected BaseTileContainer(@Nullable ContainerType<?> containerType, int windowId, TileEntity tile) {
+    protected BaseTileContainer(@Nullable ContainerType<?> containerType, int windowId, BasicTile tile) {
         super(containerType, windowId);
         this.tile = tile;
     }
@@ -78,62 +80,52 @@ public abstract class BaseTileContainer extends Container {
         return getFluidCapability().getFluidInTank(0);
     }
 
-    protected boolean supportsShiftClick(PlayerEntity player, int index) {
-        return true;
-    }
-
-    protected abstract int getMergeableSlotCount();
-
-    protected boolean performMerge(int index, ItemStack stack) {
-        int invBase = getMergeableSlotCount();
-        int invFull = slots.size();
-        int invHotbar = invFull - 9;
-        int invPlayer = invHotbar - 27;
-
-        if (index < invPlayer) {
-            return moveItemStackTo(stack, invPlayer, invFull, false);
-        } else {
-            return moveItemStackTo(stack, 0, invBase, false);
-        }
-    }
-
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(@Nonnull PlayerEntity player) {
         BlockPos pos = this.tile.getBlockPos();
         return !this.tile.isRemoved() && player.distanceToSqr(new Vector3d(pos.getX(), pos.getY(), pos.getZ()).add(0.5D, 0.5D, 0.5D)) <= 64D;
     }
 
+    @Nonnull
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int index) {
-
-        if (!supportsShiftClick(player, index)) {
-            return ItemStack.EMPTY;
-        }
-        ItemStack stack = ItemStack.EMPTY;
+    public ItemStack quickMoveStack(@Nonnull PlayerEntity player, int index) {
+        ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = slots.get(index);
-
         if (slot != null && slot.hasItem()) {
-            ItemStack stackInSlot = slot.getItem();
-            stack = stackInSlot.copy();
+            ItemStack itemstack1 = slot.getItem();
+            itemstack = itemstack1.copy();
 
-            if (!performMerge(index, stackInSlot)) {
+            int containerSlots = slots.size() - player.inventory.items.size();
+
+            if (index < containerSlots) {
+                if (!this.moveItemStackTo(itemstack1, containerSlots, slots.size(), true)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (!this.moveItemStackTo(itemstack1, 0, containerSlots, false)) {
                 return ItemStack.EMPTY;
             }
-            slot.onQuickCraft(stackInSlot, stack);
 
-            if (stackInSlot.isEmpty()) {
+            if (itemstack1.getCount() == 0) {
                 slot.set(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
             }
-            if (stackInSlot.getCount() == stack.getCount()) {
+
+            if (itemstack1.getCount() == itemstack.getCount()) {
                 return ItemStack.EMPTY;
             }
-            slot.onTake(player, stackInSlot);
+
+            slot.onTake(player, itemstack1);
         }
-        return stack;
+
+        return itemstack;
     }
 
+    @Override
+    public void slotsChanged(@Nonnull IInventory inventory) {
+        super.slotsChanged(inventory);
+        this.tile.setChanged();
+    }
 
 
 }

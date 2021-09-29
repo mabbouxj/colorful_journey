@@ -37,6 +37,7 @@ public class ModItemTagProvider extends ItemTagsProvider {
     public static final ITag.INamedTag<Item> COLORED_SKULLS = ItemTags.bind(ColorfulJourney.MOD_ID + ":colored_skulls");
     public static final ITag.INamedTag<Item> COLORED_BAT_WINGS = ItemTags.bind(ColorfulJourney.MOD_ID + ":colored_bat_wings");
     public static final ITag.INamedTag<Item> COLORED_TENTACLES = ItemTags.bind(ColorfulJourney.MOD_ID + ":colored_tentacles");
+    public static final ITag.INamedTag<Item> DENSE_DYES = ItemTags.bind(ColorfulJourney.MOD_ID + ":dense_dyes");
 
     public ModItemTagProvider(DataGenerator dataGenerator, BlockTagsProvider blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
         super(dataGenerator, blockTagsProvider, ColorfulJourney.MOD_ID, existingFileHelper);
@@ -72,6 +73,7 @@ public class ModItemTagProvider extends ItemTagsProvider {
         tag(COLORED_SKULLS).add(mapToItem(ModItems.COLORED_SKULLS));
         tag(COLORED_BAT_WINGS).add(mapToItem(ModItems.COLORED_BAT_WINGS));
         tag(COLORED_TENTACLES).add(mapToItem(ModItems.COLORED_TENTACLES));
+        tag(DENSE_DYES).add(mapToItem(ModItems.DENSE_DYES));
     }
 
     private Item[] mapToItem(Map<DyeColor, RegistryObject<? extends Item>> map) {

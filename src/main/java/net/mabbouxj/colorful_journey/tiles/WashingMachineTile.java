@@ -1,27 +1,23 @@
 package net.mabbouxj.colorful_journey.tiles;
 
 import net.mabbouxj.colorful_journey.ModConfigs;
+import net.mabbouxj.colorful_journey.annotations.Sync;
 import net.mabbouxj.colorful_journey.blocks.WashingMachineBlock;
 import net.mabbouxj.colorful_journey.capabilities.TileEnergyStorageCapability;
 import net.mabbouxj.colorful_journey.capabilities.TileFluidStorageCapability;
+import net.mabbouxj.colorful_journey.components.InventoryComponent;
 import net.mabbouxj.colorful_journey.containers.WashingMachineContainer;
 import net.mabbouxj.colorful_journey.init.ModRecipeTypes;
 import net.mabbouxj.colorful_journey.init.ModTiles;
 import net.mabbouxj.colorful_journey.recipes.WashingMachineRecipe;
 import net.mabbouxj.colorful_journey.utils.RecipeUtils;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -34,64 +30,55 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.function.Predicate;
 
-public class WashingMachineTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class WashingMachineTile extends BasicTile implements ITickableTileEntity, INamedContainerProvider {
 
     public enum Slots {
-        INPUT(0),
-        OUTPUT1(1),
-        OUTPUT2(2);
+        INPUT(0, (stack) -> true),
+        OUTPUT1(1, (stack) -> false),
+        OUTPUT2(2, (stack) -> false);
 
         int id;
+        Predicate<ItemStack> filter;
 
-        Slots(int number) {
-            id = number;
+        Slots(int number, Predicate<ItemStack> filter) {
+            this.id = number;
+            this.filter = filter;
         }
 
         public int getId() {
             return id;
         }
+        public Predicate<ItemStack> getFilter() {
+            return filter;
+        }
     }
 
+    @Sync
     public TileEnergyStorageCapability energyStorage;
+    @Sync
     public TileFluidStorageCapability fluidStorage;
+    @Sync
+    public InventoryComponent inventoryStorage;
     private final LazyOptional<TileEnergyStorageCapability> energy;
     private final LazyOptional<TileFluidStorageCapability> fluid;
     private final LazyOptional<ItemStackHandler> inventory;
-    private int recipeProgress = 0;
-    private WashingMachineRecipe currentRecipe;
 
-    public final IIntArray data = new IIntArray() {
-        @Override
-        public int get(int index) {
-            switch (index) {
-                case 0:
-                    return WashingMachineTile.this.recipeProgress;
-                case 1:
-                    return WashingMachineTile.this.currentRecipe != null ? WashingMachineTile.this.currentRecipe.getProcessingTime(): -1;
-                default:
-                    throw new IllegalArgumentException("Invalid index: " + index);
-            }
-        }
-
-        @Override
-        public void set(int index, int value) {
-            throw new IllegalStateException("Cannot set values through IIntArray");
-        }
-
-        @Override
-        public int getCount() {
-            return 2;
-        }
-    };
+    @Sync
+    public int recipeProgress = 0;
+    @Sync
+    public int recipeMaxProgress = 0;
+    public WashingMachineRecipe currentRecipe;
 
     public WashingMachineTile() {
         super(ModTiles.WASHING_MACHINE.get());
-        this.energyStorage = new TileEnergyStorageCapability(this, ModConfigs.COMMON_CONFIG.WASHING_MACHINE_ENERGY_BUFFER.get(), 1000, false, true);
+        this.energyStorage = new TileEnergyStorageCapability(this, ModConfigs.COMMON.WASHING_MACHINE_ENERGY_BUFFER.get(), 1000, false, true);
         this.energy = LazyOptional.of(() -> energyStorage);
-        this.fluidStorage = new TileFluidStorageCapability(this, ModConfigs.COMMON_CONFIG.WASHING_MACHINE_FLUID_BUFFER.get());
+        this.fluidStorage = new TileFluidStorageCapability(this, ModConfigs.COMMON.WASHING_MACHINE_FLUID_BUFFER.get());
         this.fluid = LazyOptional.of(() -> fluidStorage);
-        this.inventory = LazyOptional.of(() -> new WashingMachineTile.ItemHandler(this));
+        this.inventoryStorage = new InventoryComponent(this, Slots.values().length);
+        this.inventory = LazyOptional.of(() -> inventoryStorage);
     }
 
     private void checkForRecipe() {
@@ -107,6 +94,9 @@ public class WashingMachineTile extends TileEntity implements ITickableTileEntit
             if (currentRecipe == null) {
                 this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(WashingMachineBlock.LIT, false), 3);
                 recipeProgress = 0;
+                recipeMaxProgress = 0;
+            } else {
+                recipeMaxProgress = currentRecipe.getProcessingTime();
             }
         })));
     }
@@ -115,7 +105,7 @@ public class WashingMachineTile extends TileEntity implements ITickableTileEntit
     @Override
     public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity player) {
         assert level != null;
-        return new WashingMachineContainer(this, this.data, i, playerInventory, this.inventory.orElse(new ItemStackHandler(Slots.values().length)));
+        return new WashingMachineContainer(this, i, playerInventory, this.inventory.orElse(new ItemStackHandler(Slots.values().length)));
     }
 
     @Override
@@ -138,16 +128,17 @@ public class WashingMachineTile extends TileEntity implements ITickableTileEntit
 
             recipeProgress++;
 
-            if (recipeProgress == currentRecipe.getProcessingTime()) {
+            if (recipeProgress >= currentRecipe.getProcessingTime()) {
                 inventory.insertItem(Slots.OUTPUT1.getId(), recipeResult, false);
                 inventory.insertItem(Slots.OUTPUT2.getId(), recipeResultAlt, false);
                 inventory.getStackInSlot(Slots.INPUT.getId()).shrink(currentRecipe.getInputStack().getCount());
                 tank.drain(currentRecipe.getInputFluid(), IFluidHandler.FluidAction.EXECUTE);
                 recipeProgress = 0;
+                recipeMaxProgress = 0;
                 currentRecipe = null;
-                this.setChanged();
             }
 
+            setChanged();
         })));
     }
 
@@ -155,22 +146,6 @@ public class WashingMachineTile extends TileEntity implements ITickableTileEntit
     public void setChanged() {
         super.setChanged();
         checkForRecipe();
-    }
-
-    @Override
-    public void load(BlockState stateIn, CompoundNBT compound) {
-        super.load(stateIn, compound);
-        inventory.ifPresent(h -> h.deserializeNBT(compound.getCompound("inv")));
-        energy.ifPresent(h -> h.deserializeNBT(compound.getCompound("energy")));
-        fluid.ifPresent(h -> h.deserializeNBT(compound.getCompound("fluid")));
-    }
-
-    @Override
-    public CompoundNBT save(CompoundNBT compound) {
-        inventory.ifPresent(h ->  compound.put("inv", h.serializeNBT()));
-        energy.ifPresent(h -> compound.put("energy", h.serializeNBT()));
-        fluid.ifPresent(h -> compound.put("fluid", h.serializeNBT()));
-        return super.save(compound);
     }
 
     @Nonnull
@@ -186,27 +161,6 @@ public class WashingMachineTile extends TileEntity implements ITickableTileEntit
     }
 
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        // Vanilla uses the type parameter to indicate which type of tile entity (command block, skull, or beacon?) is receiving the packet, but it seems like Forge has overridden this behavior
-        return new SUpdateTileEntityPacket(getBlockPos(), 0, getUpdateTag());
-    }
-
-    @Override
-    public CompoundNBT getUpdateTag() {
-        return save(new CompoundNBT());
-    }
-
-    @Override
-    public void handleUpdateTag(BlockState stateIn, CompoundNBT tag) {
-        load(stateIn, tag);
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        load(this.getBlockState(), pkt.getTag());
-    }
-
-    @Override
     public void setRemoved() {
         energy.invalidate();
         inventory.invalidate();
@@ -214,32 +168,10 @@ public class WashingMachineTile extends TileEntity implements ITickableTileEntit
         super.setRemoved();
     }
 
+    @Nonnull
     @Override
     public ITextComponent getDisplayName() {
         return new TranslationTextComponent("container.colorful_journey.washing_machine");
-    }
-
-    public static class ItemHandler extends ItemStackHandler {
-
-        private final WashingMachineTile tile;
-
-        public ItemHandler(WashingMachineTile t) {
-            super(Slots.values().length);
-            this.tile = t;
-        }
-
-        @Override
-        protected void onContentsChanged(int slot) {
-            if (slot == Slots.INPUT.getId())
-                tile.setChanged();
-        }
-
-        @Nonnull
-        @Override
-        public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-            return super.insertItem(slot, stack, simulate);
-        }
-
     }
 
 }

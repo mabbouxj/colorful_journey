@@ -100,6 +100,7 @@ public class TileFluidStorageCapability implements IFluidHandler, INBTSerializab
             fluid.shrink(drained);
             if (fluid.isEmpty()) {
                 setFluidStack(FluidStack.EMPTY);
+                tile.setChanged();
             }
         }
         return stack;

@@ -28,7 +28,7 @@ import java.util.List;
 
 public class EnergyCapacitorBlockItem extends BlockItem {
 
-    private final int energyCapacity = ModConfigs.COMMON_CONFIG.ENERGY_CAPACITOR_BUFFER_CAPACITY.get();
+    private final int energyCapacity = ModConfigs.COMMON.ENERGY_CAPACITOR_BUFFER_CAPACITY.get();
 
     public EnergyCapacitorBlockItem() {
         super(ModBlocks.ENERGY_CAPACITOR.get(), new Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(64));
@@ -71,7 +71,7 @@ public class EnergyCapacitorBlockItem extends BlockItem {
         int power = stack.getOrCreateTag().getInt("energy");
         if( power == 0 )
             return;
-        tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(power), StringUtils.numberWithSuffix(ModConfigs.COMMON_CONFIG.ENERGY_CAPACITOR_BUFFER_CAPACITY.get())).withStyle(TextFormatting.GREEN));
+        tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(power), StringUtils.numberWithSuffix(ModConfigs.COMMON.ENERGY_CAPACITOR_BUFFER_CAPACITY.get())).withStyle(TextFormatting.GREEN));
     }
 
     @Override

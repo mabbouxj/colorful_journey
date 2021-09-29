@@ -1,6 +1,0 @@
-{
-  "parent": "colorful_journey:block/cube_all",
-  "textures": {
-    "all": "colorful_journey:block/colored_portal_frame"
-  }
-}

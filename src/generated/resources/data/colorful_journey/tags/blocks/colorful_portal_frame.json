@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "colorful_journey:colorful_colored_portal_frame_brown",
+    "colorful_journey:colorful_colored_portal_frame_purple",
+    "colorful_journey:colorful_colored_portal_frame_lime",
+    "colorful_journey:colorful_colored_portal_frame_green",
+    "colorful_journey:colorful_colored_portal_frame_pink",
+    "colorful_journey:colorful_colored_portal_frame_light_blue",
+    "colorful_journey:colorful_colored_portal_frame_blue",
+    "colorful_journey:colorful_colored_portal_frame_gray",
+    "colorful_journey:colorful_colored_portal_frame_magenta",
+    "colorful_journey:colorful_colored_portal_frame_light_gray",
+    "colorful_journey:colorful_colored_portal_frame_orange",
+    "colorful_journey:colorful_colored_portal_frame_black",
+    "colorful_journey:colorful_colored_portal_frame_cyan",
+    "colorful_journey:colorful_colored_portal_frame_white",
+    "colorful_journey:colorful_colored_portal_frame_yellow",
+    "colorful_journey:colorful_colored_portal_frame_red",
+    "colorful_journey:colorful_portal_frame"
+  ]
+}

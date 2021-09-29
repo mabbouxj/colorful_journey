@@ -2,6 +2,10 @@ package net.mabbouxj.colorful_journey;
 
 import net.mabbouxj.colorful_journey.entities.*;
 import net.mabbouxj.colorful_journey.init.*;
+import net.mabbouxj.colorful_journey.tiles.EnergyCapacitorTile;
+import net.mabbouxj.colorful_journey.tiles.EnergyDyeGeneratorTile;
+import net.mabbouxj.colorful_journey.tiles.WashingMachineTile;
+import net.mabbouxj.colorful_journey.utils.nbthandler.NBTManager;
 import net.mabbouxj.colorful_journey.world.gen.OreGeneration;
 import net.mabbouxj.colorful_journey.world.gen.TreeGeneration;
 import net.minecraft.block.Block;
@@ -52,10 +56,10 @@ public class ColorfulJourney {
         // Load configs
         final Pair<ModConfigs.Common, ForgeConfigSpec> specPairCommon = new ForgeConfigSpec.Builder().configure(ModConfigs.Common::new);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, specPairCommon.getRight());
-        ModConfigs.COMMON_CONFIG = specPairCommon.getLeft();
+        ModConfigs.COMMON = specPairCommon.getLeft();
         final Pair<ModConfigs.Client, ForgeConfigSpec> specPairClient = new ForgeConfigSpec.Builder().configure(ModConfigs.Client::new);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, specPairClient.getRight());
-        ModConfigs.CLIENT_CONFIG = specPairClient.getLeft();
+        ModConfigs.CLIENT = specPairClient.getLeft();
 
         initEnabledColors();
 
@@ -84,10 +88,14 @@ public class ColorfulJourney {
         populateReplacementItems();
         populateReplacementBlocks();
         populateReplacementMobs();
+
+        NBTManager.getInstance().scanTileClassForAnnotations(EnergyDyeGeneratorTile.class);
+        NBTManager.getInstance().scanTileClassForAnnotations(EnergyCapacitorTile.class);
+        NBTManager.getInstance().scanTileClassForAnnotations(WashingMachineTile.class);
     }
 
     private void initEnabledColors() throws Exception {
-        for (String colorName: ModConfigs.COMMON_CONFIG.ENABLED_COLORS.get()) {
+        for (String colorName: ModConfigs.COMMON.ENABLED_COLORS.get()) {
             DyeColor color = DyeColor.byName(colorName, DyeColor.WHITE);
             if (!colorName.equals(color.getName())) {
                 throw new Exception("Error while loading enabled colors from configuration file, unknown color: " + colorName);

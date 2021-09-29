@@ -1,0 +1,8 @@
+{
+  "type": "colorful_journey:energy_dye_generator",
+  "ingredient": {
+    "tag": "colorful_journey:dense_dyes"
+  },
+  "energy_per_tick": 40,
+  "energy_total": 8000
+}

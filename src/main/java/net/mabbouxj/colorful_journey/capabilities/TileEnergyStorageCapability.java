@@ -7,7 +7,6 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEnergyStorageCapability implements IEnergyStorage, INBTSerializable<CompoundNBT> {
 
-    private static final String KEY = "energy";
     private int energy = 0;
     private final int capacity;
     private final int maxInOut;
@@ -30,13 +29,13 @@ public class TileEnergyStorageCapability implements IEnergyStorage, INBTSerializ
     @Override
     public CompoundNBT serializeNBT() {
         CompoundNBT tag = new CompoundNBT();
-        tag.putInt(KEY, this.energy);
+        tag.putInt("energy", this.energy);
         return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
-        this.energy = nbt.getInt(KEY);
+        this.energy = nbt.getInt("energy");
     }
 
     @Override
@@ -52,16 +51,22 @@ public class TileEnergyStorageCapability implements IEnergyStorage, INBTSerializ
     }
 
     public void setEnergy(int energy) {
-        this.energy = energy;
+        if (energy > this.getMaxEnergyStored()) {
+            this.energy = this.getMaxEnergyStored();
+        } else {
+            this.energy = Math.max(energy, 0);
+        }
+        this.tile.setChanged();
     }
 
-    // We don't use this method and thus we don't let other people use it either
     @Override
     public int extractEnergy(int maxExtract, boolean simulate) {
         int energyExtracted = Math.min(energy, Math.min(this.maxInOut, maxExtract));
 
-        if (!simulate)
+        if (!simulate) {
             energy -= energyExtracted;
+            this.tile.setChanged();
+        }
 
         return energyExtracted;
     }
@@ -88,15 +93,6 @@ public class TileEnergyStorageCapability implements IEnergyStorage, INBTSerializ
 
     public int getMaxInOut() {
         return maxInOut;
-    }
-
-    @Override
-    public String toString() {
-        return "ChargerEnergyStorage{" +
-                "energy=" + energy +
-                ", capacity=" + capacity +
-                ", maxInOut=" + maxInOut +
-                '}';
     }
 
 }

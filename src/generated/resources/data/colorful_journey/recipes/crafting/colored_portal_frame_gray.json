@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#o#",
+    "oxo",
+    "#o#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "o": {
+      "item": "colorful_journey:dense_dye_gray"
+    },
+    "x": {
+      "item": "colorful_journey:colored_nether_star_gray"
+    }
+  },
+  "result": {
+    "item": "colorful_journey:colorful_colored_portal_frame_gray"
+  }
+}

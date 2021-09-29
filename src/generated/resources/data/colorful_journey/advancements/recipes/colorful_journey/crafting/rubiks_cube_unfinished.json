@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "colorful_journey:crafting/rubiks_cube_unfinished"
+    ]
+  },
+  "criteria": {
+    "has_rubiks_cube_unfinished": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "colorful_journey:rubiks_cube_unfinished"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "colorful_journey:crafting/rubiks_cube_unfinished"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_rubiks_cube_unfinished",
+      "has_the_recipe"
+    ]
+  ]
+}

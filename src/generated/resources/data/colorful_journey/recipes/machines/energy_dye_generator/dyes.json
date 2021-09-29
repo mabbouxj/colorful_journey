@@ -1,0 +1,8 @@
+{
+  "type": "colorful_journey:energy_dye_generator",
+  "ingredient": {
+    "tag": "forge:dyes"
+  },
+  "energy_per_tick": 20,
+  "energy_total": 1000
+}

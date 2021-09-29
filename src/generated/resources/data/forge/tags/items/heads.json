@@ -1,21 +1,21 @@
 {
   "replace": false,
   "values": [
+    "colorful_journey:colored_skull_black",
+    "colorful_journey:colored_skull_yellow",
+    "colorful_journey:colored_skull_orange",
+    "colorful_journey:colored_skull_white",
+    "colorful_journey:colored_skull_light_blue",
+    "colorful_journey:colored_skull_light_gray",
+    "colorful_journey:colored_skull_pink",
+    "colorful_journey:colored_skull_blue",
+    "colorful_journey:colored_skull_red",
+    "colorful_journey:colored_skull_cyan",
+    "colorful_journey:colored_skull_magenta",
+    "colorful_journey:colored_skull_gray",
     "colorful_journey:colored_skull_brown",
     "colorful_journey:colored_skull_purple",
     "colorful_journey:colored_skull_lime",
-    "colorful_journey:colored_skull_orange",
-    "colorful_journey:colored_skull_white",
-    "colorful_journey:colored_skull_green",
-    "colorful_journey:colored_skull_pink",
-    "colorful_journey:colored_skull_light_blue",
-    "colorful_journey:colored_skull_blue",
-    "colorful_journey:colored_skull_magenta",
-    "colorful_journey:colored_skull_gray",
-    "colorful_journey:colored_skull_light_gray",
-    "colorful_journey:colored_skull_black",
-    "colorful_journey:colored_skull_cyan",
-    "colorful_journey:colored_skull_yellow",
-    "colorful_journey:colored_skull_red"
+    "colorful_journey:colored_skull_green"
   ]
 }

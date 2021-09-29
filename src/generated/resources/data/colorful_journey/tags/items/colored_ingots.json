@@ -1,21 +1,21 @@
 {
   "replace": false,
   "values": [
+    "colorful_journey:colored_ingot_black",
+    "colorful_journey:colored_ingot_yellow",
+    "colorful_journey:colored_ingot_orange",
+    "colorful_journey:colored_ingot_white",
+    "colorful_journey:colored_ingot_light_blue",
+    "colorful_journey:colored_ingot_light_gray",
+    "colorful_journey:colored_ingot_pink",
+    "colorful_journey:colored_ingot_blue",
+    "colorful_journey:colored_ingot_red",
+    "colorful_journey:colored_ingot_cyan",
+    "colorful_journey:colored_ingot_magenta",
+    "colorful_journey:colored_ingot_gray",
     "colorful_journey:colored_ingot_brown",
     "colorful_journey:colored_ingot_purple",
     "colorful_journey:colored_ingot_lime",
-    "colorful_journey:colored_ingot_orange",
-    "colorful_journey:colored_ingot_white",
-    "colorful_journey:colored_ingot_green",
-    "colorful_journey:colored_ingot_pink",
-    "colorful_journey:colored_ingot_light_blue",
-    "colorful_journey:colored_ingot_blue",
-    "colorful_journey:colored_ingot_magenta",
-    "colorful_journey:colored_ingot_gray",
-    "colorful_journey:colored_ingot_light_gray",
-    "colorful_journey:colored_ingot_black",
-    "colorful_journey:colored_ingot_cyan",
-    "colorful_journey:colored_ingot_yellow",
-    "colorful_journey:colored_ingot_red"
+    "colorful_journey:colored_ingot_green"
   ]
 }

@@ -2,6 +2,7 @@ package net.mabbouxj.colorful_journey.init;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.client.entity.render.*;
+import net.mabbouxj.colorful_journey.client.particles.ColorfulPortalParticle;
 import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
 import net.mabbouxj.colorful_journey.items.PaintbrushItem;
 import net.mabbouxj.colorful_journey.items.RubiksCubeUnfinishedItem;
@@ -67,6 +68,7 @@ public class ClientEventBusSubscriber {
 
         RenderTypeLookup.setRenderLayer(ModBlocks.RUBIKS_CUBE.get(), RenderType.solid());
         RenderTypeLookup.setRenderLayer(ModBlocks.RUBIKS_CUBE_UNFINISHED.get(), RenderType.solid());
+        RenderTypeLookup.setRenderLayer(ModBlocks.COLORFUL_PORTAL_FRAME.get(), RenderType.translucent());
 
         event.enqueueWork(() -> ItemModelsProperties.register(
                 ModItems.RUBIKS_CUBE_UNFINISHED.get(),
@@ -98,6 +100,7 @@ public class ClientEventBusSubscriber {
     @SubscribeEvent
     public static void onParticleFactoryRegistrationEvent(ParticleFactoryRegisterEvent event) {
         Minecraft.getInstance().particleEngine.register(ModParticles.INK_SPLASH.get(), InkSplashParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(ModParticles.COLORFUL_PORTAL.get(), ColorfulPortalParticle.Factory::new);
     }
 
 }
