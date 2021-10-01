@@ -29,10 +29,12 @@ public class ModBlocks {
     public static RegistryObject<Block> RUBIKS_CUBE_UNFINISHED = BLOCKS.register("rubiks_cube_unfinished", RubiksCubeUnfinishedBlock::new);
     public static RegistryObject<Block> COLORFUL_PORTAL_FRAME = BLOCKS.register("colorful_portal_frame", () -> new Block(AbstractBlock.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F).noOcclusion().isViewBlocking((x,y,z)-> false)));
     public static RegistryObject<Block> COLORFUL_PORTAL = BLOCKS.register("colorful_portal", ColorfulPortalBlock::new);
+    public static RegistryObject<Block> UNCOLORED_INGOT_BLOCK = BLOCKS.register("uncolored_ingot_block", () -> new Block(AbstractBlock.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL).noOcclusion().isViewBlocking((x, y, z) -> false)));
 
     public static RegistryObject<Block> ENERGY_DYE_GENERATOR = BLOCKS.register("energy_dye_generator", EnergyDyeGeneratorBlock::new);
     public static RegistryObject<Block> ENERGY_CAPACITOR = BLOCKS.register("energy_capacitor", EnergyCapacitorBlock::new);
     public static RegistryObject<Block> WASHING_MACHINE = BLOCKS.register("washing_machine", WashingMachineBlock::new);
+    public static RegistryObject<Block> EASEL = BLOCKS.register("easel", EaselBlock::new);
 
     public static final List<RegistryObject<Block>> ALL_COLORED_VARIANTS_BLOCKS = new ArrayList<>();
     public static Map<DyeColor, RegistryObject<? extends Block>> COLORED_SKULLS = registerColoredVariantsBlock("colored_skull", ColoredSkullBlock::new);

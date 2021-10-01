@@ -6,7 +6,7 @@
   },
   "input_fluid": {
     "fluid": "minecraft:water",
-    "amount": 250
+    "amount": 100
   },
   "processing_time": 40,
   "energy_per_tick": 100,

@@ -7,13 +7,13 @@
   ],
   "key": {
     "o": {
-      "item": "minecraft:glass_bottle"
+      "item": "colorful_journey:uncolored_ingot_block"
     },
     "#": {
       "item": "minecraft:netherite_ingot"
     },
     "i": {
-      "tag": "forge:rods/blaze"
+      "item": "colorful_journey:colored_aggressive_agglomera"
     }
   },
   "result": {

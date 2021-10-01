@@ -10,7 +10,7 @@
       "item": "minecraft:glass_bottle"
     },
     "#": {
-      "item": "minecraft:iron_ingot"
+      "tag": "colorful_journey:colored_ingots"
     },
     "i": {
       "tag": "forge:rods/wooden"

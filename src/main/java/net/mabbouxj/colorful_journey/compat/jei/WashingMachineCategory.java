@@ -60,7 +60,7 @@ public class WashingMachineCategory implements IRecipeCategory<WashingMachineRec
     @Override
     @Nonnull
     public ResourceLocation getUid() {
-        return new ResourceLocation(ColorfulJourney.MOD_ID, "washing_machine");
+        return new ResourceLocation(ColorfulJourney.MOD_ID, "machines/washing_machine");
     }
 
     @Override

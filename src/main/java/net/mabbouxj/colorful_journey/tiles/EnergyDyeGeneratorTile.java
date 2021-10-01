@@ -99,15 +99,15 @@ public class EnergyDyeGeneratorTile extends BasicTile implements ITickableTileEn
 
             EnergyUtils.extractToAdjacentBlocks(this.level, buffer, getBlockPos());
 
-            if (remainingFuel <= 0)
-                ignite(handler);
-            consumeFuel();
-            if (remainingFuel <= 0) {
+            if (currentRecipe == null) {
                 setChanged();
                 return;
             }
 
-            if (currentRecipe == null) {
+            if (remainingFuel <= 0)
+                ignite(handler);
+            consumeFuel();
+            if (remainingFuel <= 0) {
                 setChanged();
                 return;
             }
@@ -174,7 +174,7 @@ public class EnergyDyeGeneratorTile extends BasicTile implements ITickableTileEn
         if (this.level == null || this.level.isClientSide || currentRecipe != null)
             return;
         inventory.ifPresent(inventory -> energy.ifPresent(buffer -> {
-            if (remainingFuel > 0) {
+            if (!inventory.getStackInSlot(Slots.FUEL.getId()).isEmpty()) {
                 currentRecipe = RecipeUtils.getRecipes(this.level, ModRecipeTypes.ENERGY_DYE_GENERATOR).stream()
                         .filter(recipe -> recipe.matches(inventory, buffer)).findFirst().orElse(null);
             }

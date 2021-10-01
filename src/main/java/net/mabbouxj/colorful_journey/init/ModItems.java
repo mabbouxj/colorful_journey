@@ -34,15 +34,19 @@ public class ModItems {
     public static final RegistryObject<Item> COLOR_GUN = ITEMS.register("color_gun", ColorGunItem::new);
     public static final RegistryObject<Item> COLOR_LASER_GUN = ITEMS.register("color_laser_gun", ColorLaserGunItem::new);
     public static final RegistryObject<Item> INK_BALL = ITEMS.register("ink_ball", InkBallItem::new);
+    public static final RegistryObject<Item> UNCOLORED_INGOT = ITEMS.register("uncolored_ingot", () -> new Item(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP)));
+    public static final RegistryObject<Item> UNCOLORED_NUGGET = ITEMS.register("uncolored_nugget", () -> new Item(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP)));
     public static final RegistryObject<Item> COLORED_PASSIVE_AGGLOMERA = ITEMS.register("colored_passive_agglomera", () -> new Item(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP)));
     public static final RegistryObject<Item> COLORED_AGGRESSIVE_AGGLOMERA = ITEMS.register("colored_aggressive_agglomera", () -> new Item(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP)));
 
     public static final RegistryObject<BlockItem> RUBIKS_CUBE = ITEMS.register("rubiks_cube", RubiksCubeItem::new);
     public static final RegistryObject<BlockItem> RUBIKS_CUBE_UNFINISHED = ITEMS.register("rubiks_cube_unfinished", RubiksCubeUnfinishedItem::new);
     public static final RegistryObject<BlockItem> COLORFUL_PORTAL_FRAME = ITEMS.register("colorful_portal_frame", () -> new BlockItem(ModBlocks.COLORFUL_PORTAL_FRAME.get(), new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> UNCOLORED_INGOT_BLOCK = ITEMS.register("uncolored_ingot_block", () -> new BlockItem(ModBlocks.UNCOLORED_INGOT_BLOCK.get(), new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP)));
     public static final RegistryObject<BlockItem> ENERGY_DYE_GENERATOR = ITEMS.register("energy_dye_generator", EnergyDyeGeneratorBlockItem::new);
     public static final RegistryObject<BlockItem> ENERGY_CAPACITOR = ITEMS.register("energy_capacitor", EnergyCapacitorBlockItem::new);
     public static final RegistryObject<BlockItem> WASHING_MACHINE = ITEMS.register("washing_machine", WashingMachineBlockItem::new);
+    public static final RegistryObject<BlockItem> EASEL = ITEMS.register("easel", EaselBlockItem::new);
 
     public static final Map<DyeColor, RegistryObject<? extends Item>> DENSE_DYES = registerColoredVariantsItem("dense_dye");
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_FEATHERS = registerColoredVariantsItem("colored_feather", Items.FEATHER);

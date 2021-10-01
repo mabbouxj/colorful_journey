@@ -1,0 +1,6 @@
+{
+  "parent": "colorful_journey:block/cube_all",
+  "textures": {
+    "all": "colorful_journey:block/uncolored_ingot_block"
+  }
+}

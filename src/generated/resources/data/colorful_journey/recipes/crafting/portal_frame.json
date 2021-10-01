@@ -10,10 +10,10 @@
       "item": "minecraft:iron_ingot"
     },
     "o": {
-      "tag": "colorful_journey:colored_ingots"
+      "item": "colorful_journey:uncolored_ingot"
     },
     "x": {
-      "item": "minecraft:blackstone"
+      "item": "colorful_journey:uncolored_ingot_block"
     }
   },
   "result": {

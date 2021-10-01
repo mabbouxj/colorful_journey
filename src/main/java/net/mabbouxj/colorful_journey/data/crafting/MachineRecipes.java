@@ -11,6 +11,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
@@ -52,13 +53,30 @@ public class MachineRecipes extends RecipeProvider {
                 if (coloredVariantsItem.getInitialItem() != null) {
                     new WashingMachineRecipe.Builder(locMachine("washing_machine/water_" + registryItem.getId().getPath()))
                             .withInput(registryItem.get(), 1)
-                            .withInputFluid(new FluidStack(Fluids.WATER, 250))
+                            .withInputFluid(new FluidStack(Fluids.WATER, 100))
                             .withOutput(coloredVariantsItem.getInitialItem(), 1)
                             .withOutputAlt(ColorUtils.getDyeItemByColor(coloredVariantsItem.getColor()), 1)
                             .save(consumer);
                 }
             }
         }
+
+        for (DyeColor color: DyeColor.values()) {
+            new WashingMachineRecipe.Builder(locMachine("washing_machine/uncolored_ingot_from_" + color.getName()))
+                    .withInput(ModItems.COLORED_INGOTS.get(color).get(), 1)
+                    .withInputFluid(new FluidStack(Fluids.WATER, 100))
+                    .withOutput(ModItems.UNCOLORED_INGOT.get(), 1)
+                    .withOutputAlt(ColorUtils.getDyeItemByColor(color), 1)
+                    .save(consumer);
+            new WashingMachineRecipe.Builder(locMachine("washing_machine/uncolored_ingot_block_from_" + color.getName()))
+                    .withInput(ModItems.COLORED_INGOT_BLOCKS.get(color).get(), 1)
+                    .withInputFluid(new FluidStack(Fluids.WATER, 900))
+                    .withOutput(ModItems.UNCOLORED_INGOT_BLOCK.get(), 1)
+                    .withOutputAlt(ColorUtils.getDyeItemByColor(color), 9)
+                    .save(consumer);
+        }
+
+
     }
 
 }

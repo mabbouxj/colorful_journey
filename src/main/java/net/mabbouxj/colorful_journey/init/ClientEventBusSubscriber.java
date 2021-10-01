@@ -23,6 +23,7 @@ import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -34,6 +35,7 @@ public class ClientEventBusSubscriber {
     public static void onClientSetup(FMLClientSetupEvent event) {
 
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.INK_BALL.get(), erm -> new SpriteRenderer<>(erm, Minecraft.getInstance().getItemRenderer()));
+        ClientRegistry.bindTileEntityRenderer(ModTiles.EASEL.get(), EaselRenderer::new);
 
         for (DyeColor color: DyeColor.values()) {
             RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COLORED_CHICKEN.get(color).get(), ColoredChickenRenderer::new);
@@ -69,6 +71,7 @@ public class ClientEventBusSubscriber {
         RenderTypeLookup.setRenderLayer(ModBlocks.RUBIKS_CUBE.get(), RenderType.solid());
         RenderTypeLookup.setRenderLayer(ModBlocks.RUBIKS_CUBE_UNFINISHED.get(), RenderType.solid());
         RenderTypeLookup.setRenderLayer(ModBlocks.COLORFUL_PORTAL_FRAME.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(ModBlocks.UNCOLORED_INGOT_BLOCK.get(), RenderType.translucent());
 
         event.enqueueWork(() -> ItemModelsProperties.register(
                 ModItems.RUBIKS_CUBE_UNFINISHED.get(),

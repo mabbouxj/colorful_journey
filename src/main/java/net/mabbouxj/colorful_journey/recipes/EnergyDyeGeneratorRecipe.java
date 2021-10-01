@@ -89,6 +89,11 @@ public class EnergyDyeGeneratorRecipe implements IRecipe<IInventory> {
         return ModRecipeTypes.ENERGY_DYE_GENERATOR;
     }
 
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<EnergyDyeGeneratorRecipe> {
 
         @Override

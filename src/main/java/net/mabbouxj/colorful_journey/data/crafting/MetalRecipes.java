@@ -21,6 +21,33 @@ public class MetalRecipes extends RecipeProvider {
     }
 
     public void generate(Consumer<IFinishedRecipe> consumer) {
+
+        ShapelessRecipeBuilder.shapeless(ModItems.UNCOLORED_NUGGET.get(), 9)
+                .requires(ModItems.UNCOLORED_INGOT.get())
+                .unlockedBy("has_item", has(ModItems.UNCOLORED_INGOT.get()))
+                .save(consumer, locMetal("uncolored_nuggets_from_ingot"));
+
+        ShapelessRecipeBuilder.shapeless(ModItems.UNCOLORED_INGOT.get(), 9)
+                .requires(ModItems.UNCOLORED_INGOT_BLOCK.get())
+                .unlockedBy("has_item", has(ModItems.UNCOLORED_INGOT_BLOCK.get()))
+                .save(consumer, locMetal("uncolored_ingots_from_block"));
+
+        ShapedRecipeBuilder.shaped(ModItems.UNCOLORED_INGOT.get(), 1)
+                .pattern("###")
+                .pattern("###")
+                .pattern("###")
+                .define('#', ModItems.UNCOLORED_NUGGET.get())
+                .unlockedBy("has_item", has(ModItems.UNCOLORED_NUGGET.get()))
+                .save(consumer, locMetal("uncolored_ingot_from_nuggets"));
+
+        ShapedRecipeBuilder.shaped(ModItems.UNCOLORED_INGOT_BLOCK.get(), 1)
+                .pattern("###")
+                .pattern("###")
+                .pattern("###")
+                .define('#', ModItems.UNCOLORED_INGOT.get())
+                .unlockedBy("has_item", has(ModItems.UNCOLORED_INGOT.get()))
+                .save(consumer, locMetal("uncolored_block_from_ingots"));
+
         for (DyeColor color: DyeColor.values()) {
             String name = "colored_" + color.getName();
 

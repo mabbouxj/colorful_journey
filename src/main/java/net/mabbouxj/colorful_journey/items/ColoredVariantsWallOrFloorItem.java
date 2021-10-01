@@ -3,7 +3,6 @@ package net.mabbouxj.colorful_journey.items;
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.minecraft.block.Block;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
@@ -42,11 +41,7 @@ public class ColoredVariantsWallOrFloorItem extends WallOrFloorItem implements C
     public void appendHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag flag) {
         TranslationTextComponent tooltip = new TranslationTextComponent("tooltip.colorful_journey." + this.registryName);
         if (!tooltip.getString().contains("tooltip.colorful_journey")) {
-            if (Screen.hasShiftDown()) {
-                tooltips.add(tooltip);
-            } else {
-                tooltips.add(new TranslationTextComponent("tooltip.colorful_journey.hold_shift_for_info"));
-            }
+            tooltips.add(tooltip);
         }
         super.appendHoverText(itemStack, world, tooltips, flag);
     }

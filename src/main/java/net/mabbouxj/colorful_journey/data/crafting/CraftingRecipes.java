@@ -58,7 +58,7 @@ public class CraftingRecipes extends RecipeProvider {
                 .pattern("###")
                 .pattern("  i")
                 .define('o', Items.GLASS_BOTTLE)
-                .define('#', Items.IRON_INGOT)
+                .define('#', ModItemTagProvider.COLORED_INGOTS)
                 .define('i', Tags.Items.RODS_WOODEN)
                 .unlockedBy("has_" + ModItems.COLOR_GUN.getId().getPath(), has(ModItems.COLOR_GUN.get()))
                 .save(consumer, locCrafting("color_gun"));
@@ -67,9 +67,9 @@ public class CraftingRecipes extends RecipeProvider {
                 .pattern(" o ")
                 .pattern("###")
                 .pattern("  i")
-                .define('o', Items.GLASS_BOTTLE)
+                .define('o', ModItems.UNCOLORED_INGOT_BLOCK.get())
                 .define('#', Items.NETHERITE_INGOT)
-                .define('i', Tags.Items.RODS_BLAZE)
+                .define('i', ModItems.COLORED_AGGRESSIVE_AGGLOMERA.get())
                 .unlockedBy("has_" + ModItems.COLOR_LASER_GUN.getId().getPath(), has(ModItems.COLOR_LASER_GUN.get()))
                 .save(consumer, locCrafting("color_laser_gun"));
 
@@ -149,8 +149,8 @@ public class CraftingRecipes extends RecipeProvider {
                 .pattern("oxo")
                 .pattern("#o#")
                 .define('#', Items.IRON_INGOT)
-                .define('o', ModItemTagProvider.COLORED_INGOTS)
-                .define('x', Items.BLACKSTONE)
+                .define('o', ModItems.UNCOLORED_INGOT.get())
+                .define('x', ModItems.UNCOLORED_INGOT_BLOCK.get())
                 .unlockedBy("has_item", has(ModItems.COLORFUL_PORTAL_FRAME.get()))
                 .save(consumer, locCrafting("portal_frame"));
 

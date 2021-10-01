@@ -23,7 +23,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -261,9 +260,10 @@ public class ColorLaserGunItem extends Item {
         IEnergyStorage energy = itemStack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
         tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(energy.getEnergyStored()), StringUtils.numberWithSuffix(ModConfigs.COMMON.LASER_GUN_BUFFER_CAPACITY.get())).withStyle(TextFormatting.GREEN));
         if (isRandom) {
-            tooltips.add(new StringTextComponent("Laser color: random"));
+            String r = ColorUtils.DYE_COLOR_TO_TEXT_FORMAT.get(ColorUtils.getRandomEnabledColor().getId());
+            tooltips.add(new TranslationTextComponent("tooltip.colorful_journey.laser_color", r + "random"));
         } else {
-            tooltips.add(new StringTextComponent("Laser color: " + ColorUtils.coloredColorName(color)));
+            tooltips.add(new TranslationTextComponent("tooltip.colorful_journey.laser_color", ColorUtils.coloredColorName(color)));
         }
         tooltips.add(new TranslationTextComponent("tooltip.colorful_journey.color_laser_gun"));
         super.appendHoverText(itemStack, world, tooltips, flag);

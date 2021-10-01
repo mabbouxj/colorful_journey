@@ -4,7 +4,6 @@ import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.entities.InkBallEntity;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.init.ModSounds;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -77,11 +76,7 @@ public class ColorGunItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag flag) {
-        if (Screen.hasShiftDown()) {
-            tooltips.add(new TranslationTextComponent("tooltip.colorful_journey.color_gun"));
-        } else {
-            tooltips.add(new TranslationTextComponent("tooltip.colorful_journey.hold_shift_for_info"));
-        }
+        tooltips.add(new TranslationTextComponent("tooltip.colorful_journey.color_gun"));
         super.appendHoverText(itemStack, world, tooltips, flag);
     }
 

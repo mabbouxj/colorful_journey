@@ -2,7 +2,6 @@ package net.mabbouxj.colorful_journey.items;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
@@ -30,11 +29,7 @@ public class InkBallItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag flag) {
-        if (Screen.hasShiftDown()) {
-            tooltips.add(new TranslationTextComponent("tooltip.colorful_journey.ink_ball"));
-        } else {
-            tooltips.add(new TranslationTextComponent("tooltip.colorful_journey.hold_shift_for_info"));
-        }
+        tooltips.add(new TranslationTextComponent("tooltip.colorful_journey.ink_ball"));
         super.appendHoverText(itemStack, world, tooltips, flag);
     }
 }

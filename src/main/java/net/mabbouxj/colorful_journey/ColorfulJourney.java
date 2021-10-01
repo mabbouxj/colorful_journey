@@ -2,6 +2,7 @@ package net.mabbouxj.colorful_journey;
 
 import net.mabbouxj.colorful_journey.entities.*;
 import net.mabbouxj.colorful_journey.init.*;
+import net.mabbouxj.colorful_journey.tiles.EaselTile;
 import net.mabbouxj.colorful_journey.tiles.EnergyCapacitorTile;
 import net.mabbouxj.colorful_journey.tiles.EnergyDyeGeneratorTile;
 import net.mabbouxj.colorful_journey.tiles.WashingMachineTile;
@@ -92,6 +93,7 @@ public class ColorfulJourney {
         NBTManager.getInstance().scanTileClassForAnnotations(EnergyDyeGeneratorTile.class);
         NBTManager.getInstance().scanTileClassForAnnotations(EnergyCapacitorTile.class);
         NBTManager.getInstance().scanTileClassForAnnotations(WashingMachineTile.class);
+        NBTManager.getInstance().scanTileClassForAnnotations(EaselTile.class);
     }
 
     private void initEnabledColors() throws Exception {
