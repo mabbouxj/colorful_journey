@@ -34,7 +34,7 @@ public class ColoredVariantsWallOrFloorItem extends WallOrFloorItem implements C
 
     @Override
     public ITextComponent getName(ItemStack itemStack) {
-        return ColorUtils.getDisplayItemColorName(itemStack, new TranslationTextComponent("block.colorful_journey." + this.registryName).getString());
+        return ColorUtils.getDisplayItemColorName(itemStack, "block.colorful_journey." + this.registryName);
     }
 
     @Override

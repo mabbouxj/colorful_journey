@@ -3,6 +3,6 @@
   "ingredient": {
     "tag": "colorful_journey:dense_dyes"
   },
-  "energy_per_tick": 40,
-  "energy_total": 8000
+  "energy_per_tick": 50,
+  "energy_total": 10000
 }

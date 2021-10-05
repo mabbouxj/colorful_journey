@@ -1,14 +1,12 @@
 package net.mabbouxj.colorful_journey.blocks;
 
-import net.mabbouxj.colorful_journey.init.ModItems;
-import net.mabbouxj.colorful_journey.init.ModSounds;
 import net.mabbouxj.colorful_journey.tiles.EaselTile;
-import net.mabbouxj.colorful_journey.utils.ColorUtils;
-import net.mabbouxj.colorful_journey.utils.ParticleUtils;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,9 +21,12 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,13 +34,13 @@ import javax.annotation.Nullable;
 public class EaselBlock extends ContainerBlock {
 
     public static final IntegerProperty ROTATION = BlockStateProperties.ROTATION_16;
-    protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 26.0D, 16.0D);
+    protected static final VoxelShape SHAPE = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 25.0D, 13.0D);
 
     public EaselBlock() {
         super(AbstractBlock.Properties
                 .of(Material.WOOD)
                 .sound(SoundType.WOOD)
-                .strength(2.5f)
+                .strength(1.5f)
                 .noOcclusion()
                 .isViewBlocking((x,y,z) -> false));
         this.registerDefaultState(this.stateDefinition.any().setValue(ROTATION, 0));
@@ -71,6 +72,10 @@ public class EaselBlock extends ContainerBlock {
             return ActionResultType.FAIL;
         EaselTile tile = (EaselTile) te;
 
+        ItemStack stack = player.getItemInHand(hand);
+        Item item = stack.getItem();
+
+        // Remove paper from block
         if (tile.hasSlate && player.isCrouching()) {
             if (tile.popSlate(world, blockPos)) {
                 world.playSound(null, blockPos, SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundCategory.BLOCKS, 1.0F, 1.0F);
@@ -79,21 +84,16 @@ public class EaselBlock extends ContainerBlock {
             }
         }
 
-        ItemStack stack = player.getItemInHand(hand);
-        Item item = stack.getItem();
-
+        // Add paper to block
         if (!tile.hasSlate && item.equals(Items.PAPER)) {
             player.getItemInHand(hand).shrink(1);
             world.playSound(null, blockPos, SoundEvents.ARMOR_EQUIP_GENERIC, SoundCategory.BLOCKS, 1.0F, 1.0F);
             tile.hasSlate = true;
-        } else if (tile.hasSlate && item.equals(ModItems.PAINTBRUSH.get()) && ColorUtils.hasColor(stack)) {
-            ParticleUtils.makeParticles(player.level, ColorUtils.getColor(stack), 8, 20, new Vector3d(blockPos.getX(), blockPos.getY(), blockPos.getZ()));
-            world.playSound(null, blockPos, ModSounds.INK_SPLASH.get(), SoundCategory.BLOCKS, 1.0F, 1.0F);
-            stack.hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
-            ColorUtils.removeColor(stack);
-            tile.changePaint();
+            tile.setChanged();
+            return ActionResultType.SUCCESS;
         }
 
+        NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, blockPos);
         tile.setChanged();
         return ActionResultType.SUCCESS;
     }
@@ -121,6 +121,24 @@ public class EaselBlock extends ContainerBlock {
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> stateBuilder) {
         stateBuilder.add(ROTATION);
+    }
+
+    @Override
+    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+        if(newState.getBlock() != this) {
+            TileEntity tileEntity = world.getBlockEntity(pos);
+            if (tileEntity != null) {
+                LazyOptional<IItemHandler> cap = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+                cap.ifPresent(handler -> {
+                    for( int i = 0; i < handler.getSlots(); i ++ )
+                        InventoryHelper.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), handler.getStackInSlot(i));
+                });
+                if (tileEntity instanceof EaselTile) {
+                    ((EaselTile) tileEntity).popSlate(world, pos);
+                }
+            }
+            super.onRemove(state, world, pos, newState, isMoving);
+        }
     }
 
 }

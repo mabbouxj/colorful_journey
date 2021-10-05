@@ -1,21 +1,21 @@
 {
   "replace": false,
   "values": [
-    "colorful_journey:colored_gunpowder_black",
-    "colorful_journey:colored_gunpowder_yellow",
-    "colorful_journey:colored_gunpowder_orange",
-    "colorful_journey:colored_gunpowder_white",
-    "colorful_journey:colored_gunpowder_light_blue",
-    "colorful_journey:colored_gunpowder_light_gray",
-    "colorful_journey:colored_gunpowder_pink",
-    "colorful_journey:colored_gunpowder_blue",
-    "colorful_journey:colored_gunpowder_red",
-    "colorful_journey:colored_gunpowder_cyan",
-    "colorful_journey:colored_gunpowder_magenta",
-    "colorful_journey:colored_gunpowder_gray",
     "colorful_journey:colored_gunpowder_brown",
     "colorful_journey:colored_gunpowder_purple",
     "colorful_journey:colored_gunpowder_lime",
-    "colorful_journey:colored_gunpowder_green"
+    "colorful_journey:colored_gunpowder_green",
+    "colorful_journey:colored_gunpowder_pink",
+    "colorful_journey:colored_gunpowder_light_blue",
+    "colorful_journey:colored_gunpowder_blue",
+    "colorful_journey:colored_gunpowder_gray",
+    "colorful_journey:colored_gunpowder_magenta",
+    "colorful_journey:colored_gunpowder_light_gray",
+    "colorful_journey:colored_gunpowder_orange",
+    "colorful_journey:colored_gunpowder_black",
+    "colorful_journey:colored_gunpowder_cyan",
+    "colorful_journey:colored_gunpowder_white",
+    "colorful_journey:colored_gunpowder_yellow",
+    "colorful_journey:colored_gunpowder_red"
   ]
 }

@@ -258,10 +258,10 @@ public class ColorLaserGunItem extends Item {
     public void appendHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag flag) {
         DyeColor color = ColorUtils.getColor(itemStack);
         IEnergyStorage energy = itemStack.getCapability(CapabilityEnergy.ENERGY, null).orElse(null);
-        tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(energy.getEnergyStored()), StringUtils.numberWithSuffix(ModConfigs.COMMON.LASER_GUN_BUFFER_CAPACITY.get())).withStyle(TextFormatting.GREEN));
+        tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(energy.getEnergyStored()), StringUtils.numberWithSuffix(ModConfigs.COMMON.LASER_GUN_BUFFER_CAPACITY.get())));
         if (isRandom) {
             String r = ColorUtils.DYE_COLOR_TO_TEXT_FORMAT.get(ColorUtils.getRandomEnabledColor().getId());
-            tooltips.add(new TranslationTextComponent("tooltip.colorful_journey.laser_color", r + "random"));
+            tooltips.add(new TranslationTextComponent("tooltip.colorful_journey.laser_color", r + "Random"));
         } else {
             tooltips.add(new TranslationTextComponent("tooltip.colorful_journey.laser_color", ColorUtils.coloredColorName(color)));
         }

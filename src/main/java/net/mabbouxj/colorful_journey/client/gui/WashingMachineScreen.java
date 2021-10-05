@@ -42,10 +42,20 @@ public class WashingMachineScreen extends ContainerScreen<WashingMachineContaine
             this.renderTooltip(matrixStack, LanguageMap.getInstance().getVisualOrder(Arrays.asList(
                     new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(this.container.getEnergy()), StringUtils.numberWithSuffix(this.container.getMaxEnergy()))
             )), mouseX, mouseY);
-        if (mouseX > (leftPos + 25) && mouseX < (leftPos + 25) + 18 && mouseY > (topPos + 16) && mouseY < (topPos + 16) + 54)
-            this.renderTooltip(matrixStack, LanguageMap.getInstance().getVisualOrder(Arrays.asList(
-                    new TranslationTextComponent("screen.colorful_journey.fluid", this.container.getFluidStack().getDisplayName(), StringUtils.numberWithSuffix(this.container.getFluid()), StringUtils.numberWithSuffix(this.container.getMaxFluid()))
-            )), mouseX, mouseY);
+        if (mouseX > (leftPos + 25) && mouseX < (leftPos + 25) + 18 && mouseY > (topPos + 16) && mouseY < (topPos + 16) + 54) {
+            FluidStack fluidStack = this.container.getFluidStack();
+            if (fluidStack.isEmpty()) {
+                this.renderTooltip(matrixStack, LanguageMap.getInstance().getVisualOrder(Arrays.asList(
+                        new TranslationTextComponent("screen.colorful_journey.fluid_empty")
+                )), mouseX, mouseY);
+            } else {
+                this.renderTooltip(matrixStack, LanguageMap.getInstance().getVisualOrder(Arrays.asList(
+                        new TranslationTextComponent("screen.colorful_journey.fluid", fluidStack.getDisplayName()),
+                        new TranslationTextComponent("screen.colorful_journey.fluid_amount", StringUtils.numberWithSuffix(fluidStack.getAmount()), StringUtils.numberWithSuffix(this.container.getMaxFluid()))
+                )), mouseX, mouseY);
+            }
+        }
+
     }
 
     @Override

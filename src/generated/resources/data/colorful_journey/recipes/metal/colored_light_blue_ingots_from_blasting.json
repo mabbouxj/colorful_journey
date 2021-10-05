@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "colorful_journey:colored_ore_light_blue"
+  },
+  "result": "colorful_journey:colored_ingot_light_blue",
+  "experience": 0.7,
+  "cookingtime": 100
+}

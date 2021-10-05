@@ -2,7 +2,10 @@ package net.mabbouxj.colorful_journey;
 
 import net.minecraft.item.DyeColor;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +17,15 @@ public class ModConfigs {
     private static final String config = "config." + ColorfulJourney.MOD_ID + ".";
     public static Common COMMON;
     public static Client CLIENT;
+
+    public static void load() {
+        final Pair<Common, ForgeConfigSpec> specPairCommon = new ForgeConfigSpec.Builder().configure(ModConfigs.Common::new);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, specPairCommon.getRight());
+        ModConfigs.COMMON = specPairCommon.getLeft();
+        final Pair<ModConfigs.Client, ForgeConfigSpec> specPairClient = new ForgeConfigSpec.Builder().configure(ModConfigs.Client::new);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, specPairClient.getRight());
+        ModConfigs.CLIENT = specPairClient.getLeft();
+    }
 
     public static class Common {
 
@@ -27,7 +39,6 @@ public class ModConfigs {
         public ForgeConfigSpec.IntValue ENERGY_CAPACITOR_BUFFER_CAPACITY;
         public ForgeConfigSpec.IntValue ENERGY_CAPACITOR_MAX_IN_OUT;
         public ForgeConfigSpec.IntValue WASHING_MACHINE_ENERGY_BUFFER;
-        public ForgeConfigSpec.IntValue WASHING_MACHINE_ENERGY_CONSUMPTION;
         public ForgeConfigSpec.IntValue WASHING_MACHINE_FLUID_BUFFER;
 
         public Common(ForgeConfigSpec.Builder builder) {
@@ -41,14 +52,14 @@ public class ModConfigs {
                     .defineInRange("laser_gun_buffer_capacity", 100000, 1000, 1000000000);
             LASER_GUN_ENERGY_COST_PER_TICK = builder
                     .comment("Energy cost (in FE/tick) while using the Laser gun")
-                    .defineInRange("laser_gun_cost_per_tick", 100, 0, 1000000);
+                    .defineInRange("laser_gun_cost_per_tick", 50, 0, 1000000);
             LASER_GUN_ENERGY_COST_PER_TRANSFORMATION = builder
                     .comment("Energy cost (in FE) when the Laser gun transforms something")
                     .defineInRange("laser_gun_cost_per_transformation", 1000, 0, 1000000);
 
             ENERGY_DYE_GENERATOR_BUFFER_CAPACITY = builder
                     .comment("Buffer capacity (in FE) of the Energy dye generator")
-                    .defineInRange("energy_dye_generator_buffer_capacity", 100000, 1000, 1000000000);
+                    .defineInRange("energy_dye_generator_buffer_capacity", 50000, 1000, 1000000000);
             ENERGY_DYE_GENERATOR_FUEL_CONSUMPTION_SPEED = builder
                     .comment("How fast the fuel should be burn. Setting it to 10.0 will consume fuel 10x faster")
                     .defineInRange("energy_dye_generator_fuel_consumption_speed", 10, 0.001, 1000);
@@ -68,7 +79,7 @@ public class ModConfigs {
                     .defineInRange("washing_machine_energy_buffer", 10000, 1000, 1000000);
             WASHING_MACHINE_FLUID_BUFFER = builder
                     .comment("Fluid buffer capacity (in mB) of the Washing machine")
-                    .defineInRange("washing_machine_fluid_buffer", 10000, 1000, 1000000);
+                    .defineInRange("washing_machine_fluid_buffer", 5000, 1000, 1000000);
 
         }
 
@@ -79,10 +90,6 @@ public class ModConfigs {
         public Client(ForgeConfigSpec.Builder builder) {
 
         }
-
-    }
-
-    public static void build() {
 
     }
 

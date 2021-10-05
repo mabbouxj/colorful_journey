@@ -9,7 +9,6 @@ import net.minecraft.item.EnderPearlItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -38,7 +37,7 @@ public class ColoredEnderPearlItem extends EnderPearlItem implements ColorUtils.
 
     @Override
     public ITextComponent getName(ItemStack itemStack) {
-        return ColorUtils.getDisplayItemColorName(itemStack, new TranslationTextComponent("item.colorful_journey.colored_ender_pearl").getString());
+        return ColorUtils.getDisplayItemColorName(itemStack, "item.colorful_journey.colored_ender_pearl");
     }
 
     @Override

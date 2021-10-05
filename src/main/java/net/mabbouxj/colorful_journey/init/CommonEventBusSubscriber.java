@@ -1,7 +1,7 @@
 package net.mabbouxj.colorful_journey.init;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
-import net.mabbouxj.colorful_journey.ModConfigs;
+import net.mabbouxj.colorful_journey.client.gui.EaselScreen;
 import net.mabbouxj.colorful_journey.client.gui.EnergyCapacitorScreen;
 import net.mabbouxj.colorful_journey.client.gui.EnergyDyeGeneratorScreen;
 import net.mabbouxj.colorful_journey.client.gui.WashingMachineScreen;
@@ -26,7 +26,6 @@ public class CommonEventBusSubscriber {
 
     @SubscribeEvent
     public static void onCommonSetup(FMLCommonSetupEvent event) {
-        ModConfigs.build();
         MinecraftForge.EVENT_BUS.register(new EntityEventListeners());
         MinecraftForge.EVENT_BUS.register(new BlockEventListeners());
         MinecraftForge.EVENT_BUS.register(new WorldEventListeners());
@@ -62,6 +61,7 @@ public class CommonEventBusSubscriber {
         ScreenManager.register(ModContainers.ENERGY_DYE_GENERATOR.get(), EnergyDyeGeneratorScreen::new);
         ScreenManager.register(ModContainers.ENERGY_CAPACITOR.get(), EnergyCapacitorScreen::new);
         ScreenManager.register(ModContainers.WASHING_MACHINE.get(), WashingMachineScreen::new);
+        ScreenManager.register(ModContainers.EASEL.get(), EaselScreen::new);
     }
 
 }

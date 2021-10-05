@@ -1,7 +1,8 @@
 package net.mabbouxj.colorful_journey.init;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
-import net.mabbouxj.colorful_journey.client.entity.render.*;
+import net.mabbouxj.colorful_journey.client.entity.render.EaselRenderer;
+import net.mabbouxj.colorful_journey.client.entity.render.mobs.*;
 import net.mabbouxj.colorful_journey.client.particles.ColorfulPortalParticle;
 import net.mabbouxj.colorful_journey.client.particles.InkSplashParticle;
 import net.mabbouxj.colorful_journey.items.PaintbrushItem;

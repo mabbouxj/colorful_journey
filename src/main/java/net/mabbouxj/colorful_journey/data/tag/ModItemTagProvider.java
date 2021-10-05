@@ -38,6 +38,9 @@ public class ModItemTagProvider extends ItemTagsProvider {
     public static final ITag.INamedTag<Item> COLORED_BAT_WINGS = ItemTags.bind(ColorfulJourney.MOD_ID + ":colored_bat_wings");
     public static final ITag.INamedTag<Item> COLORED_TENTACLES = ItemTags.bind(ColorfulJourney.MOD_ID + ":colored_tentacles");
     public static final ITag.INamedTag<Item> DENSE_DYES = ItemTags.bind(ColorfulJourney.MOD_ID + ":dense_dyes");
+    public static final ITag.INamedTag<Item> ULTRA_DENSE_DYES = ItemTags.bind(ColorfulJourney.MOD_ID + ":ultra_dense_dyes");
+    public static final ITag.INamedTag<Item> COLORED_LOGS = ItemTags.bind(ColorfulJourney.MOD_ID + ":colored_logs");
+    public static final ITag.INamedTag<Item> COLORED_PLANKS = ItemTags.bind(ColorfulJourney.MOD_ID + ":colored_planks");
 
     public ModItemTagProvider(DataGenerator dataGenerator, BlockTagsProvider blockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
         super(dataGenerator, blockTagsProvider, ColorfulJourney.MOD_ID, existingFileHelper);
@@ -54,6 +57,18 @@ public class ModItemTagProvider extends ItemTagsProvider {
         tag(Tags.Items.NETHER_STARS).add(mapToItem(ModItems.COLORED_NETHER_STARS));
         tag(Tags.Items.GUNPOWDER).add(mapToItem(ModItems.COLORED_GUNPOWDERS));
         tag(Tags.Items.HEADS).add(mapToItem(ModItems.COLORED_SKULLS));
+        tag(Tags.Items.INGOTS).add(mapToItem(ModItems.COLORED_INGOTS))
+                .add(ModItems.UNCOLORED_INGOT.get());
+        tag(Tags.Items.ORES).add(mapToItem(ModItems.COLORED_ORES))
+                .add(mapToItem(ModItems.COLORED_NETHER_ORES))
+                .add(mapToItem(ModItems.COLORED_END_ORES));
+        tag(Tags.Items.NUGGETS).add(mapToItem(ModItems.COLORED_NUGGETS))
+                .add(ModItems.UNCOLORED_NUGGET.get());
+        tag(ItemTags.PLANKS).add(mapToItem(ModItems.COLORED_PLANKS));
+        tag(ItemTags.LOGS).add(mapToItem(ModItems.COLORED_LOGS));
+        tag(ItemTags.LOGS_THAT_BURN).add(mapToItem(ModItems.COLORED_LOGS));
+        tag(ItemTags.LEAVES).add(mapToItem(ModItems.COLORED_LEAVES));
+        tag(ItemTags.SAPLINGS).add(mapToItem(ModItems.COLORED_SAPLINGS));
         tag(COLORED_INGOTS).add(mapToItem(ModItems.COLORED_INGOTS));
         tag(COLORED_NUGGETS).add(mapToItem(ModItems.COLORED_NUGGETS));
         tag(COLORED_FEATHERS).add(mapToItem(ModItems.COLORED_FEATHERS));
@@ -74,6 +89,9 @@ public class ModItemTagProvider extends ItemTagsProvider {
         tag(COLORED_BAT_WINGS).add(mapToItem(ModItems.COLORED_BAT_WINGS));
         tag(COLORED_TENTACLES).add(mapToItem(ModItems.COLORED_TENTACLES));
         tag(DENSE_DYES).add(mapToItem(ModItems.DENSE_DYES));
+        tag(ULTRA_DENSE_DYES).add(mapToItem(ModItems.ULTRA_DENSE_DYES));
+        tag(COLORED_PLANKS).add(mapToItem(ModItems.COLORED_PLANKS));
+        tag(COLORED_LOGS).add(mapToItem(ModItems.COLORED_LOGS));
     }
 
     private Item[] mapToItem(Map<DyeColor, RegistryObject<? extends Item>> map) {

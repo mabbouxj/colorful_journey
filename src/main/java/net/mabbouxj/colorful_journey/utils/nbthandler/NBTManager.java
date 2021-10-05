@@ -35,6 +35,7 @@ public class NBTManager {
         handlerList.add(new TankNBTHandler());
         handlerList.add(new UUIDNBTHandler());
         handlerList.add(new NBTSerializableNBTHandler());
+        handlerList.add(new IntegerArrayNBTHandler());
     }
 
     public static NBTManager getInstance() {

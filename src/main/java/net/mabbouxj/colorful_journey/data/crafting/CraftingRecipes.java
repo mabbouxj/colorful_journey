@@ -47,9 +47,10 @@ public class CraftingRecipes extends RecipeProvider {
 
         ShapedRecipeBuilder.shaped(ModItems.INK_BALL.get(), 4)
                 .pattern(" # ")
-                .pattern("###")
+                .pattern("#o#")
                 .pattern(" # ")
                 .define('#', Tags.Items.DYES)
+                .define('o', ModItems.FINISHED_PAINTING.get())
                 .unlockedBy("has_" + ModItems.INK_BALL.getId().getPath(), has(ModItems.INK_BALL.get()))
                 .save(consumer, locCrafting("ink_ball"));
 
@@ -77,7 +78,7 @@ public class CraftingRecipes extends RecipeProvider {
                 .pattern("wr#")
                 .pattern("g#b")
                 .pattern("#oy")
-                .define('#', Tags.Items.NUGGETS_IRON)
+                .define('#', Tags.Items.INGOTS_IRON)
                 .define('w', ModItems.DENSE_DYES.get(DyeColor.WHITE).get())
                 .define('r', ModItems.DENSE_DYES.get(DyeColor.RED).get())
                 .define('g', ModItems.DENSE_DYES.get(DyeColor.GREEN).get())
@@ -120,26 +121,35 @@ public class CraftingRecipes extends RecipeProvider {
                 .unlockedBy("has_" + ModItems.WASHING_MACHINE.getId().getPath(), has(ModItems.WASHING_MACHINE.get()))
                 .save(consumer, locCrafting("washing_machine"));
 
+        ShapedRecipeBuilder.shaped(ModItems.EASEL.get(), 1)
+                .pattern("#o#")
+                .pattern("###")
+                .pattern("# #")
+                .define('#', Tags.Items.RODS_WOODEN)
+                .define('o', Items.PAPER)
+                .unlockedBy("has_item", has(Tags.Items.RODS_WOODEN))
+                .save(consumer, locCrafting("easel"));
+
         ShapelessRecipeBuilder.shapeless(ModItems.COLORED_PASSIVE_AGGLOMERA.get(), 1)
+                .requires(ModItemTagProvider.COLORED_BAT_WINGS)
+                .requires(ModItemTagProvider.COLORED_EGGS)
                 .requires(ModItemTagProvider.COLORED_FEATHERS)
                 .requires(ModItemTagProvider.COLORED_BAMBOOS)
                 .requires(ModItemTagProvider.COLORED_LEATHERS)
-                .requires(ModItemTagProvider.COLORED_EGGS)
-                .requires(ModItemTagProvider.COLORED_HONEYCOMBS)
-                .requires(ModItemTagProvider.COLORED_BAT_WINGS)
                 .requires(ModItemTagProvider.COLORED_TENTACLES)
+                .requires(ModItemTagProvider.COLORED_HONEYCOMBS)
                 .unlockedBy("has_item", has(ModItems.COLORED_PASSIVE_AGGLOMERA.get()))
                 .save(consumer, locCrafting("colored_passive_agglomera"));
 
         ShapelessRecipeBuilder.shapeless(ModItems.COLORED_AGGRESSIVE_AGGLOMERA.get(), 1)
                 .requires(ModItemTagProvider.COLORED_BONES)
-                .requires(ModItemTagProvider.COLORED_ENDER_PEARLS)
-                .requires(ModItemTagProvider.COLORED_BLAZE_RODS)
-                .requires(ModItemTagProvider.COLORED_ROTTEN_FLESHES)
-                .requires(ModItemTagProvider.COLORED_GHAST_TEARS)
-                .requires(ModItemTagProvider.COLORED_PHANTOM_MEMBRANES)
-                .requires(ModItemTagProvider.COLORED_STRINGS)
                 .requires(ModItemTagProvider.COLORED_SKULLS)
+                .requires(ModItemTagProvider.COLORED_BLAZE_RODS)
+                .requires(ModItemTagProvider.COLORED_PHANTOM_MEMBRANES)
+                .requires(ModItemTagProvider.COLORED_GHAST_TEARS)
+                .requires(ModItemTagProvider.COLORED_ROTTEN_FLESHES)
+                .requires(ModItemTagProvider.COLORED_STRINGS)
+                .requires(ModItemTagProvider.COLORED_ENDER_PEARLS)
                 .requires(ModItemTagProvider.COLORED_GUNPOWDERS)
                 .unlockedBy("has_item", has(ModItems.COLORED_AGGRESSIVE_AGGLOMERA.get()))
                 .save(consumer, locCrafting("colored_aggressive_agglomera"));
@@ -161,15 +171,24 @@ public class CraftingRecipes extends RecipeProvider {
                     .pattern("###")
                     .define('#', ColorUtils.getDyeItemByColor(color))
                     .define('x', ModItems.COLORED_INGOTS.get(color).get())
-                    .unlockedBy("has_item", has(ModItems.DENSE_DYES.get(color).get()))
+                    .unlockedBy("has_item", has(ColorUtils.getDyeItemByColor(color)))
                     .save(consumer, locCrafting("dense_dye_" + color.getName()));
+
+            ShapedRecipeBuilder.shaped(ModItems.ULTRA_DENSE_DYES.get(color).get(), 1)
+                    .pattern("###")
+                    .pattern("#x#")
+                    .pattern("###")
+                    .define('#', ModItems.DENSE_DYES.get(color).get())
+                    .define('x', ModItems.COLORED_INGOT_BLOCKS.get(color).get())
+                    .unlockedBy("has_item", has(ModItems.DENSE_DYES.get(color).get()))
+                    .save(consumer, locCrafting("ultra_dense_dye_" + color.getName()));
 
             ShapedRecipeBuilder.shaped(ModItems.COLORFUL_COLORED_PORTAL_FRAMES.get(color).get(), 1)
                     .pattern("#o#")
                     .pattern("oxo")
                     .pattern("#o#")
                     .define('#', Items.NETHERITE_INGOT)
-                    .define('o', ModItems.DENSE_DYES.get(color).get())
+                    .define('o', ModItems.ULTRA_DENSE_DYES.get(color).get())
                     .define('x', ModItems.COLORED_NETHER_STARS.get(color).get())
                     .unlockedBy("has_item", has(ModItems.COLORFUL_COLORED_PORTAL_FRAMES.get(color).get()))
                     .save(consumer, locCrafting("colored_portal_frame_" + color.getName()));

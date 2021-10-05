@@ -1,21 +1,21 @@
 {
   "replace": false,
   "values": [
-    "colorful_journey:colored_blaze_rod_black",
-    "colorful_journey:colored_blaze_rod_yellow",
-    "colorful_journey:colored_blaze_rod_orange",
-    "colorful_journey:colored_blaze_rod_white",
-    "colorful_journey:colored_blaze_rod_light_blue",
-    "colorful_journey:colored_blaze_rod_light_gray",
-    "colorful_journey:colored_blaze_rod_pink",
-    "colorful_journey:colored_blaze_rod_blue",
-    "colorful_journey:colored_blaze_rod_red",
-    "colorful_journey:colored_blaze_rod_cyan",
-    "colorful_journey:colored_blaze_rod_magenta",
-    "colorful_journey:colored_blaze_rod_gray",
     "colorful_journey:colored_blaze_rod_brown",
     "colorful_journey:colored_blaze_rod_purple",
     "colorful_journey:colored_blaze_rod_lime",
-    "colorful_journey:colored_blaze_rod_green"
+    "colorful_journey:colored_blaze_rod_green",
+    "colorful_journey:colored_blaze_rod_pink",
+    "colorful_journey:colored_blaze_rod_light_blue",
+    "colorful_journey:colored_blaze_rod_blue",
+    "colorful_journey:colored_blaze_rod_gray",
+    "colorful_journey:colored_blaze_rod_magenta",
+    "colorful_journey:colored_blaze_rod_light_gray",
+    "colorful_journey:colored_blaze_rod_orange",
+    "colorful_journey:colored_blaze_rod_black",
+    "colorful_journey:colored_blaze_rod_cyan",
+    "colorful_journey:colored_blaze_rod_white",
+    "colorful_journey:colored_blaze_rod_yellow",
+    "colorful_journey:colored_blaze_rod_red"
   ]
 }

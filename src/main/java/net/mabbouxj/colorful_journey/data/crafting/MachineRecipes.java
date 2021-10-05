@@ -42,7 +42,11 @@ public class MachineRecipes extends RecipeProvider {
                 .save(consumer);
         new EnergyDyeGeneratorRecipe.Builder(locMachine("energy_dye_generator/dense_dyes"))
                 .withIngredient(ModItemTagProvider.DENSE_DYES)
-                .withEnergyGeneration(40, 8000)
+                .withEnergyGeneration(50, 10000)
+                .save(consumer);
+        new EnergyDyeGeneratorRecipe.Builder(locMachine("energy_dye_generator/ultra_dense_dyes"))
+                .withIngredient(ModItemTagProvider.ULTRA_DENSE_DYES)
+                .withEnergyGeneration(100, 100000)
                 .save(consumer);
     }
 

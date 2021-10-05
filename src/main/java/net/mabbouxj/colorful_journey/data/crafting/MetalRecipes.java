@@ -63,6 +63,18 @@ public class MetalRecipes extends RecipeProvider {
                     .unlockedBy("has_item", has(ModBlocks.COLORED_END_ORES.get(color).get()))
                     .save(consumer, locMetal(name + "_ingots_from_smelting_end"));
 
+            CookingRecipeBuilder.blasting(Ingredient.of(ModBlocks.COLORED_ORES.get(color).get()), ModItems.COLORED_INGOTS.get(color).get(), 0.7f, 100)
+                    .unlockedBy("has_item", has(ModBlocks.COLORED_ORES.get(color).get()))
+                    .save(consumer, locMetal(name + "_ingots_from_blasting"));
+
+            CookingRecipeBuilder.blasting(Ingredient.of(ModBlocks.COLORED_NETHER_ORES.get(color).get()), ModItems.COLORED_INGOTS.get(color).get(), 1.0f, 90)
+                    .unlockedBy("has_item", has(ModBlocks.COLORED_NETHER_ORES.get(color).get()))
+                    .save(consumer, locMetal(name + "_ingots_from_blasting_nether"));
+
+            CookingRecipeBuilder.blasting(Ingredient.of(ModBlocks.COLORED_END_ORES.get(color).get()), ModItems.COLORED_INGOTS.get(color).get(), 1.5f, 80)
+                    .unlockedBy("has_item", has(ModBlocks.COLORED_END_ORES.get(color).get()))
+                    .save(consumer, locMetal(name + "_ingots_from_blasting_end"));
+
             ShapelessRecipeBuilder.shapeless(ModItems.COLORED_NUGGETS.get(color).get(), 9)
                     .requires(ModItems.COLORED_INGOTS.get(color).get())
                     .unlockedBy("has_item", has(ModItems.COLORED_INGOTS.get(color).get()))

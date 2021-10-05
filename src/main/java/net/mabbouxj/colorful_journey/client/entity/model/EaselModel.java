@@ -16,8 +16,7 @@ public class EaselModel extends Model {
     private final ModelRenderer cube_r3;
     public final ModelRenderer slate;
     private final ModelRenderer cube_r4;
-    public final ModelRenderer paper;
-    private final ModelRenderer cube_r5;
+    public final PaintModel paper = new PaintModel();
 
     public EaselModel() {
         super(RenderType::entityCutoutNoCull);
@@ -62,15 +61,6 @@ public class EaselModel extends Model {
         setRotationAngle(cube_r4, -0.3927F, 0.0F, 0.0F);
         cube_r4.texOffs(0, 0).addBox(-8.0F, -8.0F, -0.5F, 16.0F, 16.0F, 1.0F, 0.0F, false);
 
-        paper = new ModelRenderer(this);
-        paper.setPos(0.0F, 24.0F, 0.0F);
-
-
-        cube_r5 = new ModelRenderer(this);
-        cube_r5.setPos(0.0F, -16.5537F, 0.271F);
-        paper.addChild(cube_r5);
-        setRotationAngle(cube_r5, -0.3927F, 0.0F, 0.0F);
-        cube_r5.texOffs(0, 0).addBox(-8.0F, -8.0F, -0.071F, 16.0F, 16.0F, 0.0F, 0.0F, false);
     }
 
     public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
@@ -82,4 +72,34 @@ public class EaselModel extends Model {
     @Override
     public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int p_225598_3_, int p_225598_4_, float p_225598_5_, float p_225598_6_, float p_225598_7_, float p_225598_8_) { }
 
-}
+    public class PaintModel extends Model {
+        public final ModelRenderer paper;
+        private final ModelRenderer cube_r5;
+
+        public PaintModel() {
+            super(RenderType::entityCutoutNoCull);
+            texWidth = 16;
+            texHeight = 16;
+
+            paper = new ModelRenderer(this);
+            paper.setPos(0.0F, 24.0F, 0.0F);
+
+            cube_r5 = new ModelRenderer(this);
+            cube_r5.setPos(0.0F, -16.5537F, 0.271F);
+            paper.addChild(cube_r5);
+            setRotationAngle(cube_r5, -0.3927F, 0.0F, 0.0F);
+            cube_r5.texOffs(0, 0).addBox(-8.0F, -8.0F, -0.071F, 16.0F, 16.0F, 0.001F, 0.001F, false);
+        }
+
+        public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
+            modelRenderer.xRot = x;
+            modelRenderer.yRot = y;
+            modelRenderer.zRot = z;
+        }
+
+        @Override
+        public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int p_225598_3_, int p_225598_4_, float p_225598_5_, float p_225598_6_, float p_225598_7_, float p_225598_8_) {
+        }
+    }
+
+    }

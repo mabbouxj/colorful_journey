@@ -20,6 +20,8 @@ import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.init.ModRecipeTypes;
 import net.mabbouxj.colorful_journey.recipes.WashingMachineRecipe;
 import net.mabbouxj.colorful_journey.utils.StringUtils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -122,6 +124,20 @@ public class WashingMachineCategory implements IRecipeCategory<WashingMachineRec
     public void draw(@Nonnull WashingMachineRecipe recipe, @Nonnull MatrixStack matrixStack, double mouseX, double mouseY) {
         cachedArrow.getUnchecked(Math.max(1, recipe.getProcessingTime())).draw(matrixStack, 81, 22);
         energyOverlay.draw(matrixStack, 3, 3);
+
+        drawProcessingTime(recipe, matrixStack, 42);
+
+    }
+
+    protected void drawProcessingTime(WashingMachineRecipe recipe, MatrixStack matrixStack, int y) {
+        int processingTime = recipe.getProcessingTime();
+        if (processingTime > 0) {
+            String timeString = StringUtils.ticksInHumanReadable(recipe.getProcessingTime());
+            Minecraft minecraft = Minecraft.getInstance();
+            FontRenderer fontRenderer = minecraft.font;
+            int stringWidth = fontRenderer.width(timeString);
+            fontRenderer.draw(matrixStack, timeString, background.getWidth() - stringWidth, y, 0xFF808080);
+        }
     }
 
     @Override
@@ -134,8 +150,6 @@ public class WashingMachineCategory implements IRecipeCategory<WashingMachineRec
             int totalEnergy = energyPerTick * processingTime;
             tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy_consume_per_tick", StringUtils.numberWithSuffix(energyPerTick)));
             tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy_consume_total", StringUtils.numberWithSuffix(totalEnergy)));
-        } else if (mouseX > 80 && mouseX < 80 + 24 && mouseY > 20 && mouseY < 20 + 18) {
-            tooltips.add(new TranslationTextComponent("screen.colorful_journey.processing_time", StringUtils.ticksInHumanReadable(recipe.getProcessingTime())));
         }
         return tooltips;
     }

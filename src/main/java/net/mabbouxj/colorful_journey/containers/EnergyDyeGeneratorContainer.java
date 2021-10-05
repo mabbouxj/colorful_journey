@@ -20,8 +20,8 @@ public class EnergyDyeGeneratorContainer extends BaseTileContainer {
         super(ModContainers.ENERGY_DYE_GENERATOR.get(), windowId, tile);
         this.tile = tile;
 
-        addSlot(new RestrictedSlot(handler, EnergyDyeGeneratorTile.Slots.FUEL.getId(), 62, 53, EnergyDyeGeneratorTile.Slots.FUEL.getFilter()));
-        addSlot(new RestrictedSlot(handler, EnergyDyeGeneratorTile.Slots.INGREDIENT.getId(), 62, 17, EnergyDyeGeneratorTile.Slots.INGREDIENT.getFilter()));
+        addSlot(new RestrictedSlot(handler, EnergyDyeGeneratorTile.Slots.FUEL.getId(), 26, 53, EnergyDyeGeneratorTile.Slots.FUEL.getFilter()));
+        addSlot(new RestrictedSlot(handler, EnergyDyeGeneratorTile.Slots.INGREDIENT.getId(), 26, 17, EnergyDyeGeneratorTile.Slots.INGREDIENT.getFilter()));
 
         bindPlayerInventory(playerInventory);
     }
@@ -36,6 +36,16 @@ public class EnergyDyeGeneratorContainer extends BaseTileContainer {
 
     public int getRemainingIngredient() {
         return this.tile.remainingIngredient;
+    }
+
+    public int getMaxIngredient() {
+        return this.tile.maxIngredient;
+    }
+
+    public int getRemainingTicks() {
+        if (getMaxIngredient() <= 0)
+            return 0;
+        return getRemainingIngredient() / getMaxIngredient();
     }
 
     public int getCurrentEnergyGeneration() {

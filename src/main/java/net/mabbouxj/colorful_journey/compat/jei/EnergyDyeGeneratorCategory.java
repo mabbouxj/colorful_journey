@@ -1,8 +1,5 @@
 package net.mabbouxj.colorful_journey.compat.jei;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -16,6 +13,8 @@ import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.init.ModRecipeTypes;
 import net.mabbouxj.colorful_journey.recipes.EnergyDyeGeneratorRecipe;
 import net.mabbouxj.colorful_journey.utils.StringUtils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -33,19 +32,19 @@ public class EnergyDyeGeneratorCategory implements IRecipeCategory<EnergyDyeGene
 
     private final IDrawable background;
     private final IDrawable icon;
-    private final IDrawable energyOverlay;
-    private final LoadingCache<Integer, IDrawableAnimated> cachedFire;
+    private final IDrawableAnimated energy;
+    private final IDrawableAnimated fire;
+    private final IDrawableAnimated arrow;
 
     public EnergyDyeGeneratorCategory(IGuiHelper guiHelper) {
-        this.background = guiHelper.createDrawable(TEXTURE, 0, 0, 58, 58);
+        this.background = guiHelper.createDrawable(TEXTURE, 0, 0, 130, 58);
         this.icon = guiHelper.createDrawableIngredient(new ItemStack(ModItems.ENERGY_DYE_GENERATOR.get()));
-        this.energyOverlay = guiHelper.createDrawable(TEXTURE, 58, 14, 16, 52);
-        this.cachedFire = CacheBuilder.newBuilder().maximumSize(25L).build(new CacheLoader<Integer,IDrawableAnimated>() {
-            @Override
-            public IDrawableAnimated load(Integer craftProgression) {
-                return guiHelper.drawableBuilder(TEXTURE, 58, 0, 14, 14).buildAnimated(craftProgression, IDrawableAnimated.StartDirection.BOTTOM, false);
-            }
-        });
+        fire = guiHelper.drawableBuilder(TEXTURE, 130, 0, 14, 14)
+                .buildAnimated(new TickTimer(guiHelper, 14), IDrawableAnimated.StartDirection.BOTTOM);
+        energy = guiHelper.drawableBuilder(TEXTURE, 130, 14, 16, 52)
+                .buildAnimated(new TickTimer(guiHelper, 52), IDrawableAnimated.StartDirection.BOTTOM);
+        arrow = guiHelper.drawableBuilder(TEXTURE, 130, 66, 54, 16)
+                .buildAnimated(new TickTimer(guiHelper, 54), IDrawableAnimated.StartDirection.LEFT);
     }
 
     @Override
@@ -98,18 +97,32 @@ public class EnergyDyeGeneratorCategory implements IRecipeCategory<EnergyDyeGene
 
     @Override
     public void draw(@Nonnull EnergyDyeGeneratorRecipe recipe, @Nonnull MatrixStack matrixStack, double mouseX, double mouseY) {
-        cachedFire.getUnchecked(Math.max(1, 100)).draw(matrixStack, 3, 22);
-        energyOverlay.draw(matrixStack, 39, 3);
+        energy.draw(matrixStack, 111, 3);
+        fire.draw(matrixStack, 4, 22);
+        arrow.draw(matrixStack, 38, 22);
+        drawEnergyGeneration(recipe, matrixStack);
+    }
+
+    protected void drawEnergyGeneration(EnergyDyeGeneratorRecipe recipe, MatrixStack matrixStack) {
+        FontRenderer fontRenderer = Minecraft.getInstance().font;
+
+        int perTickEnergy = recipe.energyPerTick;
+        int totalEnergy = recipe.energyTotal;
+        int totalTicks = totalEnergy / perTickEnergy;
+
+        String perTickString = new TranslationTextComponent("screen.colorful_journey.suffix_energy_per_tick", StringUtils.numberWithSuffix(perTickEnergy)).getString();
+        fontRenderer.draw(matrixStack, perTickString, 38, 7, 0xFF808080);
+
+        String totalTicksString = StringUtils.ticksInHumanReadable(totalTicks);
+        fontRenderer.draw(matrixStack, totalTicksString, 38, 43, 0xFF808080);
     }
 
     @Override
     @Nonnull
     public List<ITextComponent> getTooltipStrings(@Nonnull EnergyDyeGeneratorRecipe recipe, double mouseX, double mouseY) {
         List<ITextComponent> tooltips = new ArrayList<>();
-        if (mouseX > 38 && mouseX < 38 + 18 && mouseY > 2 && mouseY < 2 + 54) {
-            tooltips.add(new TranslationTextComponent("screen.colorful_journey.generating", StringUtils.numberWithSuffix(recipe.energyPerTick)));
-            tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy_consume_total", StringUtils.numberWithSuffix(recipe.energyTotal)));
-        }
+        if (mouseX > 110 && mouseX < 110+18 && mouseY > 2 && mouseY < 2+54)
+            tooltips.add(new TranslationTextComponent("screen.colorful_journey.suffix_energy", StringUtils.numberWithSuffix(recipe.energyTotal)));
         return tooltips;
     }
 

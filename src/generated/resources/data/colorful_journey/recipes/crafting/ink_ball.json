@@ -2,12 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     " # ",
-    "###",
+    "#o#",
     " # "
   ],
   "key": {
     "#": {
       "tag": "forge:dyes"
+    },
+    "o": {
+      "item": "colorful_journey:finished_painting"
     }
   },
   "result": {

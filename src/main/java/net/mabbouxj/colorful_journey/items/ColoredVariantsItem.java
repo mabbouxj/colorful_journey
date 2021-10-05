@@ -54,7 +54,7 @@ public class ColoredVariantsItem extends Item implements ColorUtils.IColored {
 
     @Override
     public ITextComponent getName(ItemStack itemStack) {
-        return ColorUtils.getDisplayItemColorName(itemStack, new TranslationTextComponent("item.colorful_journey." + this.registryName).getString());
+        return ColorUtils.getDisplayItemColorName(itemStack, "item.colorful_journey." + this.registryName);
     }
 
     @Override

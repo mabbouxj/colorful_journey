@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "colorful_journey:colored_nugget_brown",
+    "colorful_journey:colored_nugget_purple",
+    "colorful_journey:colored_nugget_lime",
+    "colorful_journey:colored_nugget_green",
+    "colorful_journey:colored_nugget_pink",
+    "colorful_journey:colored_nugget_light_blue",
+    "colorful_journey:colored_nugget_blue",
+    "colorful_journey:colored_nugget_gray",
+    "colorful_journey:colored_nugget_magenta",
+    "colorful_journey:colored_nugget_light_gray",
+    "colorful_journey:colored_nugget_orange",
+    "colorful_journey:colored_nugget_black",
+    "colorful_journey:colored_nugget_cyan",
+    "colorful_journey:colored_nugget_white",
+    "colorful_journey:colored_nugget_yellow",
+    "colorful_journey:colored_nugget_red",
+    "colorful_journey:uncolored_nugget"
+  ]
+}

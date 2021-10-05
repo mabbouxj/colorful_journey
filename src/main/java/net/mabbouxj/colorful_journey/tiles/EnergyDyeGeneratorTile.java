@@ -69,6 +69,8 @@ public class EnergyDyeGeneratorTile extends BasicTile implements ITickableTileEn
     @Sync
     public int remainingIngredient = 0;
     @Sync
+    public int maxIngredient = 0;
+    @Sync
     public int remainingFuel = 0;
     @Sync
     public int maxFuel = 0;
@@ -146,6 +148,7 @@ public class EnergyDyeGeneratorTile extends BasicTile implements ITickableTileEn
     private void initBurn(ItemStackHandler handler) {
         if (remainingFuel > 0 && currentRecipe != null) {
             remainingIngredient = currentRecipe.energyTotal;
+            maxIngredient = currentRecipe.energyTotal;
             handler.extractItem(Slots.INGREDIENT.id, 1, false);
         }
     }
@@ -174,12 +177,13 @@ public class EnergyDyeGeneratorTile extends BasicTile implements ITickableTileEn
         if (this.level == null || this.level.isClientSide || currentRecipe != null)
             return;
         inventory.ifPresent(inventory -> energy.ifPresent(buffer -> {
-            if (!inventory.getStackInSlot(Slots.FUEL.getId()).isEmpty()) {
+            if (!inventory.getStackInSlot(Slots.FUEL.getId()).isEmpty() || remainingFuel > 0) {
                 currentRecipe = RecipeUtils.getRecipes(this.level, ModRecipeTypes.ENERGY_DYE_GENERATOR).stream()
                         .filter(recipe -> recipe.matches(inventory, buffer)).findFirst().orElse(null);
             }
             if (currentRecipe == null) {
                 remainingIngredient = 0;
+                maxIngredient = 0;
             }
         }));
     }

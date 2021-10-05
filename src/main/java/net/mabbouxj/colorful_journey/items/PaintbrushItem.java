@@ -1,6 +1,7 @@
 package net.mabbouxj.colorful_journey.items;
 
 import net.mabbouxj.colorful_journey.ColorfulJourney;
+import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.utils.ColorUtils;
 import net.mabbouxj.colorful_journey.utils.MobUtils;
 import net.mabbouxj.colorful_journey.utils.ParticleUtils;
@@ -36,7 +37,7 @@ public class PaintbrushItem extends Item {
         ItemStack paintbrush = player.getMainHandItem();
         ItemStack colorPalette = player.getOffhandItem();
 
-        if (!(paintbrush.getItem() instanceof PaintbrushItem) || !(colorPalette.getItem() instanceof ColorPaletteItem)) {
+        if (!(paintbrush.getItem() instanceof PaintbrushItem) || !(colorPalette.getItem().equals(ModItems.COLOR_PALETTE.get()))) {
             TranslationTextComponent message = new TranslationTextComponent("message.colorful_journey.paintbrush_usage");
             player.displayClientMessage(message, true);
             return ActionResult.fail(paintbrush);

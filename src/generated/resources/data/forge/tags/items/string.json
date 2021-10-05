@@ -1,21 +1,21 @@
 {
   "replace": false,
   "values": [
-    "colorful_journey:colored_string_black",
-    "colorful_journey:colored_string_yellow",
-    "colorful_journey:colored_string_orange",
-    "colorful_journey:colored_string_white",
-    "colorful_journey:colored_string_light_blue",
-    "colorful_journey:colored_string_light_gray",
-    "colorful_journey:colored_string_pink",
-    "colorful_journey:colored_string_blue",
-    "colorful_journey:colored_string_red",
-    "colorful_journey:colored_string_cyan",
-    "colorful_journey:colored_string_magenta",
-    "colorful_journey:colored_string_gray",
     "colorful_journey:colored_string_brown",
     "colorful_journey:colored_string_purple",
     "colorful_journey:colored_string_lime",
-    "colorful_journey:colored_string_green"
+    "colorful_journey:colored_string_green",
+    "colorful_journey:colored_string_pink",
+    "colorful_journey:colored_string_light_blue",
+    "colorful_journey:colored_string_blue",
+    "colorful_journey:colored_string_gray",
+    "colorful_journey:colored_string_magenta",
+    "colorful_journey:colored_string_light_gray",
+    "colorful_journey:colored_string_orange",
+    "colorful_journey:colored_string_black",
+    "colorful_journey:colored_string_cyan",
+    "colorful_journey:colored_string_white",
+    "colorful_journey:colored_string_yellow",
+    "colorful_journey:colored_string_red"
   ]
 }

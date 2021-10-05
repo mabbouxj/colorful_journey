@@ -2,6 +2,8 @@ package net.mabbouxj.colorful_journey;
 
 import net.mabbouxj.colorful_journey.entities.*;
 import net.mabbouxj.colorful_journey.init.*;
+import net.mabbouxj.colorful_journey.network.PacketHandler;
+import net.mabbouxj.colorful_journey.network.packets.server.TilePacket;
 import net.mabbouxj.colorful_journey.tiles.EaselTile;
 import net.mabbouxj.colorful_journey.tiles.EnergyCapacitorTile;
 import net.mabbouxj.colorful_journey.tiles.EnergyDyeGeneratorTile;
@@ -16,17 +18,14 @@ import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.*;
 import net.minecraft.item.*;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,9 +41,8 @@ public class ColorfulJourney {
 
     public static final String MOD_ID = "colorful_journey";
     public static final Logger LOGGER = Logger.getLogger(MOD_ID);
-    public static final String MOD_NAME = "Colorful Journey";
-    public static final String MOD_VERSION = "0.0.1";
     public static final ItemGroup MOD_ITEM_GROUP = new ColorfulJourneyItemGroup();
+    public static final PacketHandler PACKET_HANDLER = new PacketHandler(new ResourceLocation(MOD_ID, "general"));
 
     public static final Map<RegistryObject<? extends Item>, Map<DyeColor, RegistryObject<? extends Item>>> REPLACEMENT_ITEMS = new HashMap<>();
     public static final Map<Block, Map<DyeColor, RegistryObject<? extends Block>>> REPLACEMENT_BLOCKS = new HashMap<>();
@@ -55,14 +53,10 @@ public class ColorfulJourney {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Load configs
-        final Pair<ModConfigs.Common, ForgeConfigSpec> specPairCommon = new ForgeConfigSpec.Builder().configure(ModConfigs.Common::new);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, specPairCommon.getRight());
-        ModConfigs.COMMON = specPairCommon.getLeft();
-        final Pair<ModConfigs.Client, ForgeConfigSpec> specPairClient = new ForgeConfigSpec.Builder().configure(ModConfigs.Client::new);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, specPairClient.getRight());
-        ModConfigs.CLIENT = specPairClient.getLeft();
+        ModConfigs.load();
 
         initEnabledColors();
+        registerPackets();
 
         // Register all stuff
         bus.register(this);
@@ -74,6 +68,7 @@ public class ColorfulJourney {
         ModSounds.register(bus);
         ModParticles.register(bus);
         ModRecipeSerializers.register(bus);
+        ModPaintingTypes.register(bus);
 
         bus.addListener(CommonEventBusSubscriber::onCommonSetup);
         bus.addListener(CommonEventBusSubscriber::onEntityAttributeCreationEvent);
@@ -94,6 +89,11 @@ public class ColorfulJourney {
         NBTManager.getInstance().scanTileClassForAnnotations(EnergyCapacitorTile.class);
         NBTManager.getInstance().scanTileClassForAnnotations(WashingMachineTile.class);
         NBTManager.getInstance().scanTileClassForAnnotations(EaselTile.class);
+
+    }
+
+    private void registerPackets() {
+        PACKET_HANDLER.registerPacket(0, TilePacket::new);
     }
 
     private void initEnabledColors() throws Exception {

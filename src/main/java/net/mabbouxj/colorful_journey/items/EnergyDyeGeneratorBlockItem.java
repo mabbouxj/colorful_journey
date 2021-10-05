@@ -17,7 +17,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -68,11 +67,9 @@ public class EnergyDyeGeneratorBlockItem extends BlockItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag flag) {
-        super.appendHoverText(stack, world, tooltips, flag);
         int power = stack.getOrCreateTag().getInt("energy");
-        if( power == 0 )
-            return;
-        tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(power), StringUtils.numberWithSuffix(ModConfigs.COMMON.ENERGY_DYE_GENERATOR_BUFFER_CAPACITY.get())).withStyle(TextFormatting.GREEN));
+        tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(power), StringUtils.numberWithSuffix(ModConfigs.COMMON.ENERGY_DYE_GENERATOR_BUFFER_CAPACITY.get())));
+        super.appendHoverText(stack, world, tooltips, flag);
     }
 
     @Override

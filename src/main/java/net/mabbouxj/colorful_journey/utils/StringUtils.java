@@ -1,5 +1,7 @@
 package net.mabbouxj.colorful_journey.utils;
 
+import net.minecraft.util.text.TranslationTextComponent;
+
 public class StringUtils {
 
     public static String numberWithSuffix(int count) {
@@ -11,11 +13,14 @@ public class StringUtils {
     }
 
     public static String ticksInHumanReadable(int ticks) {
-        float seconds = ticks / 20f;
+        int millis = ticks * 50;
+        if (millis < 1000)
+            return new TranslationTextComponent("screen.colorful_journey.suffix_millis", String.format("%d", millis)).getString();
+        float seconds = millis / 1000f;
         if (seconds < 60)
-            return String.format("%.2f", seconds) + "s";
+            return new TranslationTextComponent("screen.colorful_journey.suffix_second", String.format("%.2f", seconds)).getString();
         float minutes = seconds / 60f;
-        return String.format("%.2f", minutes) + "min";
+        return new TranslationTextComponent("screen.colorful_journey.suffix_minute", String.format("%.2f", minutes)).getString();
     }
 
 }

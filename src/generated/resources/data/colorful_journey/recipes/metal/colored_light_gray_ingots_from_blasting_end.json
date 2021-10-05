@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "colorful_journey:colored_end_ore_light_gray"
+  },
+  "result": "colorful_journey:colored_ingot_light_gray",
+  "experience": 1.5,
+  "cookingtime": 80
+}

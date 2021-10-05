@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#o#",
+    "###",
+    "# #"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:rods/wooden"
+    },
+    "o": {
+      "item": "minecraft:paper"
+    }
+  },
+  "result": {
+    "item": "colorful_journey:easel"
+  }
+}

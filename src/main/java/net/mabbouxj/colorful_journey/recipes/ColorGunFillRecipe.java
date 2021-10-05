@@ -3,7 +3,6 @@ package net.mabbouxj.colorful_journey.recipes;
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.init.ModRecipeSerializers;
 import net.mabbouxj.colorful_journey.items.ColorGunItem;
-import net.mabbouxj.colorful_journey.items.InkBallItem;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -35,7 +34,7 @@ public class ColorGunFillRecipe extends SpecialRecipe {
 
             if (colorGunStack.isEmpty() && slotStack.isDamageableItem() && slotStack.getItem() instanceof ColorGunItem) {
                 colorGunStack = slotStack;
-            } else if (slotStack.getItem() instanceof InkBallItem) {
+            } else if (slotStack.getItem().equals(ModItems.INK_BALL.get())) {
                 inkBallStacks.add(slotStack);
             }
         }
@@ -106,7 +105,7 @@ public class ColorGunFillRecipe extends SpecialRecipe {
             if (inkBallUsedToRepair == 0)
                 continue;
 
-            if (slotStack.getItem() instanceof InkBallItem) {
+            if (slotStack.getItem().equals(ModItems.INK_BALL.get())) {
                 if (slotStack.getCount() <= inkBallUsedToRepair) {
                     inkBallUsedToRepair -= slotStack.getCount();
                     inventory.getItem(i).setCount(0);

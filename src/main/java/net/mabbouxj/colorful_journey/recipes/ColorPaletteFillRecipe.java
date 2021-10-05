@@ -2,7 +2,6 @@ package net.mabbouxj.colorful_journey.recipes;
 
 import net.mabbouxj.colorful_journey.init.ModItems;
 import net.mabbouxj.colorful_journey.init.ModRecipeSerializers;
-import net.mabbouxj.colorful_journey.items.ColorPaletteItem;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -33,7 +32,7 @@ public class ColorPaletteFillRecipe extends SpecialRecipe {
             if (slotStack.isEmpty())
                 continue;
 
-            if (colorPaletteStack.isEmpty() && slotStack.isDamageableItem() && slotStack.getItem() instanceof ColorPaletteItem) {
+            if (colorPaletteStack.isEmpty() && slotStack.isDamageableItem() && slotStack.getItem().equals(ModItems.COLOR_PALETTE.get())) {
                 colorPaletteStack = slotStack;
             } else if (slotStack.getItem().is(Tags.Items.DYES)) {
                 dyeStacks.add(slotStack);

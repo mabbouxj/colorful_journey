@@ -22,23 +22,28 @@ public class ModItems {
 
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ColorfulJourney.MOD_ID);
 
+    public static final List<RegistryObject<Item>> ALL_BASIC_ITEMS = new ArrayList<>();
     public static final List<RegistryObject<Item>> ALL_COLORED_VARIANTS_ITEMS = new ArrayList<>();
     public static final List<RegistryObject<BlockItem>> ALL_COLORED_VARIANTS_BLOCK_ITEMS = new ArrayList<>();
 
-
-    public static final RegistryObject<Item> HORSEHAIR = ITEMS.register("horsehair", () -> new Item(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP)));
-    public static final RegistryObject<Item> BAT_WING = ITEMS.register("bat_wing", () -> new Item(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP)));
-    public static final RegistryObject<Item> TENTACLE = ITEMS.register("tentacle", () -> new Item(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP)));
+    // Items
     public static final RegistryObject<Item> PAINTBRUSH = ITEMS.register("paintbrush", PaintbrushItem::new);
-    public static final RegistryObject<Item> COLOR_PALETTE = ITEMS.register("color_palette", ColorPaletteItem::new);
     public static final RegistryObject<Item> COLOR_GUN = ITEMS.register("color_gun", ColorGunItem::new);
     public static final RegistryObject<Item> COLOR_LASER_GUN = ITEMS.register("color_laser_gun", ColorLaserGunItem::new);
-    public static final RegistryObject<Item> INK_BALL = ITEMS.register("ink_ball", InkBallItem::new);
-    public static final RegistryObject<Item> UNCOLORED_INGOT = ITEMS.register("uncolored_ingot", () -> new Item(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP)));
-    public static final RegistryObject<Item> UNCOLORED_NUGGET = ITEMS.register("uncolored_nugget", () -> new Item(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP)));
-    public static final RegistryObject<Item> COLORED_PASSIVE_AGGLOMERA = ITEMS.register("colored_passive_agglomera", () -> new Item(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP)));
-    public static final RegistryObject<Item> COLORED_AGGRESSIVE_AGGLOMERA = ITEMS.register("colored_aggressive_agglomera", () -> new Item(new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP)));
 
+    // Basic Items
+    public static final RegistryObject<Item> INK_BALL = registerBasicItem("ink_ball");
+    public static final RegistryObject<Item> HORSEHAIR = registerBasicItem("horsehair");
+    public static final RegistryObject<Item> BAT_WING = registerBasicItem("bat_wing");
+    public static final RegistryObject<Item> TENTACLE = registerBasicItem("tentacle");
+    public static final RegistryObject<Item> COLOR_PALETTE = registerBasicItem("color_palette", new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP).stacksTo(1).durability(64));
+    public static final RegistryObject<Item> UNCOLORED_INGOT = registerBasicItem("uncolored_ingot");
+    public static final RegistryObject<Item> UNCOLORED_NUGGET = registerBasicItem("uncolored_nugget");
+    public static final RegistryObject<Item> COLORED_PASSIVE_AGGLOMERA = registerBasicItem("colored_passive_agglomera");
+    public static final RegistryObject<Item> COLORED_AGGRESSIVE_AGGLOMERA = registerBasicItem("colored_aggressive_agglomera");
+    public static final RegistryObject<Item> FINISHED_PAINTING = registerBasicItem("finished_painting");
+
+    // Block Items
     public static final RegistryObject<BlockItem> RUBIKS_CUBE = ITEMS.register("rubiks_cube", RubiksCubeItem::new);
     public static final RegistryObject<BlockItem> RUBIKS_CUBE_UNFINISHED = ITEMS.register("rubiks_cube_unfinished", RubiksCubeUnfinishedItem::new);
     public static final RegistryObject<BlockItem> COLORFUL_PORTAL_FRAME = ITEMS.register("colorful_portal_frame", () -> new BlockItem(ModBlocks.COLORFUL_PORTAL_FRAME.get(), new Item.Properties().tab(ColorfulJourney.MOD_ITEM_GROUP)));
@@ -48,7 +53,9 @@ public class ModItems {
     public static final RegistryObject<BlockItem> WASHING_MACHINE = ITEMS.register("washing_machine", WashingMachineBlockItem::new);
     public static final RegistryObject<BlockItem> EASEL = ITEMS.register("easel", EaselBlockItem::new);
 
+    // Items with color variants
     public static final Map<DyeColor, RegistryObject<? extends Item>> DENSE_DYES = registerColoredVariantsItem("dense_dye");
+    public static final Map<DyeColor, RegistryObject<? extends Item>> ULTRA_DENSE_DYES = registerColoredVariantsItem("ultra_dense_dye");
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_FEATHERS = registerColoredVariantsItem("colored_feather", Items.FEATHER);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_EGGS = registerColoredVariantsItem("colored_egg", Items.EGG);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_HONEYCOMBS = registerColoredVariantsItem("colored_honeycomb", Items.HONEYCOMB);
@@ -68,8 +75,10 @@ public class ModItems {
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_INGOTS = registerColoredVariantsItem("colored_ingot");
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_NUGGETS = registerColoredVariantsItem("colored_nugget");
 
+    // WallOrFloor Items with color variants
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_SKULLS = registerColoredVariantsWallOrFloorItem("colored_skull", ModBlocks.COLORED_SKULLS, ModBlocks.COLORED_WALL_SKULLS);
 
+    // Block Items with color variants
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_LOGS = registerColoredVariantsBlockItem("colored_log", ModBlocks.COLORED_LOGS);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_STRIPPED_LOGS = registerColoredVariantsBlockItem("colored_stripped_log", ModBlocks.COLORED_STRIPPED_LOGS);
     public static final Map<DyeColor, RegistryObject<? extends Item>> COLORED_WOODS = registerColoredVariantsBlockItem("colored_wood", ModBlocks.COLORED_WOODS);
@@ -141,6 +150,17 @@ public class ModItems {
         return map;
     }
 
+    private static RegistryObject<Item> registerBasicItem(String name) {
+        RegistryObject<Item> registryObject = ITEMS.register(name, () -> new BasicItem(name));
+        ALL_BASIC_ITEMS.add(registryObject);
+        return registryObject;
+    }
+
+    private static RegistryObject<Item> registerBasicItem(String name, Item.Properties properties) {
+        RegistryObject<Item> registryObject = ITEMS.register(name, () -> new BasicItem(name, properties));
+        ALL_BASIC_ITEMS.add(registryObject);
+        return registryObject;
+    }
 
     public static void register(IEventBus bus) {
         ITEMS.register(bus);

@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
@@ -30,13 +29,16 @@ public class WashingMachineBlockItem extends BlockItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag flag) {
-        super.appendHoverText(stack, world, tooltips, flag);
         int power = stack.getOrCreateTag().getInt("energy");
         FluidStack fluid = FluidStack.loadFluidStackFromNBT(stack.getOrCreateTag().getCompound("fluid"));
-        if (power > 0)
-            tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(power), StringUtils.numberWithSuffix(ModConfigs.COMMON.WASHING_MACHINE_ENERGY_BUFFER.get())).withStyle(TextFormatting.GREEN));
-        if (!fluid.isEmpty())
-            tooltips.add(new TranslationTextComponent("screen.colorful_journey.fluid", fluid.getDisplayName(), StringUtils.numberWithSuffix(fluid.getAmount()), StringUtils.numberWithSuffix(ModConfigs.COMMON.WASHING_MACHINE_FLUID_BUFFER.get())).withStyle(TextFormatting.AQUA));
+        tooltips.add(new TranslationTextComponent("screen.colorful_journey.energy", StringUtils.numberWithSuffix(power), StringUtils.numberWithSuffix(ModConfigs.COMMON.WASHING_MACHINE_ENERGY_BUFFER.get())));
+        if (fluid.isEmpty()) {
+            tooltips.add(new TranslationTextComponent("screen.colorful_journey.fluid_empty"));
+        } else {
+            tooltips.add(new TranslationTextComponent("screen.colorful_journey.fluid", fluid.getDisplayName()));
+            tooltips.add(new TranslationTextComponent("screen.colorful_journey.fluid_amount", StringUtils.numberWithSuffix(fluid.getAmount()), StringUtils.numberWithSuffix(ModConfigs.COMMON.WASHING_MACHINE_FLUID_BUFFER.get())));
+        }
+        super.appendHoverText(stack, world, tooltips, flag);
     }
 
     @Override

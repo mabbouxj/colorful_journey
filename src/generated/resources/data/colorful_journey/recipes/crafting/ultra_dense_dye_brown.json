@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#x#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "colorful_journey:dense_dye_brown"
+    },
+    "x": {
+      "item": "colorful_journey:colored_ingot_block_brown"
+    }
+  },
+  "result": {
+    "item": "colorful_journey:ultra_dense_dye_brown"
+  }
+}

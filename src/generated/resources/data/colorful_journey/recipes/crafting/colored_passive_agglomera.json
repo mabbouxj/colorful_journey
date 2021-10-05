@@ -2,6 +2,12 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
+      "tag": "colorful_journey:colored_bat_wings"
+    },
+    {
+      "tag": "colorful_journey:colored_eggs"
+    },
+    {
       "tag": "colorful_journey:colored_feathers"
     },
     {
@@ -11,16 +17,10 @@
       "tag": "colorful_journey:colored_leathers"
     },
     {
-      "tag": "colorful_journey:colored_eggs"
+      "tag": "colorful_journey:colored_tentacles"
     },
     {
       "tag": "colorful_journey:colored_honeycombs"
-    },
-    {
-      "tag": "colorful_journey:colored_bat_wings"
-    },
-    {
-      "tag": "colorful_journey:colored_tentacles"
     }
   ],
   "result": {

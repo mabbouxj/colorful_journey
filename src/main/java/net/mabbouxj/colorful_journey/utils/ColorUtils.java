@@ -9,6 +9,7 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
@@ -69,15 +70,20 @@ public class ColorUtils {
         return str;
     }
 
-    public static String coloredColorName(DyeColor color) {
+    public static String colorName(DyeColor color) {
         String colorName = color.getName().replace("_", " ");
         colorName = Arrays.stream(colorName.split(" ")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
-        return DYE_COLOR_TO_TEXT_FORMAT.get(color.getId()) + colorName;
+        return colorName;
     }
 
-    public static ITextComponent getDisplayItemColorName(ItemStack itemStack, String itemName) {
+    public static String coloredColorName(DyeColor color) {
+        return DYE_COLOR_TO_TEXT_FORMAT.get(color.getId()) + colorName(color);
+    }
+
+    public static ITextComponent getDisplayItemColorName(ItemStack itemStack, String translationKey) {
         DyeColor color = ColorUtils.getColor(itemStack);
-        return new StringTextComponent(coloredColorName(color) + " " + itemName);
+        String textFormat = DYE_COLOR_TO_TEXT_FORMAT.get(color.getId());
+        return new StringTextComponent(textFormat + new TranslationTextComponent(translationKey, colorName(color)).getString());
     }
 
     public interface IColored {

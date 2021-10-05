@@ -4,6 +4,7 @@ import net.mabbouxj.colorful_journey.utils.nbthandler.NBTManager;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -63,4 +64,16 @@ public class BasicTile extends TileEntity {
         markForUpdate();
         super.setChanged();
     }
+
+    public PacketBuffer getTilePacket(PacketBuffer buffer) {
+        CompoundNBT nbt = new CompoundNBT();
+        return buffer.writeNbt(save(nbt));
+    }
+
+    public void handleTilePacket(PacketBuffer buffer) {
+        CompoundNBT nbt = buffer.readNbt();
+        if (nbt != null)
+            load(getBlockState(), nbt);
+    }
+
 }

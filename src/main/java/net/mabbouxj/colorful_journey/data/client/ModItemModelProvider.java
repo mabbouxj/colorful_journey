@@ -41,6 +41,13 @@ public class ModItemModelProvider extends ItemModelProvider {
             }
         }
 
+        for (RegistryObject<Item> registryObject : ModItems.ALL_BASIC_ITEMS) {
+            ResourceLocation registry = registryObject.get().getRegistryName();
+            String textureLoc = registry.getNamespace() + ":item/" + registry.getPath();
+            textureLoc = ColorUtils.removeColorSuffix(textureLoc);
+            getBuilder(registry.toString()).parent(itemGenerated).texture("layer0", textureLoc);
+        }
+
     }
 
 }

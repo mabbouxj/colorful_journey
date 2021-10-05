@@ -49,14 +49,14 @@ public class EaselRenderer extends TileEntityRenderer<EaselTile> {
 
         // Render slate (paper part)
         if (tile.hasSlate) {
-            r = MODEL.renderType(tile.getSlateTexture());
+            r = MODEL.renderType(EaselTile.EMPTY_SLATE_TEX);
             ivertexbuilder = buffer.getBuffer(r);
             MODEL.slate.render(matrixStack, ivertexbuilder, combinedLight, combinedOverlay);
 
-            if (tile.hasPaint) {
+            if (tile.isFinished()) {
                 r = MODEL.renderType(tile.getPaintTexture());
                 ivertexbuilder = buffer.getBuffer(r);
-                MODEL.paper.render(matrixStack, ivertexbuilder, combinedLight, combinedOverlay);
+                MODEL.paper.paper.render(matrixStack, ivertexbuilder, combinedLight, combinedOverlay);
             }
         }
 

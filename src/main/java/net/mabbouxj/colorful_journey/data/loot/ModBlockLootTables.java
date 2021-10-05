@@ -8,6 +8,7 @@ import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.item.DyeColor;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.Nonnull;
 import java.util.stream.Collectors;
 
 public class ModBlockLootTables extends BlockLootTables {
@@ -31,6 +32,7 @@ public class ModBlockLootTables extends BlockLootTables {
 
     }
 
+    @Nonnull
     @Override
     protected Iterable<Block> getKnownBlocks() {
         return ForgeRegistries.BLOCKS.getValues().stream()

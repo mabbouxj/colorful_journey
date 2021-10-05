@@ -25,18 +25,21 @@ public class ModBlocks {
 
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ColorfulJourney.MOD_ID);
 
+    public static final List<RegistryObject<Block>> ALL_COLORED_VARIANTS_BLOCKS = new ArrayList<>();
+
     public static RegistryObject<Block> RUBIKS_CUBE = BLOCKS.register("rubiks_cube", RubiksCubeBlock::new);
     public static RegistryObject<Block> RUBIKS_CUBE_UNFINISHED = BLOCKS.register("rubiks_cube_unfinished", RubiksCubeUnfinishedBlock::new);
     public static RegistryObject<Block> COLORFUL_PORTAL_FRAME = BLOCKS.register("colorful_portal_frame", () -> new Block(AbstractBlock.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F).noOcclusion().isViewBlocking((x,y,z)-> false)));
     public static RegistryObject<Block> COLORFUL_PORTAL = BLOCKS.register("colorful_portal", ColorfulPortalBlock::new);
     public static RegistryObject<Block> UNCOLORED_INGOT_BLOCK = BLOCKS.register("uncolored_ingot_block", () -> new Block(AbstractBlock.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL).noOcclusion().isViewBlocking((x, y, z) -> false)));
 
+    // Machines
     public static RegistryObject<Block> ENERGY_DYE_GENERATOR = BLOCKS.register("energy_dye_generator", EnergyDyeGeneratorBlock::new);
     public static RegistryObject<Block> ENERGY_CAPACITOR = BLOCKS.register("energy_capacitor", EnergyCapacitorBlock::new);
     public static RegistryObject<Block> WASHING_MACHINE = BLOCKS.register("washing_machine", WashingMachineBlock::new);
     public static RegistryObject<Block> EASEL = BLOCKS.register("easel", EaselBlock::new);
 
-    public static final List<RegistryObject<Block>> ALL_COLORED_VARIANTS_BLOCKS = new ArrayList<>();
+    // Colored variants Blocks
     public static Map<DyeColor, RegistryObject<? extends Block>> COLORED_SKULLS = registerColoredVariantsBlock("colored_skull", ColoredSkullBlock::new);
     public static Map<DyeColor, RegistryObject<? extends Block>> COLORED_WALL_SKULLS = registerColoredVariantsBlock("colored_wall_skull", ColoredWallSkullBlock::new);
     public static Map<DyeColor, RegistryObject<? extends Block>> COLORED_LOGS = registerColoredVariantsBlock("colored_log", ColoredRotatedPillarBlock::new, AbstractBlock.Properties.of(Material.WOOD, MaterialColor.WOOD).strength(2.0F).sound(SoundType.WOOD));
